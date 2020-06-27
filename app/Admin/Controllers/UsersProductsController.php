@@ -7,6 +7,8 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use App\Models\Users;
+use App\Models\Products;
 
 class UsersProductsController extends AdminController
 {
@@ -15,7 +17,7 @@ class UsersProductsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'UsersProducts';
+    protected $title = '用户商品';
 
     /**
      * Make a grid builder.
@@ -27,13 +29,18 @@ class UsersProductsController extends AdminController
         $grid = new Grid(new UsersProducts());
 
         $grid->column('id', __('Id'));
-        $grid->column('uid', __('Uid'));
-        $grid->column('products_id', __('Products id'));
-        $grid->column('price', __('Price'));
-        $grid->column('type', __('Type'));
-        $grid->column('num', __('Num'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
+        $grid->column('users.username', __('用户账号'));
+        $grid->column('products.name', __('商品名称'));
+        $grid->column('price', __('价格'))->display(function($price){
+            if($price >= 1000) {
+                $price = number_format($price / 10000, 1) . 'w';
+            }
+            return $price;
+        });
+        $grid->column('type', __('类型'));
+        $grid->column('num', __('数量'));
+        $grid->column('created_at', __('创建时间'));
+        $grid->column('updated_at', __('修改时间'));
 
         return $grid;
     }
@@ -49,13 +56,13 @@ class UsersProductsController extends AdminController
         $show = new Show(UsersProducts::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('uid', __('Uid'));
-        $show->field('products_id', __('Products id'));
-        $show->field('price', __('Price'));
-        $show->field('type', __('Type'));
-        $show->field('num', __('Num'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('users.username', __('用户账号'));
+        $show->field('products.name', __('商品名称'));
+        $show->field('price', __('价格'));
+        $show->field('type', __('类型'));
+        $show->field('num', __('数量'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('修改时间'));
 
         return $show;
     }
@@ -69,11 +76,36 @@ class UsersProductsController extends AdminController
     {
         $form = new Form(new UsersProducts());
 
-        $form->number('uid', __('Uid'));
-        $form->number('products_id', __('Products id'));
-        $form->number('price', __('Price'));
-        $form->switch('type', __('Type'));
-        $form->number('num', __('Num'));
+        $form->select('uid', __('用户账号'))->options(
+            Users::query()->pluck('username', 'id')
+        );
+        $form->select('products_id', __('商品名称'))->options(
+            Products::query()->pluck('name', 'id')
+        );
+         $form->select('type', __('类型'))->options(['买入', '卖出']);
+        $form->number('price', __('金额'));
+        $form->number('num', __('数量'));
+        
+         // 保存前回调
+        $form->saving(function (Form $form) {
+            // 卖出
+            if($form->type) {
+               Users::where('id', $form->uid)->increment(
+                    'assets',
+                    $form->price * $form->num
+                );  
+            } else {
+                Users::where('id', $form->uid)->decrement(
+                    'assets', 
+                    $form->price * $form->num,
+                    ['updated_at'=>date('Y-m-d H:i:s')]
+                );
+                Users::where('id', $form->uid)->increment(
+                    'market_value',
+                    $form->price * $form->num
+                );                
+            }
+        });
 
         return $form;
     }

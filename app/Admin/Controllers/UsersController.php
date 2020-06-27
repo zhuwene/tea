@@ -15,7 +15,7 @@ class UsersController extends AdminController
      *
      * @var string
      */
-    protected $title = '用户';
+    protected $title = '用戶';
 
     /**
      * Make a grid builder.
@@ -27,14 +27,17 @@ class UsersController extends AdminController
         $grid = new Grid(new Users());
 
         $grid->column('id', __('Id'));
-        $grid->column('name', __('Name'));
-        $grid->column('email', __('Email'));
-        $grid->column('email_verified_at', __('Email verified at'));
-        $grid->column('password', __('Password'));
-        $grid->column('remember_token', __('Remember token'));
-        $grid->column('created_at', __('Created at'));
-        $grid->column('updated_at', __('Updated at'));
-
+        $grid->column('username', __('用户账号'));
+        $grid->column('assets', __('总资产'));
+        $grid->column('profit_loss', __('总盈亏'));
+        $grid->column('market_value', __('总市值'));
+        $grid->column('surplus_cash', __('可用资金'))->display(function($grid){
+            return $this->assets - $this->market_value;
+        });
+        $grid->column('account', __('银行账号'));
+        $grid->column('created_at', __('创建时间'));
+        $grid->column('updated_at', __('修改时间'));
+        
         return $grid;
     }
 
@@ -49,13 +52,13 @@ class UsersController extends AdminController
         $show = new Show(Users::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('name', __('Name'));
-        $show->field('email', __('Email'));
-        $show->field('email_verified_at', __('Email verified at'));
-        $show->field('password', __('Password'));
-        $show->field('remember_token', __('Remember token'));
-        $show->field('created_at', __('Created at'));
-        $show->field('updated_at', __('Updated at'));
+        $show->field('username', __('用户账号'));
+        $show->field('assets', __('总资产'));
+        $show->field('profit_loss', __('总盈亏'));
+        $show->field('market_value', __('总市值'));
+        $show->field('account', __('银行账号'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('修改时间'));
 
         return $show;
     }
@@ -69,11 +72,25 @@ class UsersController extends AdminController
     {
         $form = new Form(new Users());
 
-        $form->text('name', __('Name'));
-        $form->email('email', __('Email'));
-        $form->datetime('email_verified_at', __('Email verified at'))->default(date('Y-m-d H:i:s'));
-        $form->password('password', __('Password'));
-        $form->text('remember_token', __('Remember token'));
+        $form->text('username', __('用户账号'))->creationRules(['required', "unique:users"])
+        ->updateRules(['required', "unique:users,username,{{id}}"]);
+        $form->password('password', __('密码'))->rules('required|confirmed', [
+            'required' => '密码不能为空',
+            'confirmed' => '两次密码不一致'
+        ]);
+        $form->password('password_confirmation', __('确认密码'))->rules('required', [
+            'required' => '确认密码不能为空',
+        ])
+            ->default(function ($form) {
+                return $form->model()->password;
+            });
+
+        $form->ignore(['password_confirmation']);
+        $form->saving(function (Form $form) {
+            if ($form->password && $form->model()->password != $form->password) {
+                $form->password = md5(env('ADMIN_KEY').$form->password);;
+            }
+        });
 
         return $form;
     }

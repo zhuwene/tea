@@ -14,6 +14,6 @@ class UsersCapitals extends Model
 
     public function users()
     {
-        return $this->belongsTo(users::class, 'uid');
+        return $this->belongsTo(Users::class, 'uid');
     }
 }

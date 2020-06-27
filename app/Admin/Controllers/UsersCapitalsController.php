@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\users;
+use App\Models\Users;
 use App\Models\UsersCapitals;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -19,7 +19,7 @@ class UsersCapitalsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'UsersCapitals';
+    protected $title = '资金明细';
 
     /**
      * Make a grid builder.
@@ -54,7 +54,7 @@ class UsersCapitalsController extends AdminController
         $show = new Show(UsersCapitals::findOrFail($id));
 
         $show->field('id', __('Id'));
-        $show->field('users.username', __('用户名称'));
+        $show->field('users.username', __('用户账号'));
         $show->field('account', __('账号'));
         $show->field('price', __('金额'));
         $show->field('balance', __('余额'));
@@ -73,21 +73,40 @@ class UsersCapitalsController extends AdminController
     protected function form()
     {
         $form = new Form(new UsersCapitals());
-//        $users = users::query()->select('id', 'username')->get();
-//        foreach ($users as $user) {
-//            $directors[$user['id']] = $user['username'];
-//        }
-        $form->select('uid', __('用户'))->options(
-            users::query()->pluck('username', 'id')
+        
+        $form->select('uid', __('用户账号'))->rules('required', [
+            'required' => '用户账号不能为空',
+        ])->options(
+            Users::query()->pluck('username', 'id')
         )->load('account', '/admin/userAccount');
-        $form->select('account', __('账号'));
-        $form->select('type', __('类型'))->options(['转入', '转出']);
-        $form->number('price', __('金额'));
-//        $form->number('balance', __('余额'));
-
-        //保存后回调
-        $form->saved(function (Form $form) {
-            //...
+        $form->select('account', __('银行账号'))->rules('required', [
+            'required' => '请选择银行账号',
+        ]);
+        $form->select('type', __('类型'))->options(['转入', '转出'])->rules('required', [
+            'required' => '请选择类型',
+        ]);
+        $form->number('price', __('金额'))->rules('required', [
+            'required' => '请填写金额',
+        ]);
+        $form->hidden('balance');
+        
+        // 保存前回调
+        $form->saving(function (Form $form) {
+            if($form->type) {
+                Users::where('id', $form->uid)->decrement(
+                    'assets', 
+                    $form->price,
+                    ['updated_at'=>date('Y-m-d H:i:s')]
+                );
+            } else {
+                Users::where('id', $form->uid)->increment(
+                    'assets', 
+                    $form->price,
+                    ['updated_at'=>date('Y-m-d H:i:s')]
+                );
+            }
+            $users = Users::where('id', $form->uid)->select('assets', 'market_value')->first();
+            $form->balance = $users->assets - $users->market_value;
         });
         return $form;
     }
