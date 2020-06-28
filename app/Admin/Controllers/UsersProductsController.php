@@ -9,6 +9,8 @@ use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use App\Models\Users;
 use App\Models\Products;
+use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class UsersProductsController extends AdminController
 {
@@ -31,17 +33,19 @@ class UsersProductsController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('users.username', __('用户账号'));
         $grid->column('products.name', __('商品名称'));
-        $grid->column('price', __('价格'))->display(function($price){
-            if($price >= 1000) {
+        $grid->column('price', __('单价'))->display(function ($price) {
+            if ($price >= 1000) {
                 $price = number_format($price / 10000, 1) . 'w';
             }
             return $price;
         });
         $grid->column('type', __('类型'));
-        $grid->column('num', __('数量'));
+        $grid->column('num', __('总数量'));
+        $grid->column('surplus', __('可用数量'));
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('修改时间'));
-
+        $grid->disableExport();
+        $grid->disableColumnSelector();
         return $grid;
     }
 
@@ -78,35 +82,87 @@ class UsersProductsController extends AdminController
 
         $form->select('uid', __('用户账号'))->options(
             Users::query()->pluck('username', 'id')
-        );
-        $form->select('products_id', __('商品名称'))->options(
-            Products::query()->pluck('name', 'id')
-        );
-         $form->select('type', __('类型'))->options(['买入', '卖出']);
-        $form->number('price', __('金额'));
-        $form->number('num', __('数量'));
-        
-         // 保存前回调
-        $form->saving(function (Form $form) {
-            // 卖出
-            if($form->type) {
-               Users::where('id', $form->uid)->increment(
-                    'assets',
-                    $form->price * $form->num
-                );  
-            } else {
-                Users::where('id', $form->uid)->decrement(
-                    'assets', 
-                    $form->price * $form->num,
-                    ['updated_at'=>date('Y-m-d H:i:s')]
+        )
+            ->rules('required', ['required' => '请选择用户账号'])
+            ->load('pro', '/admin/userPro');
+
+        $form->select('type', __('类型'))->options([1 => '买入', 2 => '卖出'])
+            ->when(1, function (Form $form) {
+                $form->select('products_id', __('商品名称'))->options(
+                    Products::query()->pluck('name', 'id')
                 );
+                $form->number('price', __('金额'));
+                $form->number('num', __('数量'));
+                $form->hidden('surplus');
+            })
+            ->when(2, function (Form $form) {
+                $form->select('pro', __('商品名称'));
+                $form->number('price', __('金额'));
+                $form->number('num', __('数量'));
+            })
+            ->rules('required', ['required' => '请选择类型']);
+        $products_id = Request()->input('pro');
+        // 保存前回调
+        $form->saving(function (Form $form) use ($products_id) {
+            // 卖出
+            if ($form->type == 2) {
+                $userPro           = UsersProducts::where('id', $products_id)->first();
+                $form->products_id = $userPro->products_id;
+                if ($form->num > $userPro->surplus) {
+                    $error = new MessageBag([
+                        'title'   => '错误提示',
+                        'message' => '大于当前商品可用数量!',
+                    ]);
+                    return back()->with(compact('error'));
+                }
+                // 成本
+                $market = $form->num * $userPro->price;
+                // 卖出金额
+                $sellMoney = $form->num * $form->price;
+                // 盈亏
+                $loss = $sellMoney - $market;
+
+                $user               = Users::where('id', $form->uid)->first();
+//                $user->assets       = $user->assets + $loss;
+                $user->profit_loss  = $user->profit_loss + $loss;
+                $user->market_value = $user->market_value - $market;
+                $user->updated_at   = date('Y-m-d H:i:s');
+                $user->save();
+
+                // 扣减可用数量
+                $userPro->surplus -= $form->num;
+                $userPro->save();
+
+            } else {
+                $form->surplus = $form->num;
+
                 Users::where('id', $form->uid)->increment(
                     'market_value',
                     $form->price * $form->num
-                );                
+                );
             }
         });
-
+        $form->ignore('pro');
         return $form;
+    }
+
+    public function userPro(Request $request)
+    {
+        $id = $request->get('q');
+
+        $userPro = UsersProducts::query()
+            ->where('uid', $id)
+            ->where('type', 1)
+            ->where('surplus', '>', 0)
+            ->get();
+
+        foreach ($userPro as $k => $pro) {
+            $data[$k]['id'] = $pro->id;
+            if ($pro->price >= 1000) {
+                $price = number_format($pro->price / 10000, 1) . 'w';
+            }
+            $data[$k]['text'] = $pro->products->name . ' - 买入单价:' . $price . ' - 可用:' . $pro->surplus;
+        }
+        return $data;
     }
 }

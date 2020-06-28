@@ -17,5 +17,6 @@ Route::group([
     $router->resource('users-products', UsersProductsController::class);
     $router->resource('users-capitals', UsersCapitalsController::class);
     $router->get('userAccount', 'UsersCapitalsController@userAccount');
+    $router->get('userPro', 'UsersProductsController@userPro');
 
 });

@@ -19,6 +19,8 @@ class CreateProductsTable extends Migration
             $table->string('name', 50)->default('')->comment('商品名称');
             $table->smallInteger('goods_id')->default(0)->comment('商品ID');
             $table->string('ref_price', 20)->default('')->comment('参考价');
+            $table->string('up', 20)->default('')->comment('升跌');
+            $table->string('percent', 20)->default('')->comment('升跌幅');
 
             $table->timestamps();
         });

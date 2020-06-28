@@ -13,12 +13,12 @@ class UsersProducts extends Model
 
     public function products()
     {
-        return  $this->belongsTo(Products::class);
+        return $this->belongsTo(Products::class);
     }
 
     public function getTypeAttribute($key)
     {
-        $arr = ['买入', '卖出'];
+        $arr = [1 => '买入', 2 => '卖出'];
         return $arr[$key];
     }
 }

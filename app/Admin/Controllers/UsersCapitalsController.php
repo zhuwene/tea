@@ -33,12 +33,23 @@ class UsersCapitalsController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('users.username', __('用户名称'));
         $grid->column('account', __('账号'));
-        $grid->column('price', __('金额'));
-        $grid->column('balance', __('余额'));
+        $grid->column('price', __('金额'))->display(function ($price) {
+            if ($price >= 1000) {
+                $price = number_format($price / 10000, 1) . 'w';
+            }
+            return $price;
+        });
+        $grid->column('balance', __('余额'))->display(function ($price) {
+            if ($price >= 1000) {
+                $price = number_format($price / 10000, 1) . 'w';
+            }
+            return $price;
+        });
         $grid->column('type', __('类型'));
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
-//        $grid->users()->name();
+        $grid->disableExport();
+        $grid->disableColumnSelector();
 
         return $grid;
     }
@@ -73,7 +84,7 @@ class UsersCapitalsController extends AdminController
     protected function form()
     {
         $form = new Form(new UsersCapitals());
-        
+
         $form->select('uid', __('用户账号'))->rules('required', [
             'required' => '用户账号不能为空',
         ])->options(
@@ -82,30 +93,30 @@ class UsersCapitalsController extends AdminController
         $form->select('account', __('银行账号'))->rules('required', [
             'required' => '请选择银行账号',
         ]);
-        $form->select('type', __('类型'))->options(['转入', '转出'])->rules('required', [
+        $form->select('type', __('类型'))->options([1 => '转入', 2 => '转出'])->rules('required', [
             'required' => '请选择类型',
         ]);
         $form->number('price', __('金额'))->rules('required', [
             'required' => '请填写金额',
         ]);
         $form->hidden('balance');
-        
+
         // 保存前回调
         $form->saving(function (Form $form) {
-            if($form->type) {
+            if ($form->type == 2) {
                 Users::where('id', $form->uid)->decrement(
-                    'assets', 
+                    'assets',
                     $form->price,
-                    ['updated_at'=>date('Y-m-d H:i:s')]
+                    ['updated_at' => date('Y-m-d H:i:s')]
                 );
             } else {
                 Users::where('id', $form->uid)->increment(
-                    'assets', 
+                    'assets',
                     $form->price,
-                    ['updated_at'=>date('Y-m-d H:i:s')]
+                    ['updated_at' => date('Y-m-d H:i:s')]
                 );
             }
-            $users = Users::where('id', $form->uid)->select('assets', 'market_value')->first();
+            $users         = Users::where('id', $form->uid)->select('assets', 'market_value')->first();
             $form->balance = $users->assets - $users->market_value;
         });
         return $form;
@@ -113,7 +124,7 @@ class UsersCapitalsController extends AdminController
 
     public function userAccount(Request $request)
     {
-        $id = $request->get('q');
+        $id      = $request->get('q');
         $users   = users::query()->where('id', $id)->select('id', 'account')->first();
         $account = explode(',', $users->account);
         foreach ($account as $k => $acc) {

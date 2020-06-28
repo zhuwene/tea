@@ -8,7 +8,7 @@ class UsersCapitals extends Model
 {
     public function getTypeAttribute($key)
     {
-        $arr = ['转入', '转出'];
+        $arr = [1 => '转入', 2 => '转出'];
         return $arr[$key];
     }
 

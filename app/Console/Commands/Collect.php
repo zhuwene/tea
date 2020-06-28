@@ -43,6 +43,8 @@ class Collect extends Command
             'name'     => ['.dh1 a', 'text'],
             'price'    => ['.dh3', 'text'],
             'goods_id' => ['.dh1 a', 'href'],
+            'up'       => ['.dh4', 'text'],
+            'percent'  => ['.dh5', 'text'],
         ];
         $range = '.quotes_item li';
 
@@ -73,6 +75,8 @@ class Collect extends Command
                 $product->name      = $name;
                 $product->goods_id  = $goodsId;
                 $product->ref_price = $list['price'];
+                $product->up        = $list['up'];
+                $product->percent   = $list['percent'];
                 $product->save();
             }
 

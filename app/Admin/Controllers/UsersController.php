@@ -28,16 +28,37 @@ class UsersController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('username', __('用户账号'));
-        $grid->column('assets', __('总资产'));
-        $grid->column('profit_loss', __('总盈亏'));
-        $grid->column('market_value', __('总市值'));
-        $grid->column('surplus_cash', __('可用资金'))->display(function($grid){
-            return $this->assets - $this->market_value;
+        $grid->column('assets', __('总资产'))->display(function ($price) {
+            if ($price >= 1000) {
+                $price = number_format($price / 10000, 2) . 'w';
+            }
+            return $price;
+        });
+        $grid->column('profit_loss', __('总盈亏'))->display(function ($price) {
+            if (abs($price) >= 1000) {
+                $price = number_format($price / 10000, 2) . 'w';
+            }
+            return $price;
+        });;
+        $grid->column('market_value', __('总市值'))->display(function ($price) {
+            if ($price >= 1000) {
+                $price = number_format($price / 10000, 1) . 'w';
+            }
+            return $price;
+        });
+        $grid->column('surplus_cash', __('可用资金'))->display(function () {
+            $price = $this->assets - $this->market_value - abs($this->profit_loss);
+            if ($price >= 1000) {
+                $price = number_format($price / 10000, 2) . 'w';
+            }
+            return $price;
         });
         $grid->column('account', __('银行账号'));
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('修改时间'));
-        
+        $grid->disableExport();
+        $grid->disableColumnSelector();
+
         return $grid;
     }
 
@@ -73,9 +94,9 @@ class UsersController extends AdminController
         $form = new Form(new Users());
 
         $form->text('username', __('用户账号'))->creationRules(['required', "unique:users"])
-        ->updateRules(['required', "unique:users,username,{{id}}"]);
+            ->updateRules(['required', "unique:users,username,{{id}}"]);
         $form->password('password', __('密码'))->rules('required|confirmed', [
-            'required' => '密码不能为空',
+            'required'  => '密码不能为空',
             'confirmed' => '两次密码不一致'
         ]);
         $form->password('password_confirmation', __('确认密码'))->rules('required', [
@@ -88,7 +109,7 @@ class UsersController extends AdminController
         $form->ignore(['password_confirmation']);
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->password != $form->password) {
-                $form->password = md5(env('ADMIN_KEY').$form->password);;
+                $form->password = md5(env('ADMIN_KEY') . $form->password);;
             }
         });
 

@@ -5,6 +5,7 @@
  * Date: 2020/6/27
  * Time: 15:32
  */
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;

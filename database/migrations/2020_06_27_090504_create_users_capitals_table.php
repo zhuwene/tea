@@ -20,7 +20,7 @@ class CreateUsersCapitalsTable extends Migration
             $table->string('account', 25)->default('')->comment('账号');
             $table->integer('price')->default(0)->comment('金额');
             $table->integer('balance')->default(0)->comment('余额');
-            $table->tinyInteger('type')->default(0)->comment('类型 0-转入 1-转出');
+            $table->tinyInteger('type')->default(0)->comment('类型 1-转入 2-转出');
 
             $table->timestamps();
         });
