@@ -60,10 +60,7 @@ class ProductsController extends AdminController
         $grid->disableColumnSelector();
         return $grid;
     }
-    public function _handle_action_()
-    {
-        return 123123;
-    }
+
     /**
      * Make a show builder.
      *

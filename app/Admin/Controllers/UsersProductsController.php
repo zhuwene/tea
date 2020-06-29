@@ -28,8 +28,8 @@ class UsersProductsController extends AdminController
      */
     protected function grid()
     {
+        $type  = \Request::get('type');
         $grid = new Grid(new UsersProducts());
-
         $grid->column('id', __('Id'));
         $grid->column('users.username', __('用户账号'));
         $grid->column('products.name', __('商品名称'));
@@ -43,12 +43,57 @@ class UsersProductsController extends AdminController
         });;
         $grid->column('num', __('总数量'));
         $grid->column('surplus', __('可用数量'));
+
+        if(empty($type)) {
+            $grid->column('assets', __('总资产'));
+        } elseif ($type[0] == 1) {
+            $grid->column('avg', __('平均价'))->display(function(){
+                $avgArr = UsersProducts::where('id', '<', $this->id)
+                ->where('type', $this->type)
+                ->where('uid', $this->uid)
+                ->where('products_id', $this->products_id)
+                ->select('price','num')
+                ->get();
+                $num = $this->num;
+                $avg = $this->price * $this->num;
+                if(empty(count($avgArr))) {
+                    $avg = ($this->price * $this->num) / $this->num;
+                } else {
+                    foreach ($avgArr as $k => $val) {
+                        $num += $val->num;
+                        $avg += $val->price * $val->num;
+                    }
+                    $avg = $avg / $num;
+                }
+                return $avg;
+            });
+        } else {
+            $grid->column('loss', __('盈亏率'));
+        }
+
+        
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('修改时间'));
         $grid->disableExport();
         $grid->disableColumnSelector();
         $grid->actions(function ($actions) {
             $actions->disableEdit();
+        });
+        $grid->filter(function($filter){
+            // 用户账号
+            $user = Users::pluck('username','id');
+            // 商品名称
+            $pro = Products::pluck('name', 'id');
+            $filter->column(1/2, function ($filter) use ($user) {                
+                $filter->in('uid','用户账号')->multipleSelect($user);
+                
+            });
+
+            $filter->column(1/2, function ($filter) use ($pro)  {    
+                $filter->in('products_id','商品名称')->multipleSelect($pro);            
+                $filter->in('type','类型')->multipleSelect([1=>'买入', 2=>'卖出']);
+            });           
+
         });
         return $grid;
     }
@@ -136,8 +181,25 @@ class UsersProductsController extends AdminController
                 $userPro->surplus -= $form->num;
                 $userPro->save();
 
+                $lastNum = UsersProducts::where('uid', $form->uid)
+                            ->where('products_id', $form->products_id)
+                            ->orderBy('id','desc')
+                            ->select('surplus')
+                            ->first();
+                $form->surplus = $lastNum->surplus - $form->num;
+
             } else {
-                $form->surplus = $form->num;
+                $lastNum = UsersProducts::where('uid', $form->uid)
+                            ->where('products_id', $form->products_id)
+                            ->orderBy('id','desc')
+                            ->select('surplus')
+                            ->first();
+                if(!empty($lastNum)){
+                    $form->surplus = $form->num + $lastNum->surplus;
+                } else {
+                    $form->surplus = $form->num;
+                }
+                
                 $surplus = abs($user->assets - $user->market_value - abs($user->profit_loss));
                 $price = $form->price * $form->num;
                 if ($price > $surplus) {
