@@ -28,30 +28,11 @@ class UsersController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('username', __('用户账号'));
-        $grid->column('assets', __('总资产'))->display(function ($price) {
-            if ($price >= 1000) {
-                $price = number_format($price / 10000, 2) . 'w';
-            }
-            return $price;
-        });
-        $grid->column('profit_loss', __('总盈亏'))->display(function ($price) {
-            if (abs($price) >= 1000) {
-                $price = number_format($price / 10000, 2) . 'w';
-            }
-            return $price;
-        });;
-        $grid->column('market_value', __('总市值'))->display(function ($price) {
-            if ($price >= 1000) {
-                $price = number_format($price / 10000, 1) . 'w';
-            }
-            return $price;
-        });
+        $grid->column('assets', __('总资产'));
+        $grid->column('profit_loss', __('总盈亏'));
+        $grid->column('market_value', __('总市值'));
         $grid->column('surplus_cash', __('可用资金'))->display(function () {
-            $price = $this->assets - $this->market_value - abs($this->profit_loss);
-            if ($price >= 1000) {
-                $price = number_format($price / 10000, 2) . 'w';
-            }
-            return $price;
+            return $this->assets - $this->market_value - abs($this->profit_loss);
         });
         $grid->column('account', __('银行账号'));
         $grid->column('created_at', __('创建时间'));
@@ -105,7 +86,7 @@ class UsersController extends AdminController
             ->default(function ($form) {
                 return $form->model()->password;
             });
-
+        $form->text('account', __('银行账号'));
         $form->ignore(['password_confirmation']);
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->password != $form->password) {

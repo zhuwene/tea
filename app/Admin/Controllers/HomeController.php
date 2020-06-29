@@ -13,12 +13,6 @@ class HomeController extends Controller
     public function index(Content $content)
     {
         return $content
-            ->title('控制台')
-            ->row(function (Row $row) {
-
-                $row->column(12, function (Column $column) {
-                    $column->append(Dashboard::environment());
-                });
-            });
+            ->title('欢迎您');
     }
 }

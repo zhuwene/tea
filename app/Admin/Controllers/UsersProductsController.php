@@ -33,19 +33,23 @@ class UsersProductsController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('users.username', __('用户账号'));
         $grid->column('products.name', __('商品名称'));
-        $grid->column('price', __('单价'))->display(function ($price) {
-            if ($price >= 1000) {
-                $price = number_format($price / 10000, 1) . 'w';
+        $grid->column('price', __('单价'));
+        $grid->column('type', __('类型'))->display(function ($type){
+            if($type == 1) {
+                return  '买入';
+            } else {
+                return  '卖出';
             }
-            return $price;
-        });
-        $grid->column('type', __('类型'));
+        });;
         $grid->column('num', __('总数量'));
         $grid->column('surplus', __('可用数量'));
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('修改时间'));
         $grid->disableExport();
         $grid->disableColumnSelector();
+        $grid->actions(function ($actions) {
+            $actions->disableEdit();
+        });
         return $grid;
     }
 
@@ -104,6 +108,7 @@ class UsersProductsController extends AdminController
         $products_id = Request()->input('pro');
         // 保存前回调
         $form->saving(function (Form $form) use ($products_id) {
+            $user               = Users::where('id', $form->uid)->first();
             // 卖出
             if ($form->type == 2) {
                 $userPro           = UsersProducts::where('id', $products_id)->first();
@@ -122,8 +127,6 @@ class UsersProductsController extends AdminController
                 // 盈亏
                 $loss = $sellMoney - $market;
 
-                $user               = Users::where('id', $form->uid)->first();
-//                $user->assets       = $user->assets + $loss;
                 $user->profit_loss  = $user->profit_loss + $loss;
                 $user->market_value = $user->market_value - $market;
                 $user->updated_at   = date('Y-m-d H:i:s');
@@ -135,10 +138,18 @@ class UsersProductsController extends AdminController
 
             } else {
                 $form->surplus = $form->num;
-
+                $surplus = abs($user->assets - $user->market_value - abs($user->profit_loss));
+                $price = $form->price * $form->num;
+                if ($price > $surplus) {
+                    $error = new MessageBag([
+                        'title'   => '错误提示',
+                        'message' => '该用户余额不足，是否转入资金？',
+                    ]);
+                    return back()->with(compact('error'));
+                }
                 Users::where('id', $form->uid)->increment(
                     'market_value',
-                    $form->price * $form->num
+                    $price
                 );
             }
         });

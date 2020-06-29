@@ -47,15 +47,70 @@ class ProductsController extends AdminController
                 $str = "<span style='color:red'>{$percent}</span>";
             }
             return $str;
-        });;
+        });
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
-        // 关闭操作
-        $grid->disableActions();
+
+//        $grid->actions(function ($actions) {
+//            $actions->disableDelete();
+//        });
         // 禁止新建按钮
         $grid->disableCreateButton();
         $grid->disableExport();
         $grid->disableColumnSelector();
         return $grid;
+    }
+    public function _handle_action_()
+    {
+        return 123123;
+    }
+    /**
+     * Make a show builder.
+     *
+     * @param mixed $id
+     * @return Show
+     */
+    protected function detail($id)
+    {
+        $show = new Show(Products::findOrFail($id));
+
+        $show->field('id', __('Id'));
+        $show->field('no_name', __('序号名称'));
+        $show->field('name', __('商品名称'));
+        $show->field('goods_id', __('商品ID'));
+        $show->field('ref_price', __('参考价'));
+        $show->field('up', __('升跌'));
+        $show->field('percent', __('升跌幅'));
+        $show->field('created_at', __('创建时间'));
+        $show->field('updated_at', __('修改时间'));
+
+        $show->panel()->tools(function ($tools) {
+            $tools->disableDelete();
+        });
+
+        return $show;
+    }
+
+    /**
+     * Make a form builder.
+     *
+     * @return Form
+     */
+    protected function form()
+    {
+        $form = new Form(new Products());
+
+        $form->text('no_name', __('序号名称'))->disable();
+        $form->text('name', __('商品名称'))->disable();
+        $form->text('goods_id', __('商品ID'))->disable();
+        $form->text('ref_price', __('参考价'))->disable();
+        $form->text('up', __('升跌'))->disable();
+        $form->text('percent', __('升跌幅'))->disable();
+
+        $form->tools(function (Form\Tools $tools) {
+            $tools->disableDelete();
+        });
+
+        return $form;
     }
 }

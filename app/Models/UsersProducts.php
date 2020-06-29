@@ -16,9 +16,32 @@ class UsersProducts extends Model
         return $this->belongsTo(Products::class);
     }
 
-    public function getTypeAttribute($key)
+    /**
+     * 删除
+     *
+     * @return // NO
+     */
+    public static function boot()
     {
-        $arr = [1 => '买入', 2 => '卖出'];
-        return $arr[$key];
+        parent::boot();
+
+        static::deleted(function ($model) {
+            // 转入
+            if ($model->type == 1) {
+                Users::where('id', $model->uid)->decrement(
+                    'assets',
+                    $model->price,
+                    ['updated_at' => date('Y-m-d H:i:s')]
+                );
+            } else {
+                Users::where('id', $model->uid)->increment(
+                    'assets',
+                    $model->price,
+                    ['updated_at' => date('Y-m-d H:i:s')]
+                );
+            }
+
+
+        });
     }
 }

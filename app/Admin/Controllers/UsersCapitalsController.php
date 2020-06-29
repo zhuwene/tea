@@ -9,8 +9,8 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Encore\Admin\Admin;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\MessageBag;
 
 class UsersCapitalsController extends AdminController
 {
@@ -33,23 +33,22 @@ class UsersCapitalsController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('users.username', __('用户名称'));
         $grid->column('account', __('账号'));
-        $grid->column('price', __('金额'))->display(function ($price) {
-            if ($price >= 1000) {
-                $price = number_format($price / 10000, 1) . 'w';
+        $grid->column('price', __('金额'));
+        $grid->column('balance', __('余额'));
+        $grid->column('type', __('类型'))->display(function ($type) {
+            if ($type == 1) {
+                return '转入';
+            } else {
+                return '转出';
             }
-            return $price;
         });
-        $grid->column('balance', __('余额'))->display(function ($price) {
-            if ($price >= 1000) {
-                $price = number_format($price / 10000, 1) . 'w';
-            }
-            return $price;
-        });
-        $grid->column('type', __('类型'));
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
         $grid->disableExport();
         $grid->disableColumnSelector();
+        $grid->actions(function ($actions) {
+            $actions->disableEdit();
+        });
 
         return $grid;
     }
@@ -69,7 +68,13 @@ class UsersCapitalsController extends AdminController
         $show->field('account', __('账号'));
         $show->field('price', __('金额'));
         $show->field('balance', __('余额'));
-        $show->field('type', __('类型'));
+        $show->field('type', __('类型'))->as(function ($type) {
+            if ($type == 1) {
+                return '转入';
+            } else {
+                return '转出';
+            }
+        });
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
 
@@ -89,8 +94,9 @@ class UsersCapitalsController extends AdminController
             'required' => '用户账号不能为空',
         ])->options(
             Users::query()->pluck('username', 'id')
-        )->load('account', '/admin/userAccount');
-        $form->select('account', __('银行账号'))->rules('required', [
+        );
+
+        $form->text('account', __('银行账号'))->rules('required', [
             'required' => '请选择银行账号',
         ]);
         $form->select('type', __('类型'))->options([1 => '转入', 2 => '转出'])->rules('required', [
@@ -103,6 +109,7 @@ class UsersCapitalsController extends AdminController
 
         // 保存前回调
         $form->saving(function (Form $form) {
+            $users = Users::where('id', $form->uid)->select('assets', 'market_value', 'account')->first();
             if ($form->type == 2) {
                 Users::where('id', $form->uid)->decrement(
                     'assets',
@@ -116,8 +123,8 @@ class UsersCapitalsController extends AdminController
                     ['updated_at' => date('Y-m-d H:i:s')]
                 );
             }
-            $users         = Users::where('id', $form->uid)->select('assets', 'market_value')->first();
             $form->balance = $users->assets - $users->market_value;
+
         });
         return $form;
     }
