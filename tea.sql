@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Homestead
-Source Server Version : 50727
-Source Host           : 192.168.10.10:3306
+Source Server         : 本地
+Source Server Version : 50553
+Source Host           : localhost:3306
 Source Database       : tea
 
 Target Server Type    : MYSQL
-Target Server Version : 50727
+Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-06-29 19:01:11
+Date: 2020-06-30 00:31:36
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,23 +30,24 @@ CREATE TABLE `tea_admin_menu` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tea_admin_menu
 -- ----------------------------
-INSERT INTO `tea_admin_menu` VALUES ('2', '0', '7', '系统设置', 'fa-tasks', null, null, null, '2020-06-29 03:58:45');
-INSERT INTO `tea_admin_menu` VALUES ('3', '2', '8', '管理员', 'fa-users', 'auth/users', null, null, '2020-06-29 03:58:45');
-INSERT INTO `tea_admin_menu` VALUES ('4', '2', '9', '角色', 'fa-user', 'auth/roles', null, null, '2020-06-29 03:58:45');
-INSERT INTO `tea_admin_menu` VALUES ('5', '2', '10', '权限', 'fa-ban', 'auth/permissions', null, null, '2020-06-29 03:58:45');
-INSERT INTO `tea_admin_menu` VALUES ('6', '2', '11', '菜单', 'fa-bars', 'auth/menu', null, null, '2020-06-29 03:58:45');
-INSERT INTO `tea_admin_menu` VALUES ('7', '2', '12', '操作日志', 'fa-history', 'auth/logs', null, null, '2020-06-29 03:58:45');
+INSERT INTO `tea_admin_menu` VALUES ('2', '0', '8', '系统设置', 'fa-tasks', null, null, null, '2020-06-29 13:30:17');
+INSERT INTO `tea_admin_menu` VALUES ('3', '2', '9', '管理员', 'fa-users', 'auth/users', null, null, '2020-06-29 13:30:17');
+INSERT INTO `tea_admin_menu` VALUES ('4', '2', '10', '角色', 'fa-user', 'auth/roles', null, null, '2020-06-29 13:30:17');
+INSERT INTO `tea_admin_menu` VALUES ('5', '2', '11', '权限', 'fa-ban', 'auth/permissions', null, null, '2020-06-29 13:30:17');
+INSERT INTO `tea_admin_menu` VALUES ('6', '2', '12', '菜单', 'fa-bars', 'auth/menu', null, null, '2020-06-29 13:30:17');
+INSERT INTO `tea_admin_menu` VALUES ('7', '2', '13', '操作日志', 'fa-history', 'auth/logs', null, null, '2020-06-29 13:30:17');
 INSERT INTO `tea_admin_menu` VALUES ('8', '0', '2', '用户管理', 'fa-user', null, null, '2020-06-27 07:29:46', '2020-06-29 03:58:45');
 INSERT INTO `tea_admin_menu` VALUES ('9', '0', '6', '商品管理', 'fa-product-hunt', 'products', null, '2020-06-27 07:40:12', '2020-06-29 03:58:45');
 INSERT INTO `tea_admin_menu` VALUES ('10', '8', '3', '用户列表', 'fa-list', 'users', null, '2020-06-27 09:20:22', '2020-06-29 03:58:45');
 INSERT INTO `tea_admin_menu` VALUES ('11', '8', '4', '商品数据', 'fa-product-hunt', 'users-products', null, '2020-06-27 09:23:05', '2020-06-29 03:58:45');
 INSERT INTO `tea_admin_menu` VALUES ('12', '8', '5', '资金明细', 'fa-money', 'users-capitals', null, '2020-06-27 09:23:30', '2020-06-29 03:58:45');
-INSERT INTO `tea_admin_menu` VALUES ('13', '0', '0', '控制台', 'fa-connectdevelop', '/', null, '2020-06-29 04:05:34', '2020-06-29 04:05:34');
+INSERT INTO `tea_admin_menu` VALUES ('13', '0', '1', '控制台', 'fa-connectdevelop', '/', null, '2020-06-29 04:05:34', '2020-06-29 13:30:17');
+INSERT INTO `tea_admin_menu` VALUES ('14', '0', '7', '消息管理', 'fa-wechat', '/notices', null, '2020-06-29 13:30:11', '2020-06-29 13:30:17');
 
 -- ----------------------------
 -- Table structure for tea_admin_operation_log
@@ -63,7 +64,7 @@ CREATE TABLE `tea_admin_operation_log` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `tea_admin_operation_log_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1582 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1843 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tea_admin_operation_log
@@ -1649,6 +1650,267 @@ INSERT INTO `tea_admin_operation_log` VALUES ('1578', '1', 'admin/users-products
 INSERT INTO `tea_admin_operation_log` VALUES ('1579', '1', 'admin/userPro', 'GET', '192.168.10.1', '{\"q\":\"1\"}', '2020-06-29 10:59:51', '2020-06-29 10:59:51');
 INSERT INTO `tea_admin_operation_log` VALUES ('1580', '1', 'admin/users-products', 'POST', '192.168.10.1', '{\"uid\":\"1\",\"type\":\"1\",\"products_id\":\"9\",\"price\":\"2000\",\"num\":\"10\",\"surplus\":null,\"_token\":\"qfF2Bg9XwVzfo152tLh3ml1jfmtjEzJVjqw86BaH\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-products\"}', '2020-06-29 10:59:57', '2020-06-29 10:59:57');
 INSERT INTO `tea_admin_operation_log` VALUES ('1581', '1', 'admin/users-products', 'GET', '192.168.10.1', '[]', '2020-06-29 10:59:57', '2020-06-29 10:59:57');
+INSERT INTO `tea_admin_operation_log` VALUES ('1582', '1', 'admin/users', 'GET', '127.0.0.1', '[]', '2020-06-29 13:29:35', '2020-06-29 13:29:35');
+INSERT INTO `tea_admin_operation_log` VALUES ('1583', '1', 'admin/auth/menu', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 13:29:42', '2020-06-29 13:29:42');
+INSERT INTO `tea_admin_operation_log` VALUES ('1584', '1', 'admin/auth/menu', 'POST', '127.0.0.1', '{\"parent_id\":\"0\",\"title\":\"\\u6d88\\u606f\\u7ba1\\u7406\",\"icon\":\"fa-wechat\",\"uri\":\"\\/notices\",\"roles\":[null],\"permission\":null,\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\"}', '2020-06-29 13:30:10', '2020-06-29 13:30:10');
+INSERT INTO `tea_admin_operation_log` VALUES ('1585', '1', 'admin/auth/menu', 'GET', '127.0.0.1', '[]', '2020-06-29 13:30:11', '2020-06-29 13:30:11');
+INSERT INTO `tea_admin_operation_log` VALUES ('1586', '1', 'admin/auth/menu', 'POST', '127.0.0.1', '{\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_order\":\"[{\\\"id\\\":13},{\\\"id\\\":8,\\\"children\\\":[{\\\"id\\\":10},{\\\"id\\\":11},{\\\"id\\\":12}]},{\\\"id\\\":9},{\\\"id\\\":14},{\\\"id\\\":2,\\\"children\\\":[{\\\"id\\\":3},{\\\"id\\\":4},{\\\"id\\\":5},{\\\"id\\\":6},{\\\"id\\\":7}]}]\"}', '2020-06-29 13:30:17', '2020-06-29 13:30:17');
+INSERT INTO `tea_admin_operation_log` VALUES ('1587', '1', 'admin/auth/menu', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 13:30:17', '2020-06-29 13:30:17');
+INSERT INTO `tea_admin_operation_log` VALUES ('1588', '1', 'admin/auth/permissions', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 13:30:20', '2020-06-29 13:30:20');
+INSERT INTO `tea_admin_operation_log` VALUES ('1589', '1', 'admin/auth/permissions/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 13:30:23', '2020-06-29 13:30:23');
+INSERT INTO `tea_admin_operation_log` VALUES ('1590', '1', 'admin/auth/permissions', 'POST', '127.0.0.1', '{\"slug\":\"notices\",\"name\":\"\\u6d88\\u606f\\u7ba1\\u7406\",\"http_method\":[null],\"http_path\":\"\\/admin\\/notices\",\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/auth\\/permissions\"}', '2020-06-29 13:30:38', '2020-06-29 13:30:38');
+INSERT INTO `tea_admin_operation_log` VALUES ('1591', '1', 'admin/auth/permissions', 'GET', '127.0.0.1', '[]', '2020-06-29 13:30:38', '2020-06-29 13:30:38');
+INSERT INTO `tea_admin_operation_log` VALUES ('1592', '1', 'admin/auth/permissions/8/edit', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 13:30:42', '2020-06-29 13:30:42');
+INSERT INTO `tea_admin_operation_log` VALUES ('1593', '1', 'admin/auth/permissions/8', 'PUT', '127.0.0.1', '{\"slug\":\"notices\",\"name\":\"\\u6d88\\u606f\\u7ba1\\u7406\",\"http_method\":[null],\"http_path\":\"\\/notices\",\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_method\":\"PUT\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/auth\\/permissions\"}', '2020-06-29 13:30:46', '2020-06-29 13:30:46');
+INSERT INTO `tea_admin_operation_log` VALUES ('1594', '1', 'admin/auth/permissions', 'GET', '127.0.0.1', '[]', '2020-06-29 13:30:46', '2020-06-29 13:30:46');
+INSERT INTO `tea_admin_operation_log` VALUES ('1595', '1', 'admin/auth/permissions', 'GET', '127.0.0.1', '[]', '2020-06-29 13:30:55', '2020-06-29 13:30:55');
+INSERT INTO `tea_admin_operation_log` VALUES ('1596', '1', 'admin/notices', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 13:30:58', '2020-06-29 13:30:58');
+INSERT INTO `tea_admin_operation_log` VALUES ('1597', '1', 'admin/notices', 'GET', '127.0.0.1', '[]', '2020-06-29 13:36:25', '2020-06-29 13:36:25');
+INSERT INTO `tea_admin_operation_log` VALUES ('1598', '1', 'admin/notices/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 13:36:29', '2020-06-29 13:36:29');
+INSERT INTO `tea_admin_operation_log` VALUES ('1599', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:37:36', '2020-06-29 13:37:36');
+INSERT INTO `tea_admin_operation_log` VALUES ('1600', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:37:52', '2020-06-29 13:37:52');
+INSERT INTO `tea_admin_operation_log` VALUES ('1601', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:42:06', '2020-06-29 13:42:06');
+INSERT INTO `tea_admin_operation_log` VALUES ('1602', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:42:29', '2020-06-29 13:42:29');
+INSERT INTO `tea_admin_operation_log` VALUES ('1603', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:47:17', '2020-06-29 13:47:17');
+INSERT INTO `tea_admin_operation_log` VALUES ('1604', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:48:06', '2020-06-29 13:48:06');
+INSERT INTO `tea_admin_operation_log` VALUES ('1605', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:48:33', '2020-06-29 13:48:33');
+INSERT INTO `tea_admin_operation_log` VALUES ('1606', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:49:09', '2020-06-29 13:49:09');
+INSERT INTO `tea_admin_operation_log` VALUES ('1607', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:49:24', '2020-06-29 13:49:24');
+INSERT INTO `tea_admin_operation_log` VALUES ('1608', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:50:38', '2020-06-29 13:50:38');
+INSERT INTO `tea_admin_operation_log` VALUES ('1609', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:53:15', '2020-06-29 13:53:15');
+INSERT INTO `tea_admin_operation_log` VALUES ('1610', '1', 'admin/notices', 'POST', '127.0.0.1', '{\"uid\":\"1\",\"content\":\"<p><\\/p><p><img alt=\\\"\\\" src=\\\"https:\\/\\/m1-1253159997.image.myqcloud.com\\/imageDir\\/c64c1c3dd1ed7b8a4a2a2b9901f3de2a.jpeg\\\" data-upload-link=\\\"%7B%22cover%22%3A%22%22%2C%22desc%22%3A%22%22%2C%22id%22%3A%22u8wzyh_94486%22%2C%22size%22%3A27.06%2C%22width%22%3A800%2C%22height%22%3A600%2C%22url%22%3A%22https%3A%2F%2Fm1-1253159997.image.myqcloud.com%2FimageDir%2Fc64c1c3dd1ed7b8a4a2a2b9901f3de2a.jpeg%22%2C%22tags%22%3A%5B%5D%2C%22time%22%3A%22%22%2C%22mime%22%3A%22%22%7D\\\"><\\/p><p>6\\u670829\\u65e5\\uff0c\\u5317\\u4eac\\u5e02\\u7b2c136\\u573a\\u65b0\\u51a0\\u80ba\\u708e\\u75ab\\u60c5\\u9632\\u63a7\\u5de5\\u4f5c\\u65b0\\u95fb\\u53d1\\u5e03\\u4f1a\\u53ec\\u5f00\\u3002\\u5317\\u4eac\\u9752\\u5e74\\u62a5\\u8bb0\\u8005\\u4ece\\u4f1a\\u4e0a\\u83b7\\u6089\\uff0c\\u73b0\\u573a\\u8bb0\\u8005\\u63d0\\u95ee\\uff0c\\u6700\\u8fd1\\u53d1\\u751f\\u4e86\\u4e00\\u8d77\\u5728\\u516c\\u5171\\u536b\\u751f\\u95f4\\u88ab\\u4f20\\u67d3\\u7684\\u75c5\\u4f8b\\uff0c\\u4ed6\\u662f\\u5982\\u4f55\\u88ab\\u4f20\\u67d3\\u7684\\uff0c\\u5982\\u4f55\\u964d\\u4f4e\\u4e0e\\u88ab\\u6c61\\u67d3\\u73af\\u5883\\u3001\\u7269\\u54c1\\u63a5\\u89e6\\u800c\\u611f\\u67d3\\u7684\\u98ce\\u9669\\uff1f\\u5bf9\\u6b64\\uff0c\\u56fd\\u5bb6\\u536b\\u5065\\u59d4\\u4e13\\u5bb6\\u7ec4\\u4e13\\u5bb6\\u3001\\u4e2d\\u56fd\\u75be\\u63a7\\u4e2d\\u5fc3\\u5e94\\u6025\\u4e2d\\u5fc3\\u526f\\u4e3b\\u4efb\\u65bd\\u56fd\\u5e86\\u8868\\u793a\\uff0c\\u65b0\\u51a0\\u75c5\\u6bd2\\u4e3b\\u8981\\u901a\\u8fc7\\u4e24\\u79cd\\u9014\\u5f84\\u4f20\\u64ad\\uff0c\\u4e00\\u79cd\\u662f\\u76f4\\u63a5\\u4f20\\u64ad\\uff0c\\u901a\\u8fc7\\u611f\\u67d3\\u8005\\u54b3\\u55fd\\u8bf4\\u8bdd\\u7b49\\u98de\\u6cab\\u4f20\\u64ad\\uff0c\\u5176\\u6b21\\u662f\\u901a\\u8fc7\\u95f4\\u63a5\\u4f20\\u64ad\\uff0c\\u901a\\u8fc7\\u63a5\\u89e6\\u88ab\\u611f\\u67d3\\u8005\\u547c\\u5438\\u9053\\u98de\\u6cab\\u6c61\\u67d3\\u7684\\u73af\\u5883\\u548c\\u7269\\u54c1\\u611f\\u67d3\\u3002\\u5728\\u7279\\u6b8a\\u60c5\\u51b5\\u4e0b\\u8fd8\\u5b58\\u5728\\u5176\\u4ed6\\u95f4\\u63a5\\u4f20\\u64ad\\u53ef\\u80fd\\u6027\\u300222\\u65e5\\u5317\\u4eac\\u516c\\u5e03\\u7684\\u75c5\\u4f8b\\u8c03\\u67e5\\u7ed3\\u679c\\u663e\\u793a\\uff0c\\u4e2a\\u522b\\u75c5\\u4f8b\\u53bb\\u8fc7\\u6b64\\u524d\\u6709\\u8fc7\\u786e\\u8bca\\u75c5\\u4f8b\\u7684\\u5c0f\\u533a\\u4e0a\\u8fc7\\u516c\\u5171\\u536b\\u751f\\u95f4\\u3002\\u611f\\u67d3\\u8005\\u4f7f\\u7528\\u8fc7\\u536b\\u751f\\u95f4\\uff0c\\u5b58\\u5728\\u95e8\\u628a\\u624b\\u548c\\u51b2\\u6c34\\u6309\\u94ae\\u7b49\\u90e8\\u4f4d\\u88ab\\u6c61\\u67d3\\u7684\\u53ef\\u80fd\\u6027\\uff0c\\u4e5f\\u4e0d\\u6392\\u9664\\u7caa\\u4fbf\\u6c61\\u67d3\\u548c\\u73af\\u5883\\u7a7a\\u6c14\\u6c61\\u67d3\\u7684\\u53ef\\u80fd\\u6027\\u3002\\u76f8\\u5173\\u5355\\u4f4d\\u8981\\u505a\\u597d\\u536b\\u751f\\u95f4\\u6d88\\u6bd2\\u548c\\u6e05\\u6d01\\u3002\\u8981\\u51cf\\u5c11\\u63a5\\u89e6\\u53ef\\u80fd\\u53d7\\u5230\\u6c61\\u67d3\\u7684\\u5395\\u6240\\u73af\\u5883\\u8868\\u9762\\uff0c\\u7528\\u5e72\\u51c0\\u624b\\u7eb8\\uff0c\\u907f\\u514d\\u76f4\\u63a5\\u63a5\\u89e6\\u3002\\u5efa\\u8bae\\u51cf\\u5c11\\u5982\\u5395\\u65f6\\u95f4\\uff0c\\u53ca\\u65f6\\u6d17\\u624b\\u3002\\u4fbf\\u540e\\u51b2\\u6c34\\u8981\\u76d6\\u4e0a\\u9a6c\\u6876\\u76d6\\uff0c\\u964d\\u4f4e\\u5bf9\\u73af\\u5883\\u6c61\\u67d3\\u7684\\u98ce\\u9669\\u3002<\\/p><p>\\u6587\\/\\u5317\\u4eac\\u9752\\u5e74\\u62a5\\u8bb0\\u8005 \\u848b\\u82e5\\u9759 \\u6b66\\u6587\\u5a1f \\u738b\\u658c<\\/p>\",\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\"}', '2020-06-29 13:53:58', '2020-06-29 13:53:58');
+INSERT INTO `tea_admin_operation_log` VALUES ('1611', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:53:59', '2020-06-29 13:53:59');
+INSERT INTO `tea_admin_operation_log` VALUES ('1612', '1', 'admin/notices/create', 'GET', '127.0.0.1', '[]', '2020-06-29 13:54:09', '2020-06-29 13:54:09');
+INSERT INTO `tea_admin_operation_log` VALUES ('1613', '1', 'admin/notices', 'POST', '127.0.0.1', '{\"uid\":\"1\",\"msg\":\"<p><\\/p><p><img alt=\\\"\\\" src=\\\"https:\\/\\/m1-1253159997.image.myqcloud.com\\/imageDir\\/c64c1c3dd1ed7b8a4a2a2b9901f3de2a.jpeg\\\" data-upload-link=\\\"%7B%22cover%22%3A%22%22%2C%22desc%22%3A%22%22%2C%22id%22%3A%22u8wzyh_94486%22%2C%22size%22%3A27.06%2C%22width%22%3A800%2C%22height%22%3A600%2C%22url%22%3A%22https%3A%2F%2Fm1-1253159997.image.myqcloud.com%2FimageDir%2Fc64c1c3dd1ed7b8a4a2a2b9901f3de2a.jpeg%22%2C%22tags%22%3A%5B%5D%2C%22time%22%3A%22%22%2C%22mime%22%3A%22%22%7D\\\"><\\/p><p>6\\u670829\\u65e5\\uff0c\\u5317\\u4eac\\u5e02\\u7b2c136\\u573a\\u65b0\\u51a0\\u80ba\\u708e\\u75ab\\u60c5\\u9632\\u63a7\\u5de5\\u4f5c\\u65b0\\u95fb\\u53d1\\u5e03\\u4f1a\\u53ec\\u5f00\\u3002\\u5317\\u4eac\\u9752\\u5e74\\u62a5\\u8bb0\\u8005\\u4ece\\u4f1a\\u4e0a\\u83b7\\u6089\\uff0c\\u73b0\\u573a\\u8bb0\\u8005\\u63d0\\u95ee\\uff0c\\u6700\\u8fd1\\u53d1\\u751f\\u4e86\\u4e00\\u8d77\\u5728\\u516c\\u5171\\u536b\\u751f\\u95f4\\u88ab\\u4f20\\u67d3\\u7684\\u75c5\\u4f8b\\uff0c\\u4ed6\\u662f\\u5982\\u4f55\\u88ab\\u4f20\\u67d3\\u7684\\uff0c\\u5982\\u4f55\\u964d\\u4f4e\\u4e0e\\u88ab\\u6c61\\u67d3\\u73af\\u5883\\u3001\\u7269\\u54c1\\u63a5\\u89e6\\u800c\\u611f\\u67d3\\u7684\\u98ce\\u9669\\uff1f\\u5bf9\\u6b64\\uff0c\\u56fd\\u5bb6\\u536b\\u5065\\u59d4\\u4e13\\u5bb6\\u7ec4\\u4e13\\u5bb6\\u3001\\u4e2d\\u56fd\\u75be\\u63a7\\u4e2d\\u5fc3\\u5e94\\u6025\\u4e2d\\u5fc3\\u526f\\u4e3b\\u4efb\\u65bd\\u56fd\\u5e86\\u8868\\u793a\\uff0c\\u65b0\\u51a0\\u75c5\\u6bd2\\u4e3b\\u8981\\u901a\\u8fc7\\u4e24\\u79cd\\u9014\\u5f84\\u4f20\\u64ad\\uff0c\\u4e00\\u79cd\\u662f\\u76f4\\u63a5\\u4f20\\u64ad\\uff0c\\u901a\\u8fc7\\u611f\\u67d3\\u8005\\u54b3\\u55fd\\u8bf4\\u8bdd\\u7b49\\u98de\\u6cab\\u4f20\\u64ad\\uff0c\\u5176\\u6b21\\u662f\\u901a\\u8fc7\\u95f4\\u63a5\\u4f20\\u64ad\\uff0c\\u901a\\u8fc7\\u63a5\\u89e6\\u88ab\\u611f\\u67d3\\u8005\\u547c\\u5438\\u9053\\u98de\\u6cab\\u6c61\\u67d3\\u7684\\u73af\\u5883\\u548c\\u7269\\u54c1\\u611f\\u67d3\\u3002\\u5728\\u7279\\u6b8a\\u60c5\\u51b5\\u4e0b\\u8fd8\\u5b58\\u5728\\u5176\\u4ed6\\u95f4\\u63a5\\u4f20\\u64ad\\u53ef\\u80fd\\u6027\\u300222\\u65e5\\u5317\\u4eac\\u516c\\u5e03\\u7684\\u75c5\\u4f8b\\u8c03\\u67e5\\u7ed3\\u679c\\u663e\\u793a\\uff0c\\u4e2a\\u522b\\u75c5\\u4f8b\\u53bb\\u8fc7\\u6b64\\u524d\\u6709\\u8fc7\\u786e\\u8bca\\u75c5\\u4f8b\\u7684\\u5c0f\\u533a\\u4e0a\\u8fc7\\u516c\\u5171\\u536b\\u751f\\u95f4\\u3002\\u611f\\u67d3\\u8005\\u4f7f\\u7528\\u8fc7\\u536b\\u751f\\u95f4\\uff0c\\u5b58\\u5728\\u95e8\\u628a\\u624b\\u548c\\u51b2\\u6c34\\u6309\\u94ae\\u7b49\\u90e8\\u4f4d\\u88ab\\u6c61\\u67d3\\u7684\\u53ef\\u80fd\\u6027\\uff0c\\u4e5f\\u4e0d\\u6392\\u9664\\u7caa\\u4fbf\\u6c61\\u67d3\\u548c\\u73af\\u5883\\u7a7a\\u6c14\\u6c61\\u67d3\\u7684\\u53ef\\u80fd\\u6027\\u3002\\u76f8\\u5173\\u5355\\u4f4d\\u8981\\u505a\\u597d\\u536b\\u751f\\u95f4\\u6d88\\u6bd2\\u548c\\u6e05\\u6d01\\u3002\\u8981\\u51cf\\u5c11\\u63a5\\u89e6\\u53ef\\u80fd\\u53d7\\u5230\\u6c61\\u67d3\\u7684\\u5395\\u6240\\u73af\\u5883\\u8868\\u9762\\uff0c\\u7528\\u5e72\\u51c0\\u624b\\u7eb8\\uff0c\\u907f\\u514d\\u76f4\\u63a5\\u63a5\\u89e6\\u3002\\u5efa\\u8bae\\u51cf\\u5c11\\u5982\\u5395\\u65f6\\u95f4\\uff0c\\u53ca\\u65f6\\u6d17\\u624b\\u3002\\u4fbf\\u540e\\u51b2\\u6c34\\u8981\\u76d6\\u4e0a\\u9a6c\\u6876\\u76d6\\uff0c\\u964d\\u4f4e\\u5bf9\\u73af\\u5883\\u6c61\\u67d3\\u7684\\u98ce\\u9669\\u3002<\\/p><p>\\u6587\\/\\u5317\\u4eac\\u9752\\u5e74\\u62a5\\u8bb0\\u8005 \\u848b\\u82e5\\u9759 \\u6b66\\u6587\\u5a1f \\u738b\\u658c<\\/p>\",\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\"}', '2020-06-29 13:54:13', '2020-06-29 13:54:13');
+INSERT INTO `tea_admin_operation_log` VALUES ('1614', '1', 'admin/notices', 'GET', '127.0.0.1', '[]', '2020-06-29 13:54:13', '2020-06-29 13:54:13');
+INSERT INTO `tea_admin_operation_log` VALUES ('1615', '1', 'admin/notices', 'GET', '127.0.0.1', '[]', '2020-06-29 13:57:28', '2020-06-29 13:57:28');
+INSERT INTO `tea_admin_operation_log` VALUES ('1616', '1', 'admin/notices', 'GET', '127.0.0.1', '[]', '2020-06-29 13:57:39', '2020-06-29 13:57:39');
+INSERT INTO `tea_admin_operation_log` VALUES ('1617', '1', 'admin/notices/1', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 13:57:42', '2020-06-29 13:57:42');
+INSERT INTO `tea_admin_operation_log` VALUES ('1618', '1', 'admin/notices/1', 'GET', '127.0.0.1', '[]', '2020-06-29 13:58:05', '2020-06-29 13:58:05');
+INSERT INTO `tea_admin_operation_log` VALUES ('1619', '1', 'admin/notices/1', 'GET', '127.0.0.1', '[]', '2020-06-29 13:58:12', '2020-06-29 13:58:12');
+INSERT INTO `tea_admin_operation_log` VALUES ('1620', '1', 'admin/notices/1', 'GET', '127.0.0.1', '[]', '2020-06-29 13:58:48', '2020-06-29 13:58:48');
+INSERT INTO `tea_admin_operation_log` VALUES ('1621', '1', 'admin/notices/1', 'GET', '127.0.0.1', '[]', '2020-06-29 13:59:28', '2020-06-29 13:59:28');
+INSERT INTO `tea_admin_operation_log` VALUES ('1622', '1', 'admin/notices/1', 'GET', '127.0.0.1', '[]', '2020-06-29 13:59:46', '2020-06-29 13:59:46');
+INSERT INTO `tea_admin_operation_log` VALUES ('1623', '1', 'admin/notices/1', 'GET', '127.0.0.1', '[]', '2020-06-29 13:59:59', '2020-06-29 13:59:59');
+INSERT INTO `tea_admin_operation_log` VALUES ('1624', '1', 'admin/notices', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 14:05:58', '2020-06-29 14:05:58');
+INSERT INTO `tea_admin_operation_log` VALUES ('1625', '1', 'admin/notices/1/edit', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 14:06:02', '2020-06-29 14:06:02');
+INSERT INTO `tea_admin_operation_log` VALUES ('1626', '1', 'admin/notices', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 14:06:12', '2020-06-29 14:06:12');
+INSERT INTO `tea_admin_operation_log` VALUES ('1627', '1', 'admin/notices/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 14:06:20', '2020-06-29 14:06:20');
+INSERT INTO `tea_admin_operation_log` VALUES ('1628', '1', 'admin/notices', 'POST', '127.0.0.1', '{\"uid\":\"2\",\"msg\":\"<p><\\/p><p>12313132<\\/p>\",\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/notices\"}', '2020-06-29 14:06:24', '2020-06-29 14:06:24');
+INSERT INTO `tea_admin_operation_log` VALUES ('1629', '1', 'admin/notices', 'GET', '127.0.0.1', '[]', '2020-06-29 14:06:24', '2020-06-29 14:06:24');
+INSERT INTO `tea_admin_operation_log` VALUES ('1630', '1', 'admin/_handle_action_', 'POST', '127.0.0.1', '{\"_key\":\"2\",\"_model\":\"App_Models_Notices\",\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_action\":\"Encore_Admin_Grid_Actions_Delete\",\"_input\":\"true\"}', '2020-06-29 14:06:30', '2020-06-29 14:06:30');
+INSERT INTO `tea_admin_operation_log` VALUES ('1631', '1', 'admin/notices', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 14:06:30', '2020-06-29 14:06:30');
+INSERT INTO `tea_admin_operation_log` VALUES ('1632', '1', 'admin/notices', 'GET', '127.0.0.1', '[]', '2020-06-29 14:06:50', '2020-06-29 14:06:50');
+INSERT INTO `tea_admin_operation_log` VALUES ('1633', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 14:06:58', '2020-06-29 14:06:58');
+INSERT INTO `tea_admin_operation_log` VALUES ('1634', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 14:08:09', '2020-06-29 14:08:09');
+INSERT INTO `tea_admin_operation_log` VALUES ('1635', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 14:12:34', '2020-06-29 14:12:34');
+INSERT INTO `tea_admin_operation_log` VALUES ('1636', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 14:17:42', '2020-06-29 14:17:42');
+INSERT INTO `tea_admin_operation_log` VALUES ('1637', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 14:19:23', '2020-06-29 14:19:23');
+INSERT INTO `tea_admin_operation_log` VALUES ('1638', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 14:20:07', '2020-06-29 14:20:07');
+INSERT INTO `tea_admin_operation_log` VALUES ('1639', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 14:20:19', '2020-06-29 14:20:19');
+INSERT INTO `tea_admin_operation_log` VALUES ('1640', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 14:20:43', '2020-06-29 14:20:43');
+INSERT INTO `tea_admin_operation_log` VALUES ('1641', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 14:21:47', '2020-06-29 14:21:47');
+INSERT INTO `tea_admin_operation_log` VALUES ('1642', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 14:22:16', '2020-06-29 14:22:16');
+INSERT INTO `tea_admin_operation_log` VALUES ('1643', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 15:09:08', '2020-06-29 15:09:08');
+INSERT INTO `tea_admin_operation_log` VALUES ('1644', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:09:21', '2020-06-29 15:09:21');
+INSERT INTO `tea_admin_operation_log` VALUES ('1645', '1', 'admin/users-products/3,4,5,6,7', 'DELETE', '127.0.0.1', '{\"_method\":\"delete\",\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\"}', '2020-06-29 15:16:32', '2020-06-29 15:16:32');
+INSERT INTO `tea_admin_operation_log` VALUES ('1646', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:16:33', '2020-06-29 15:16:33');
+INSERT INTO `tea_admin_operation_log` VALUES ('1647', '1', 'admin/users-capitals', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:16:35', '2020-06-29 15:16:35');
+INSERT INTO `tea_admin_operation_log` VALUES ('1648', '1', 'admin/users', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:16:36', '2020-06-29 15:16:36');
+INSERT INTO `tea_admin_operation_log` VALUES ('1649', '1', 'admin/users-capitals', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:16:46', '2020-06-29 15:16:46');
+INSERT INTO `tea_admin_operation_log` VALUES ('1650', '1', 'admin/users', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:16:55', '2020-06-29 15:16:55');
+INSERT INTO `tea_admin_operation_log` VALUES ('1651', '1', 'admin/users-capitals', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:16:56', '2020-06-29 15:16:56');
+INSERT INTO `tea_admin_operation_log` VALUES ('1652', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:16:59', '2020-06-29 15:16:59');
+INSERT INTO `tea_admin_operation_log` VALUES ('1653', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:17:03', '2020-06-29 15:17:03');
+INSERT INTO `tea_admin_operation_log` VALUES ('1654', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"1\"}', '2020-06-29 15:17:05', '2020-06-29 15:17:05');
+INSERT INTO `tea_admin_operation_log` VALUES ('1655', '1', 'admin/users-products', 'POST', '127.0.0.1', '{\"uid\":\"1\",\"type\":\"1\",\"products_id\":\"9\",\"price\":\"1000\",\"num\":\"10\",\"surplus\":null,\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-products\"}', '2020-06-29 15:17:19', '2020-06-29 15:17:19');
+INSERT INTO `tea_admin_operation_log` VALUES ('1656', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '[]', '2020-06-29 15:17:20', '2020-06-29 15:17:20');
+INSERT INTO `tea_admin_operation_log` VALUES ('1657', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:17:41', '2020-06-29 15:17:41');
+INSERT INTO `tea_admin_operation_log` VALUES ('1658', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:17:42', '2020-06-29 15:17:42');
+INSERT INTO `tea_admin_operation_log` VALUES ('1659', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"1\"}', '2020-06-29 15:17:44', '2020-06-29 15:17:44');
+INSERT INTO `tea_admin_operation_log` VALUES ('1660', '1', 'admin/users-products', 'POST', '127.0.0.1', '{\"uid\":\"1\",\"type\":\"1\",\"products_id\":\"11\",\"price\":\"1000\",\"num\":\"10\",\"surplus\":null,\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-products\"}', '2020-06-29 15:18:06', '2020-06-29 15:18:06');
+INSERT INTO `tea_admin_operation_log` VALUES ('1661', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '[]', '2020-06-29 15:18:07', '2020-06-29 15:18:07');
+INSERT INTO `tea_admin_operation_log` VALUES ('1662', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:18:41', '2020-06-29 15:18:41');
+INSERT INTO `tea_admin_operation_log` VALUES ('1663', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:18:42', '2020-06-29 15:18:42');
+INSERT INTO `tea_admin_operation_log` VALUES ('1664', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"1\"}', '2020-06-29 15:18:44', '2020-06-29 15:18:44');
+INSERT INTO `tea_admin_operation_log` VALUES ('1665', '1', 'admin/users-products', 'POST', '127.0.0.1', '{\"uid\":\"1\",\"type\":\"1\",\"products_id\":\"9\",\"price\":\"1000\",\"num\":\"10\",\"surplus\":null,\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-products\"}', '2020-06-29 15:18:50', '2020-06-29 15:18:50');
+INSERT INTO `tea_admin_operation_log` VALUES ('1666', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:19:17', '2020-06-29 15:19:17');
+INSERT INTO `tea_admin_operation_log` VALUES ('1667', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:19:18', '2020-06-29 15:19:18');
+INSERT INTO `tea_admin_operation_log` VALUES ('1668', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"1\"}', '2020-06-29 15:19:20', '2020-06-29 15:19:20');
+INSERT INTO `tea_admin_operation_log` VALUES ('1669', '1', 'admin/users-products', 'POST', '127.0.0.1', '{\"uid\":\"1\",\"type\":\"1\",\"products_id\":\"9\",\"price\":\"1000\",\"num\":\"10\",\"surplus\":null,\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-products\"}', '2020-06-29 15:19:27', '2020-06-29 15:19:27');
+INSERT INTO `tea_admin_operation_log` VALUES ('1670', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 15:19:27', '2020-06-29 15:19:27');
+INSERT INTO `tea_admin_operation_log` VALUES ('1671', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:19:31', '2020-06-29 15:19:31');
+INSERT INTO `tea_admin_operation_log` VALUES ('1672', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"1\"}', '2020-06-29 15:19:34', '2020-06-29 15:19:34');
+INSERT INTO `tea_admin_operation_log` VALUES ('1673', '1', 'admin/users-products', 'POST', '127.0.0.1', '{\"uid\":\"1\",\"type\":\"1\",\"products_id\":\"9\",\"price\":\"1000\",\"num\":\"10\",\"surplus\":null,\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-products\"}', '2020-06-29 15:19:40', '2020-06-29 15:19:40');
+INSERT INTO `tea_admin_operation_log` VALUES ('1674', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 15:19:40', '2020-06-29 15:19:40');
+INSERT INTO `tea_admin_operation_log` VALUES ('1675', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:22:29', '2020-06-29 15:22:29');
+INSERT INTO `tea_admin_operation_log` VALUES ('1676', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"1\"}', '2020-06-29 15:22:31', '2020-06-29 15:22:31');
+INSERT INTO `tea_admin_operation_log` VALUES ('1677', '1', 'admin/users-products', 'POST', '127.0.0.1', '{\"uid\":\"1\",\"type\":\"2\",\"pro\":\"8\",\"price\":\"2000\",\"num\":\"5\",\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-products\"}', '2020-06-29 15:22:41', '2020-06-29 15:22:41');
+INSERT INTO `tea_admin_operation_log` VALUES ('1678', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 15:22:41', '2020-06-29 15:22:41');
+INSERT INTO `tea_admin_operation_log` VALUES ('1679', '1', 'admin/_handle_action_', 'POST', '127.0.0.1', '{\"_key\":\"10\",\"_model\":\"App_Models_UsersProducts\",\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_action\":\"Encore_Admin_Grid_Actions_Delete\",\"_input\":\"true\"}', '2020-06-29 15:23:11', '2020-06-29 15:23:11');
+INSERT INTO `tea_admin_operation_log` VALUES ('1680', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:23:11', '2020-06-29 15:23:11');
+INSERT INTO `tea_admin_operation_log` VALUES ('1681', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 15:23:27', '2020-06-29 15:23:27');
+INSERT INTO `tea_admin_operation_log` VALUES ('1682', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:23:29', '2020-06-29 15:23:29');
+INSERT INTO `tea_admin_operation_log` VALUES ('1683', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"1\"}', '2020-06-29 15:23:31', '2020-06-29 15:23:31');
+INSERT INTO `tea_admin_operation_log` VALUES ('1684', '1', 'admin/users-products', 'POST', '127.0.0.1', '{\"uid\":\"1\",\"type\":\"2\",\"pro\":\"8\",\"price\":\"2000\",\"num\":\"5\",\"_token\":\"ToQW8LEnfJ75BMs1Buusc9FexjlrtHfOsDwuvNmm\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-products\"}', '2020-06-29 15:23:39', '2020-06-29 15:23:39');
+INSERT INTO `tea_admin_operation_log` VALUES ('1685', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 15:23:39', '2020-06-29 15:23:39');
+INSERT INTO `tea_admin_operation_log` VALUES ('1686', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:44:48', '2020-06-29 15:44:48');
+INSERT INTO `tea_admin_operation_log` VALUES ('1687', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":\"8\"}', '2020-06-29 15:45:58', '2020-06-29 15:45:58');
+INSERT INTO `tea_admin_operation_log` VALUES ('1688', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:45:59', '2020-06-29 15:45:59');
+INSERT INTO `tea_admin_operation_log` VALUES ('1689', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:01', '2020-06-29 15:46:01');
+INSERT INTO `tea_admin_operation_log` VALUES ('1690', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:02', '2020-06-29 15:46:02');
+INSERT INTO `tea_admin_operation_log` VALUES ('1691', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:03', '2020-06-29 15:46:03');
+INSERT INTO `tea_admin_operation_log` VALUES ('1692', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:05', '2020-06-29 15:46:05');
+INSERT INTO `tea_admin_operation_log` VALUES ('1693', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:06', '2020-06-29 15:46:06');
+INSERT INTO `tea_admin_operation_log` VALUES ('1694', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:08', '2020-06-29 15:46:08');
+INSERT INTO `tea_admin_operation_log` VALUES ('1695', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:09', '2020-06-29 15:46:09');
+INSERT INTO `tea_admin_operation_log` VALUES ('1696', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:10', '2020-06-29 15:46:10');
+INSERT INTO `tea_admin_operation_log` VALUES ('1697', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:12', '2020-06-29 15:46:12');
+INSERT INTO `tea_admin_operation_log` VALUES ('1698', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:13', '2020-06-29 15:46:13');
+INSERT INTO `tea_admin_operation_log` VALUES ('1699', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:14', '2020-06-29 15:46:14');
+INSERT INTO `tea_admin_operation_log` VALUES ('1700', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:46:16', '2020-06-29 15:46:16');
+INSERT INTO `tea_admin_operation_log` VALUES ('1701', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:48:02', '2020-06-29 15:48:02');
+INSERT INTO `tea_admin_operation_log` VALUES ('1702', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:50:19', '2020-06-29 15:50:19');
+INSERT INTO `tea_admin_operation_log` VALUES ('1703', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:50:28', '2020-06-29 15:50:28');
+INSERT INTO `tea_admin_operation_log` VALUES ('1704', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\"}', '2020-06-29 15:50:45', '2020-06-29 15:50:45');
+INSERT INTO `tea_admin_operation_log` VALUES ('1705', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\",\"_pjax\":\"#pjax-container\"}', '2020-06-29 15:50:53', '2020-06-29 15:50:53');
+INSERT INTO `tea_admin_operation_log` VALUES ('1706', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:51:15', '2020-06-29 15:51:15');
+INSERT INTO `tea_admin_operation_log` VALUES ('1707', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:51:31', '2020-06-29 15:51:31');
+INSERT INTO `tea_admin_operation_log` VALUES ('1708', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:52:26', '2020-06-29 15:52:26');
+INSERT INTO `tea_admin_operation_log` VALUES ('1709', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:52:53', '2020-06-29 15:52:53');
+INSERT INTO `tea_admin_operation_log` VALUES ('1710', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:53:03', '2020-06-29 15:53:03');
+INSERT INTO `tea_admin_operation_log` VALUES ('1711', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:53:20', '2020-06-29 15:53:20');
+INSERT INTO `tea_admin_operation_log` VALUES ('1712', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:53:39', '2020-06-29 15:53:39');
+INSERT INTO `tea_admin_operation_log` VALUES ('1713', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:53:58', '2020-06-29 15:53:58');
+INSERT INTO `tea_admin_operation_log` VALUES ('1714', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:54:08', '2020-06-29 15:54:08');
+INSERT INTO `tea_admin_operation_log` VALUES ('1715', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:54:53', '2020-06-29 15:54:53');
+INSERT INTO `tea_admin_operation_log` VALUES ('1716', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:55:14', '2020-06-29 15:55:14');
+INSERT INTO `tea_admin_operation_log` VALUES ('1717', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:55:23', '2020-06-29 15:55:23');
+INSERT INTO `tea_admin_operation_log` VALUES ('1718', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:55:41', '2020-06-29 15:55:41');
+INSERT INTO `tea_admin_operation_log` VALUES ('1719', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:55:47', '2020-06-29 15:55:47');
+INSERT INTO `tea_admin_operation_log` VALUES ('1720', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:55:59', '2020-06-29 15:55:59');
+INSERT INTO `tea_admin_operation_log` VALUES ('1721', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:56:27', '2020-06-29 15:56:27');
+INSERT INTO `tea_admin_operation_log` VALUES ('1722', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:56:52', '2020-06-29 15:56:52');
+INSERT INTO `tea_admin_operation_log` VALUES ('1723', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:57:05', '2020-06-29 15:57:05');
+INSERT INTO `tea_admin_operation_log` VALUES ('1724', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:58:19', '2020-06-29 15:58:19');
+INSERT INTO `tea_admin_operation_log` VALUES ('1725', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:58:41', '2020-06-29 15:58:41');
+INSERT INTO `tea_admin_operation_log` VALUES ('1726', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:58:48', '2020-06-29 15:58:48');
+INSERT INTO `tea_admin_operation_log` VALUES ('1727', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:59:12', '2020-06-29 15:59:12');
+INSERT INTO `tea_admin_operation_log` VALUES ('1728', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:59:20', '2020-06-29 15:59:20');
+INSERT INTO `tea_admin_operation_log` VALUES ('1729', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 15:59:43', '2020-06-29 15:59:43');
+INSERT INTO `tea_admin_operation_log` VALUES ('1730', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:02:03', '2020-06-29 16:02:03');
+INSERT INTO `tea_admin_operation_log` VALUES ('1731', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:02:22', '2020-06-29 16:02:22');
+INSERT INTO `tea_admin_operation_log` VALUES ('1732', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:03:40', '2020-06-29 16:03:40');
+INSERT INTO `tea_admin_operation_log` VALUES ('1733', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:03:46', '2020-06-29 16:03:46');
+INSERT INTO `tea_admin_operation_log` VALUES ('1734', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:04:14', '2020-06-29 16:04:14');
+INSERT INTO `tea_admin_operation_log` VALUES ('1735', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:04:26', '2020-06-29 16:04:26');
+INSERT INTO `tea_admin_operation_log` VALUES ('1736', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:05:26', '2020-06-29 16:05:26');
+INSERT INTO `tea_admin_operation_log` VALUES ('1737', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:06:07', '2020-06-29 16:06:07');
+INSERT INTO `tea_admin_operation_log` VALUES ('1738', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:07:02', '2020-06-29 16:07:02');
+INSERT INTO `tea_admin_operation_log` VALUES ('1739', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:07:32', '2020-06-29 16:07:32');
+INSERT INTO `tea_admin_operation_log` VALUES ('1740', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:07:57', '2020-06-29 16:07:57');
+INSERT INTO `tea_admin_operation_log` VALUES ('1741', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:08:19', '2020-06-29 16:08:19');
+INSERT INTO `tea_admin_operation_log` VALUES ('1742', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:08:39', '2020-06-29 16:08:39');
+INSERT INTO `tea_admin_operation_log` VALUES ('1743', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:08:50', '2020-06-29 16:08:50');
+INSERT INTO `tea_admin_operation_log` VALUES ('1744', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":\"8\",\"uid\":\"1\"}', '2020-06-29 16:08:56', '2020-06-29 16:08:56');
+INSERT INTO `tea_admin_operation_log` VALUES ('1745', '1', 'admin/auth/logout', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:09:08', '2020-06-29 16:09:08');
+INSERT INTO `tea_admin_operation_log` VALUES ('1746', '1', 'admin', 'GET', '127.0.0.1', '[]', '2020-06-29 16:09:12', '2020-06-29 16:09:12');
+INSERT INTO `tea_admin_operation_log` VALUES ('1747', '1', 'admin/products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:09:15', '2020-06-29 16:09:15');
+INSERT INTO `tea_admin_operation_log` VALUES ('1748', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:09:17', '2020-06-29 16:09:17');
+INSERT INTO `tea_admin_operation_log` VALUES ('1749', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:10:34', '2020-06-29 16:10:34');
+INSERT INTO `tea_admin_operation_log` VALUES ('1750', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:12:02', '2020-06-29 16:12:02');
+INSERT INTO `tea_admin_operation_log` VALUES ('1751', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:13:18', '2020-06-29 16:13:18');
+INSERT INTO `tea_admin_operation_log` VALUES ('1752', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:13:33', '2020-06-29 16:13:33');
+INSERT INTO `tea_admin_operation_log` VALUES ('1753', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:14:25', '2020-06-29 16:14:25');
+INSERT INTO `tea_admin_operation_log` VALUES ('1754', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:15:24', '2020-06-29 16:15:24');
+INSERT INTO `tea_admin_operation_log` VALUES ('1755', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:15:34', '2020-06-29 16:15:34');
+INSERT INTO `tea_admin_operation_log` VALUES ('1756', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:17:03', '2020-06-29 16:17:03');
+INSERT INTO `tea_admin_operation_log` VALUES ('1757', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:17:09', '2020-06-29 16:17:09');
+INSERT INTO `tea_admin_operation_log` VALUES ('1758', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:17:28', '2020-06-29 16:17:28');
+INSERT INTO `tea_admin_operation_log` VALUES ('1759', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":\"1\",\"products_id\":null,\"type\":null,\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:17:38', '2020-06-29 16:17:38');
+INSERT INTO `tea_admin_operation_log` VALUES ('1760', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":\"1\",\"products_id\":null,\"type\":null}', '2020-06-29 16:17:49', '2020-06-29 16:17:49');
+INSERT INTO `tea_admin_operation_log` VALUES ('1761', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":\"1\",\"products_id\":null,\"type\":null,\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:17:53', '2020-06-29 16:17:53');
+INSERT INTO `tea_admin_operation_log` VALUES ('1762', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":\"1\",\"products_id\":null,\"type\":null}', '2020-06-29 16:18:58', '2020-06-29 16:18:58');
+INSERT INTO `tea_admin_operation_log` VALUES ('1763', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":\"1\",\"products_id\":null,\"type\":null,\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:19:03', '2020-06-29 16:19:03');
+INSERT INTO `tea_admin_operation_log` VALUES ('1764', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":\"1\",\"products_id\":null,\"type\":null}', '2020-06-29 16:20:24', '2020-06-29 16:20:24');
+INSERT INTO `tea_admin_operation_log` VALUES ('1765', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":\"1\",\"products_id\":null,\"type\":null,\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:20:27', '2020-06-29 16:20:27');
+INSERT INTO `tea_admin_operation_log` VALUES ('1766', '1', 'admin/auth/logout', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:20:37', '2020-06-29 16:20:37');
+INSERT INTO `tea_admin_operation_log` VALUES ('1767', '1', 'admin', 'GET', '127.0.0.1', '[]', '2020-06-29 16:20:41', '2020-06-29 16:20:41');
+INSERT INTO `tea_admin_operation_log` VALUES ('1768', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:20:50', '2020-06-29 16:20:50');
+INSERT INTO `tea_admin_operation_log` VALUES ('1769', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:22:12', '2020-06-29 16:22:12');
+INSERT INTO `tea_admin_operation_log` VALUES ('1770', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":[\"2\"],\"products_id\":null,\"type\":null,\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:22:17', '2020-06-29 16:22:17');
+INSERT INTO `tea_admin_operation_log` VALUES ('1771', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:22:19', '2020-06-29 16:22:19');
+INSERT INTO `tea_admin_operation_log` VALUES ('1772', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"uid\":[\"1\"],\"products_id\":null,\"type\":null}', '2020-06-29 16:22:24', '2020-06-29 16:22:24');
+INSERT INTO `tea_admin_operation_log` VALUES ('1773', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"uid\":[null,\"2\"],\"products_id\":null,\"type\":null}', '2020-06-29 16:22:33', '2020-06-29 16:22:33');
+INSERT INTO `tea_admin_operation_log` VALUES ('1774', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:22:35', '2020-06-29 16:22:35');
+INSERT INTO `tea_admin_operation_log` VALUES ('1775', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"products_id\":null,\"type\":\"1\"}', '2020-06-29 16:22:55', '2020-06-29 16:22:55');
+INSERT INTO `tea_admin_operation_log` VALUES ('1776', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"products_id\":null,\"type\":\"1\"}', '2020-06-29 16:22:56', '2020-06-29 16:22:56');
+INSERT INTO `tea_admin_operation_log` VALUES ('1777', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"products_id\":null,\"type\":\"1\"}', '2020-06-29 16:23:14', '2020-06-29 16:23:14');
+INSERT INTO `tea_admin_operation_log` VALUES ('1778', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:23:20', '2020-06-29 16:23:20');
+INSERT INTO `tea_admin_operation_log` VALUES ('1779', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"products_id\":[\"7\"],\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:23:26', '2020-06-29 16:23:26');
+INSERT INTO `tea_admin_operation_log` VALUES ('1780', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"products_id\":[null,\"9\"]}', '2020-06-29 16:23:32', '2020-06-29 16:23:32');
+INSERT INTO `tea_admin_operation_log` VALUES ('1781', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:23:40', '2020-06-29 16:23:40');
+INSERT INTO `tea_admin_operation_log` VALUES ('1782', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"1\"}', '2020-06-29 16:23:42', '2020-06-29 16:23:42');
+INSERT INTO `tea_admin_operation_log` VALUES ('1783', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"2\"}', '2020-06-29 16:23:44', '2020-06-29 16:23:44');
+INSERT INTO `tea_admin_operation_log` VALUES ('1784', '1', 'admin/users-products', 'POST', '127.0.0.1', '{\"uid\":\"2\",\"type\":\"1\",\"products_id\":\"8\",\"price\":\"1000\",\"num\":\"10\",\"surplus\":null,\"_token\":\"yUZQdyFkhGZkdlyvdLUmj3W2ustzie7fBB9eGdst\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-products?&id=&products_id%5B%5D=&products_id%5B%5D=9\"}', '2020-06-29 16:23:51', '2020-06-29 16:23:51');
+INSERT INTO `tea_admin_operation_log` VALUES ('1785', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '[]', '2020-06-29 16:23:51', '2020-06-29 16:23:51');
+INSERT INTO `tea_admin_operation_log` VALUES ('1786', '1', 'admin/users', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:24:01', '2020-06-29 16:24:01');
+INSERT INTO `tea_admin_operation_log` VALUES ('1787', '1', 'admin/users-capitals', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:24:14', '2020-06-29 16:24:14');
+INSERT INTO `tea_admin_operation_log` VALUES ('1788', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:24:14', '2020-06-29 16:24:14');
+INSERT INTO `tea_admin_operation_log` VALUES ('1789', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:24:16', '2020-06-29 16:24:16');
+INSERT INTO `tea_admin_operation_log` VALUES ('1790', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"1\"}', '2020-06-29 16:24:18', '2020-06-29 16:24:18');
+INSERT INTO `tea_admin_operation_log` VALUES ('1791', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"2\"}', '2020-06-29 16:24:20', '2020-06-29 16:24:20');
+INSERT INTO `tea_admin_operation_log` VALUES ('1792', '1', 'admin/users-capitals', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:24:23', '2020-06-29 16:24:23');
+INSERT INTO `tea_admin_operation_log` VALUES ('1793', '1', 'admin/users-capitals/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:24:24', '2020-06-29 16:24:24');
+INSERT INTO `tea_admin_operation_log` VALUES ('1794', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"2\"}', '2020-06-29 16:24:26', '2020-06-29 16:24:26');
+INSERT INTO `tea_admin_operation_log` VALUES ('1795', '1', 'admin/users-capitals', 'POST', '127.0.0.1', '{\"uid\":\"2\",\"account\":\"18814379553\",\"type\":\"1\",\"price\":\"100000\",\"balance\":null,\"_token\":\"yUZQdyFkhGZkdlyvdLUmj3W2ustzie7fBB9eGdst\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-capitals\"}', '2020-06-29 16:24:31', '2020-06-29 16:24:31');
+INSERT INTO `tea_admin_operation_log` VALUES ('1796', '1', 'admin/users-capitals', 'GET', '127.0.0.1', '[]', '2020-06-29 16:24:32', '2020-06-29 16:24:32');
+INSERT INTO `tea_admin_operation_log` VALUES ('1797', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:24:33', '2020-06-29 16:24:33');
+INSERT INTO `tea_admin_operation_log` VALUES ('1798', '1', 'admin/users-products/create', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:24:34', '2020-06-29 16:24:34');
+INSERT INTO `tea_admin_operation_log` VALUES ('1799', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"2\"}', '2020-06-29 16:24:37', '2020-06-29 16:24:37');
+INSERT INTO `tea_admin_operation_log` VALUES ('1800', '1', 'admin/users-products', 'POST', '127.0.0.1', '{\"uid\":\"2\",\"type\":\"1\",\"products_id\":\"10\",\"price\":\"1000\",\"num\":\"10\",\"surplus\":null,\"_token\":\"yUZQdyFkhGZkdlyvdLUmj3W2ustzie7fBB9eGdst\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-products\"}', '2020-06-29 16:24:50', '2020-06-29 16:24:50');
+INSERT INTO `tea_admin_operation_log` VALUES ('1801', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:24:51', '2020-06-29 16:24:51');
+INSERT INTO `tea_admin_operation_log` VALUES ('1802', '1', 'admin/userPro', 'GET', '127.0.0.1', '{\"q\":\"2\"}', '2020-06-29 16:24:56', '2020-06-29 16:24:56');
+INSERT INTO `tea_admin_operation_log` VALUES ('1803', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":[\"2\"],\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:24:56', '2020-06-29 16:24:56');
+INSERT INTO `tea_admin_operation_log` VALUES ('1804', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:24:58', '2020-06-29 16:24:58');
+INSERT INTO `tea_admin_operation_log` VALUES ('1805', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"products_id\":[\"9\"]}', '2020-06-29 16:25:04', '2020-06-29 16:25:04');
+INSERT INTO `tea_admin_operation_log` VALUES ('1806', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:25:06', '2020-06-29 16:25:06');
+INSERT INTO `tea_admin_operation_log` VALUES ('1807', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:25:11', '2020-06-29 16:25:11');
+INSERT INTO `tea_admin_operation_log` VALUES ('1808', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"type\":[null,\"2\"]}', '2020-06-29 16:25:18', '2020-06-29 16:25:18');
+INSERT INTO `tea_admin_operation_log` VALUES ('1809', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null}', '2020-06-29 16:25:50', '2020-06-29 16:25:50');
+INSERT INTO `tea_admin_operation_log` VALUES ('1810', '1', 'admin/users', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:25:53', '2020-06-29 16:25:53');
+INSERT INTO `tea_admin_operation_log` VALUES ('1811', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:26:00', '2020-06-29 16:26:00');
+INSERT INTO `tea_admin_operation_log` VALUES ('1812', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:04', '2020-06-29 16:26:04');
+INSERT INTO `tea_admin_operation_log` VALUES ('1813', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:10', '2020-06-29 16:26:10');
+INSERT INTO `tea_admin_operation_log` VALUES ('1814', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:11', '2020-06-29 16:26:11');
+INSERT INTO `tea_admin_operation_log` VALUES ('1815', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:12', '2020-06-29 16:26:12');
+INSERT INTO `tea_admin_operation_log` VALUES ('1816', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:14', '2020-06-29 16:26:14');
+INSERT INTO `tea_admin_operation_log` VALUES ('1817', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:15', '2020-06-29 16:26:15');
+INSERT INTO `tea_admin_operation_log` VALUES ('1818', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:16', '2020-06-29 16:26:16');
+INSERT INTO `tea_admin_operation_log` VALUES ('1819', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:18', '2020-06-29 16:26:18');
+INSERT INTO `tea_admin_operation_log` VALUES ('1820', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:19', '2020-06-29 16:26:19');
+INSERT INTO `tea_admin_operation_log` VALUES ('1821', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:20', '2020-06-29 16:26:20');
+INSERT INTO `tea_admin_operation_log` VALUES ('1822', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:22', '2020-06-29 16:26:22');
+INSERT INTO `tea_admin_operation_log` VALUES ('1823', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:23', '2020-06-29 16:26:23');
+INSERT INTO `tea_admin_operation_log` VALUES ('1824', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:25', '2020-06-29 16:26:25');
+INSERT INTO `tea_admin_operation_log` VALUES ('1825', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:26:30', '2020-06-29 16:26:30');
+INSERT INTO `tea_admin_operation_log` VALUES ('1826', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:26:34', '2020-06-29 16:26:34');
+INSERT INTO `tea_admin_operation_log` VALUES ('1827', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"],\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:26:42', '2020-06-29 16:26:42');
+INSERT INTO `tea_admin_operation_log` VALUES ('1828', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:26:43', '2020-06-29 16:26:43');
+INSERT INTO `tea_admin_operation_log` VALUES ('1829', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:26:58', '2020-06-29 16:26:58');
+INSERT INTO `tea_admin_operation_log` VALUES ('1830', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"],\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:27:04', '2020-06-29 16:27:04');
+INSERT INTO `tea_admin_operation_log` VALUES ('1831', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:27:20', '2020-06-29 16:27:20');
+INSERT INTO `tea_admin_operation_log` VALUES ('1832', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":[\"2\"],\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:27:25', '2020-06-29 16:27:25');
+INSERT INTO `tea_admin_operation_log` VALUES ('1833', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"uid\":[\"1\"]}', '2020-06-29 16:27:32', '2020-06-29 16:27:32');
+INSERT INTO `tea_admin_operation_log` VALUES ('1834', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:27:58', '2020-06-29 16:27:58');
+INSERT INTO `tea_admin_operation_log` VALUES ('1835', '1', 'admin/users-products', 'GET', '127.0.0.1', '[]', '2020-06-29 16:28:03', '2020-06-29 16:28:03');
+INSERT INTO `tea_admin_operation_log` VALUES ('1836', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:28:08', '2020-06-29 16:28:08');
+INSERT INTO `tea_admin_operation_log` VALUES ('1837', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null}', '2020-06-29 16:28:14', '2020-06-29 16:28:14');
+INSERT INTO `tea_admin_operation_log` VALUES ('1838', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":[\"2\"],\"type\":[\"2\"],\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:28:20', '2020-06-29 16:28:20');
+INSERT INTO `tea_admin_operation_log` VALUES ('1839', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"id\":null,\"uid\":[\"2\"],\"type\":[\"2\"]}', '2020-06-29 16:30:19', '2020-06-29 16:30:19');
+INSERT INTO `tea_admin_operation_log` VALUES ('1840', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\"}', '2020-06-29 16:30:26', '2020-06-29 16:30:26');
+INSERT INTO `tea_admin_operation_log` VALUES ('1841', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"type\":[\"1\"]}', '2020-06-29 16:30:31', '2020-06-29 16:30:31');
+INSERT INTO `tea_admin_operation_log` VALUES ('1842', '1', 'admin/users-products', 'GET', '127.0.0.1', '{\"_pjax\":\"#pjax-container\",\"id\":null,\"type\":[\"2\"]}', '2020-06-29 16:30:36', '2020-06-29 16:30:36');
 
 -- ----------------------------
 -- Table structure for tea_admin_permissions
@@ -1665,7 +1927,7 @@ CREATE TABLE `tea_admin_permissions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `tea_admin_permissions_name_unique` (`name`),
   UNIQUE KEY `tea_admin_permissions_slug_unique` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tea_admin_permissions
@@ -1677,6 +1939,28 @@ INSERT INTO `tea_admin_permissions` VALUES ('4', '权限设置', 'auth.setting',
 INSERT INTO `tea_admin_permissions` VALUES ('5', '系统设置', 'auth.management', '', '/auth/roles\r\n/auth/permissions\r\n/auth/menu\r\n/auth/logs', null, '2020-06-29 04:08:16');
 INSERT INTO `tea_admin_permissions` VALUES ('6', '用户管理', 'users', '', '/users', '2020-06-29 04:08:57', '2020-06-29 04:09:14');
 INSERT INTO `tea_admin_permissions` VALUES ('7', '商品管理', 'products', '', '/products', '2020-06-29 04:11:59', '2020-06-29 04:11:59');
+INSERT INTO `tea_admin_permissions` VALUES ('8', '消息管理', 'notices', '', '/notices', '2020-06-29 13:30:38', '2020-06-29 13:30:46');
+
+-- ----------------------------
+-- Table structure for tea_admin_roles
+-- ----------------------------
+DROP TABLE IF EXISTS `tea_admin_roles`;
+CREATE TABLE `tea_admin_roles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tea_admin_roles_name_unique` (`name`),
+  UNIQUE KEY `tea_admin_roles_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of tea_admin_roles
+-- ----------------------------
+INSERT INTO `tea_admin_roles` VALUES ('1', '超级管理员', 'administrator', '2020-06-27 07:16:07', '2020-06-29 04:09:31');
+INSERT INTO `tea_admin_roles` VALUES ('2', '管理员', 'admin', '2020-06-29 04:10:02', '2020-06-29 04:10:02');
 
 -- ----------------------------
 -- Table structure for tea_admin_role_menu
@@ -1735,25 +2019,27 @@ INSERT INTO `tea_admin_role_users` VALUES ('1', '1', null, null);
 INSERT INTO `tea_admin_role_users` VALUES ('2', '2', null, null);
 
 -- ----------------------------
--- Table structure for tea_admin_roles
+-- Table structure for tea_admin_users
 -- ----------------------------
-DROP TABLE IF EXISTS `tea_admin_roles`;
-CREATE TABLE `tea_admin_roles` (
+DROP TABLE IF EXISTS `tea_admin_users`;
+CREATE TABLE `tea_admin_users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `tea_admin_roles_name_unique` (`name`),
-  UNIQUE KEY `tea_admin_roles_slug_unique` (`slug`)
+  UNIQUE KEY `tea_admin_users_username_unique` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
--- Records of tea_admin_roles
+-- Records of tea_admin_users
 -- ----------------------------
-INSERT INTO `tea_admin_roles` VALUES ('1', '超级管理员', 'administrator', '2020-06-27 07:16:07', '2020-06-29 04:09:31');
-INSERT INTO `tea_admin_roles` VALUES ('2', '管理员', 'admin', '2020-06-29 04:10:02', '2020-06-29 04:10:02');
+INSERT INTO `tea_admin_users` VALUES ('1', 'admin', '$2y$10$t6G1Q1TgmVzYNM89mtck1uZt6pzq888tfWoT8P8fGRphYF1iH9rLm', '管理员', null, 'hpZaJG4CGDu8vJ6SmUQ5E7QyHatUjxTotxHoy2IksA5TlmNklU0D8wyS0sXz', '2020-06-27 07:16:07', '2020-06-27 07:22:38');
+INSERT INTO `tea_admin_users` VALUES ('2', 'tea', '$2y$10$wUJ4PgAvtsQYc25u9Azt4uuzIdRgs8Z9TYG3aSb.c6oKuyl5VdABm', '管理员', null, 'coMeOaf775Hi3MvV0SEabxS1cJBOTqopyethjoWJWpyw7rlt9QR6Xw5xuGob', '2020-06-29 04:10:32', '2020-06-29 04:10:32');
 
 -- ----------------------------
 -- Table structure for tea_admin_user_permissions
@@ -1774,29 +2060,6 @@ INSERT INTO `tea_admin_user_permissions` VALUES ('2', '3', null, null);
 INSERT INTO `tea_admin_user_permissions` VALUES ('2', '6', null, null);
 
 -- ----------------------------
--- Table structure for tea_admin_users
--- ----------------------------
-DROP TABLE IF EXISTS `tea_admin_users`;
-CREATE TABLE `tea_admin_users` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(190) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `tea_admin_users_username_unique` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Records of tea_admin_users
--- ----------------------------
-INSERT INTO `tea_admin_users` VALUES ('1', 'admin', '$2y$10$t6G1Q1TgmVzYNM89mtck1uZt6pzq888tfWoT8P8fGRphYF1iH9rLm', '管理员', null, 'XPwKcXzyxFhFQpc2eXSqScGmQeM30sVy4eRVlH3w77pyCaU5aXcGKz2KJcsJ', '2020-06-27 07:16:07', '2020-06-27 07:22:38');
-INSERT INTO `tea_admin_users` VALUES ('2', 'tea', '$2y$10$wUJ4PgAvtsQYc25u9Azt4uuzIdRgs8Z9TYG3aSb.c6oKuyl5VdABm', '管理员', null, 'coMeOaf775Hi3MvV0SEabxS1cJBOTqopyethjoWJWpyw7rlt9QR6Xw5xuGob', '2020-06-29 04:10:32', '2020-06-29 04:10:32');
-
--- ----------------------------
 -- Table structure for tea_migrations
 -- ----------------------------
 DROP TABLE IF EXISTS `tea_migrations`;
@@ -1805,7 +2068,7 @@ CREATE TABLE `tea_migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tea_migrations
@@ -1817,6 +2080,25 @@ INSERT INTO `tea_migrations` VALUES ('8', '2014_10_12_000000_create_users_table'
 INSERT INTO `tea_migrations` VALUES ('14', '2020_06_27_074103_create_products_table', '7');
 INSERT INTO `tea_migrations` VALUES ('15', '2020_06_27_085856_create_users_products_table', '8');
 INSERT INTO `tea_migrations` VALUES ('16', '2020_06_27_090504_create_users_capitals_table', '8');
+INSERT INTO `tea_migrations` VALUES ('18', '2020_06_29_133215_create_notices_table', '9');
+
+-- ----------------------------
+-- Table structure for tea_notices
+-- ----------------------------
+DROP TABLE IF EXISTS `tea_notices`;
+CREATE TABLE `tea_notices` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `msg` text COLLATE utf8mb4_unicode_ci COMMENT '消息内容',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of tea_notices
+-- ----------------------------
+INSERT INTO `tea_notices` VALUES ('1', '1', '<p></p><p><img alt=\"\" src=\"https://m1-1253159997.image.myqcloud.com/imageDir/c64c1c3dd1ed7b8a4a2a2b9901f3de2a.jpeg\" data-upload-link=\"%7B%22cover%22%3A%22%22%2C%22desc%22%3A%22%22%2C%22id%22%3A%22u8wzyh_94486%22%2C%22size%22%3A27.06%2C%22width%22%3A800%2C%22height%22%3A600%2C%22url%22%3A%22https%3A%2F%2Fm1-1253159997.image.myqcloud.com%2FimageDir%2Fc64c1c3dd1ed7b8a4a2a2b9901f3de2a.jpeg%22%2C%22tags%22%3A%5B%5D%2C%22time%22%3A%22%22%2C%22mime%22%3A%22%22%7D\"></p><p>6月29日，北京市第136场新冠肺炎疫情防控工作新闻发布会召开。北京青年报记者从会上获悉，现场记者提问，最近发生了一起在公共卫生间被传染的病例，他是如何被传染的，如何降低与被污染环境、物品接触而感染的风险？对此，国家卫健委专家组专家、中国疾控中心应急中心副主任施国庆表示，新冠病毒主要通过两种途径传播，一种是直接传播，通过感染者咳嗽说话等飞沫传播，其次是通过间接传播，通过接触被感染者呼吸道飞沫污染的环境和物品感染。在特殊情况下还存在其他间接传播可能性。22日北京公布的病例调查结果显示，个别病例去过此前有过确诊病例的小区上过公共卫生间。感染者使用过卫生间，存在门把手和冲水按钮等部位被污染的可能性，也不排除粪便污染和环境空气污染的可能性。相关单位要做好卫生间消毒和清洁。要减少接触可能受到污染的厕所环境表面，用干净手纸，避免直接接触。建议减少如厕时间，及时洗手。便后冲水要盖上马桶盖，降低对环境污染的风险。</p><p>文/北京青年报记者 蒋若静 武文娟 王斌</p>', '2020-06-29 13:54:13', '2020-06-29 13:54:13');
 
 -- ----------------------------
 -- Table structure for tea_products
@@ -1838,7 +2120,7 @@ CREATE TABLE `tea_products` (
 -- ----------------------------
 -- Records of tea_products
 -- ----------------------------
-INSERT INTO `tea_products` VALUES ('6', '2001', '7542', '2354', '￥13万', '↓￥2000', '↓  1.5%', '2020-06-28 08:13:49', '2020-06-28 08:13:49');
+INSERT INTO `tea_products` VALUES ('1', '2001', '7542', '2354', '￥13万', '↓￥2000', '↓  1.5%', '2020-06-28 08:13:49', '2020-06-28 08:13:49');
 INSERT INTO `tea_products` VALUES ('7', '2001', '7572', '2324', '￥14000', '↑￥1000', '↑  7.7%', '2020-06-28 08:13:49', '2020-06-28 08:13:49');
 INSERT INTO `tea_products` VALUES ('8', '801', '0532', '2305', '￥7600', '↑￥100', '↑  1.3%', '2020-06-28 08:13:49', '2020-06-28 08:13:49');
 INSERT INTO `tea_products` VALUES ('9', '1901', '高山韵象(熟)', '2267', '￥4000', '↑￥100', '↑  2.6%', '2020-06-28 08:13:49', '2020-06-28 08:13:49');
@@ -2929,8 +3211,8 @@ CREATE TABLE `tea_users` (
 -- ----------------------------
 -- Records of tea_users
 -- ----------------------------
-INSERT INTO `tea_users` VALUES ('1', 'zhuwene', '4dce7e8c845f0b367f620bba37c1593d', '100000', '-2500', '30000', '10086', '2020-06-29 03:54:06', '2020-06-29 10:59:57');
-INSERT INTO `tea_users` VALUES ('2', 'zhuwene2', '629daa3ce758b2c4422d2642f5f5672b', '0', '0', '0', null, '2020-06-29 03:54:27', '2020-06-29 03:54:27');
+INSERT INTO `tea_users` VALUES ('1', 'zhuwene', '4dce7e8c845f0b367f620bba37c1593d', '102000', '10000', '10000', '10086', '2020-06-29 03:54:06', '2020-06-29 15:23:39');
+INSERT INTO `tea_users` VALUES ('2', 'zhuwene2', '629daa3ce758b2c4422d2642f5f5672b', '100000', '0', '10000', null, '2020-06-29 03:54:27', '2020-06-29 16:24:51');
 
 -- ----------------------------
 -- Table structure for tea_users_capitals
@@ -2946,12 +3228,13 @@ CREATE TABLE `tea_users_capitals` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tea_users_capitals
 -- ----------------------------
 INSERT INTO `tea_users_capitals` VALUES ('11', '1', '10086', '100000', '0', '1', '2020-06-29 10:54:16', '2020-06-29 10:54:16');
+INSERT INTO `tea_users_capitals` VALUES ('12', '2', '18814379553', '100000', '0', '1', '2020-06-29 16:24:32', '2020-06-29 16:24:32');
 
 -- ----------------------------
 -- Table structure for tea_users_products
@@ -2968,13 +3251,12 @@ CREATE TABLE `tea_users_products` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tea_users_products
 -- ----------------------------
-INSERT INTO `tea_users_products` VALUES ('3', '1', '9', '1000', '1', '10', '0', '2020-06-29 10:54:30', '2020-06-29 10:57:22');
-INSERT INTO `tea_users_products` VALUES ('4', '1', '9', '2000', '1', '10', '5', '2020-06-29 10:54:47', '2020-06-29 10:55:27');
-INSERT INTO `tea_users_products` VALUES ('5', '1', '9', '2500', '2', '5', '0', '2020-06-29 10:55:27', '2020-06-29 10:55:27');
-INSERT INTO `tea_users_products` VALUES ('6', '1', '9', '500', '2', '10', '0', '2020-06-29 10:57:22', '2020-06-29 10:57:22');
-INSERT INTO `tea_users_products` VALUES ('7', '1', '9', '2000', '1', '10', '10', '2020-06-29 10:59:57', '2020-06-29 10:59:57');
+INSERT INTO `tea_users_products` VALUES ('8', '1', '9', '1000', '1', '10', '5', '2020-06-29 15:19:27', '2020-06-29 15:23:39');
+INSERT INTO `tea_users_products` VALUES ('9', '1', '9', '1000', '1', '10', '20', '2020-06-29 15:19:40', '2020-06-29 15:19:40');
+INSERT INTO `tea_users_products` VALUES ('11', '1', '9', '2000', '2', '5', '15', '2020-06-29 15:23:39', '2020-06-29 15:23:39');
+INSERT INTO `tea_users_products` VALUES ('12', '2', '10', '1000', '1', '10', '10', '2020-06-29 16:24:51', '2020-06-29 16:24:51');
