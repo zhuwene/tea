@@ -109,7 +109,6 @@ class UsersCapitalsController extends AdminController
 
         // 保存前回调
         $form->saving(function (Form $form) {
-            $users = Users::where('id', $form->uid)->select('assets', 'market_value', 'account')->first();
             if ($form->type == 2) {
                 Users::where('id', $form->uid)->decrement(
                     'assets',
@@ -123,8 +122,14 @@ class UsersCapitalsController extends AdminController
                     ['updated_at' => date('Y-m-d H:i:s')]
                 );
             }
-            $form->balance = $users->assets - $users->market_value;
-
+            $form->balance = 0;
+        });
+        $form->saved(function (Form $form) {
+            $users             = Users::where('id', $form->model()->uid)->select('assets', 'market_value', 'profit_loss')->first();
+            $balance           = $users->assets - $users->market_value - abs($users->profit_loss);
+            $usersCap          = UsersCapitals::find($form->model()->id);
+            $usersCap->balance = $balance;
+            $usersCap->save();
         });
         return $form;
     }

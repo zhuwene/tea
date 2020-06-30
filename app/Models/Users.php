@@ -21,4 +21,19 @@ class Users extends Model
     {
         return $this->hasMany(UsersProducts::class);
     }
+
+    /**
+     * 删除
+     *
+     * @return // NO
+     */
+    public static function boot()
+    {
+        parent::boot();
+        static::deleted(function ($model) {
+            UsersCapitals::where('uid', $model->id)->delete();
+            UsersProducts::where('uid', $model->id)->delete();
+            Notices::where('uid', $model->id)->delete();
+        });
+    }
 }

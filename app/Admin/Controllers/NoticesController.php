@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Notices;
+use App\Models\UsersProducts;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -29,18 +30,22 @@ class NoticesController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('users.username', __('用户账号'));
-        $grid->column('msg', __('消息内容'))->display(function($msg){
+        $grid->column('msg', __('消息内容'))->display(function ($msg) {
             $msg = strip_tags($msg);
-            $msg=preg_replace('/\n/is','',$msg);
-            $msg = mb_substr($msg, 0, 50).'...';
+            $msg = preg_replace('/\n/is', '', $msg);
+            $msg = mb_substr($msg, 0, 50) . '...';
             return $msg;
         });
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
-         // 禁止新建按钮
+        // 禁止新建按钮
         $grid->disableCreateButton();
         $grid->disableExport();
         $grid->disableColumnSelector();
+        $grid->actions(function ($actions) {
+            // 去掉查看
+            $actions->disableView();
+        });
         return $grid;
     }
 
@@ -56,7 +61,7 @@ class NoticesController extends AdminController
 
         $show->field('id', __('Id'));
         $show->field('users.username', __('用户账号'));
-        $show->file('msg', __('消息内容'));
+        $show->field('msg', __('消息内容'));
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
 
@@ -78,6 +83,10 @@ class NoticesController extends AdminController
             Users::query()->pluck('username', 'id')
         );
         $form->editor('msg');
+        $form->tools(function (Form\Tools $tools) {
+            // 去掉`查看`按钮
+            $tools->disableView();
+        });
 
         return $form;
     }
