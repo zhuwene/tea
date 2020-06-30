@@ -31,15 +31,17 @@ class NoticesController extends AdminController
         $grid->column('id', __('Id'));
         $grid->column('users.username', __('用户账号'));
         $grid->column('msg', __('消息内容'))->display(function ($msg) {
-            $msg = strip_tags($msg);
-            $msg = preg_replace('/\n/is', '', $msg);
-            $msg = mb_substr($msg, 0, 50) . '...';
+            // 去掉html标签
+            $subject = strip_tags($msg);
+            // 去掉空格
+            $content = preg_replace('/\s/', '', $subject);
+            // 截取50个汉字
+            $msg = mb_substr($content, 0, 50, 'UTF-8') . '...';
             return $msg;
         });
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
         // 禁止新建按钮
-        $grid->disableCreateButton();
         $grid->disableExport();
         $grid->disableColumnSelector();
         $grid->actions(function ($actions) {
