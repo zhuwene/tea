@@ -27,7 +27,7 @@ class ProductsController extends AdminController
     {
         $grid = new Grid(new Products());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('序号'));
         $grid->column('goods_id', __('商品ID'));
         $grid->column('no_name', __('序号名称'));
         $grid->column('name', __('商品名称'));
@@ -71,7 +71,7 @@ class ProductsController extends AdminController
     {
         $show = new Show(Products::findOrFail($id));
 
-        $show->field('id', __('Id'));
+        $show->field('id', __('序号'));
         $show->field('no_name', __('序号名称'));
         $show->field('name', __('商品名称'));
         $show->field('goods_id', __('商品ID'));

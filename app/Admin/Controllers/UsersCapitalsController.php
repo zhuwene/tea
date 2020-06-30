@@ -63,7 +63,7 @@ class UsersCapitalsController extends AdminController
     {
         $show = new Show(UsersCapitals::findOrFail($id));
 
-        $show->field('id', __('Id'));
+        $show->field('id', __('序号'));
         $show->field('users.username', __('用户账号'));
         $show->field('account', __('账号'));
         $show->field('price', __('金额'));
@@ -110,6 +110,14 @@ class UsersCapitalsController extends AdminController
         // 保存前回调
         $form->saving(function (Form $form) {
             if ($form->type == 2) {
+                $user = Users::find($form->uid);
+                if($form->price > $user->assets) {
+                    $error = new MessageBag([
+                        'title'   => '错误提示',
+                        'message' => '转出金额大于总资产!',
+                    ]);
+                    return back()->with(compact('error'));
+                }
                 Users::where('id', $form->uid)->decrement(
                     'assets',
                     $form->price,

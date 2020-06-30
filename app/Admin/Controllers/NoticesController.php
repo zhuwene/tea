@@ -28,7 +28,7 @@ class NoticesController extends AdminController
     {
         $grid = new Grid(new Notices());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('序号'));
         $grid->column('users.username', __('用户账号'));
         $grid->column('msg', __('消息内容'))->display(function ($msg) {
             // 去掉html标签
@@ -61,7 +61,7 @@ class NoticesController extends AdminController
     {
         $show = new Show(Notices::findOrFail($id));
 
-        $show->field('id', __('Id'));
+        $show->field('id', __('序号'));
         $show->field('users.username', __('用户账号'));
         $show->field('msg', __('消息内容'));
         $show->field('created_at', __('创建时间'));

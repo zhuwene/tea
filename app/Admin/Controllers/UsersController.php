@@ -26,7 +26,7 @@ class UsersController extends AdminController
     {
         $grid = new Grid(new Users());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('序号'));
         $grid->column('username', __('用户账号'));
         $grid->column('assets', __('总资产'));
         $grid->column('profit_loss', __('总盈亏'));
@@ -53,7 +53,7 @@ class UsersController extends AdminController
     {
         $show = new Show(Users::findOrFail($id));
 
-        $show->field('id', __('Id'));
+        $show->field('id', __('序号'));
         $show->field('username', __('用户账号'));
         $show->field('assets', __('总资产'));
         $show->field('profit_loss', __('总盈亏'));

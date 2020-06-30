@@ -30,7 +30,7 @@ class UsersProductsController extends AdminController
     {
         $type = \Request::get('type');
         $grid = new Grid(new UsersProducts());
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('序号'));
         $grid->column('users.username', __('用户账号'));
         $grid->column('products.name', __('商品名称'));
         $grid->column('price', __('单价'));
@@ -104,7 +104,7 @@ class UsersProductsController extends AdminController
     {
         $show = new Show(UsersProducts::findOrFail($id));
 
-        $show->field('id', __('Id'));
+        $show->field('id', __('序号'));
         $show->field('users.username', __('用户账号'));
         $show->field('products.name', __('商品名称'));
         $show->field('price', __('价格'));

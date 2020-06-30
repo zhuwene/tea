@@ -19,5 +19,6 @@ Route::group([
     $router->resource('notices', NoticesController::class);
     $router->get('userAccount', 'UsersCapitalsController@userAccount');
     $router->get('userPro', 'UsersProductsController@userPro');
+    $router->get('getData', 'HomeController@getData');
 
 });
