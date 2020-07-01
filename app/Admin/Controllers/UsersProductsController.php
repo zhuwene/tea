@@ -80,7 +80,10 @@ class UsersProductsController extends AdminController
             $user = Users::pluck('username', 'id');
             // 商品名称
             $pro = Products::pluck('name', 'id');
+                // 去掉默认的id过滤器
+            $filter->disableIdFilter();
             $filter->column(1 / 2, function ($filter) use ($user) {
+                $filter->equal('id','序号');
                 $filter->in('uid', '用户账号')->multipleSelect($user);
 
             });
