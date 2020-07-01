@@ -32,6 +32,7 @@ class UsersCapitalsController extends AdminController
 
         $grid->column('id', __('Id'));
         $grid->column('users.username', __('用户名称'));
+        $grid->column('users.name', __('用户昵称'));
         $grid->column('account', __('账号'));
         $grid->column('price', __('金额'));
         $grid->column('balance', __('余额'));

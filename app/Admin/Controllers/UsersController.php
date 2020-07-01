@@ -28,6 +28,7 @@ class UsersController extends AdminController
 
         $grid->column('id', __('序号'));
         $grid->column('username', __('用户账号'));
+        $grid->column('name', __('用户名称'));
         $grid->column('assets', __('总资产'));
         $grid->column('profit_loss', __('总盈亏'));
         $grid->column('market_value', __('总市值'));
@@ -40,6 +41,20 @@ class UsersController extends AdminController
         $grid->disableExport();
         $grid->disableColumnSelector();
 
+        $grid->filter(function ($filter) {
+            // 用户账号
+            $user = Users::pluck('username', 'id');
+                // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            $filter->column(1/2, function ($filter) use ($user) {
+                $filter->in('uid', '用户账号')->multipleSelect($user);
+            });
+             $filter->column(1/2, function ($filter) use ($user) {
+                $filter->like('name','用户昵称');
+
+            });
+
+        });
         return $grid;
     }
 
@@ -86,7 +101,10 @@ class UsersController extends AdminController
             ->default(function ($form) {
                 return $form->model()->password;
             });
-        $form->text('account', __('银行账号'));
+        $form->text('name', __('用户昵称'))->rules('max:20', [
+            'max'  => '最大长度20',
+        ]);
+        // $form->text('account', __('银行账号'));
         $form->ignore(['password_confirmation']);
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->password != $form->password) {

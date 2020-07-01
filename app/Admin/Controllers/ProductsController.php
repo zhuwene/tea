@@ -58,6 +58,27 @@ class ProductsController extends AdminController
         $grid->disableCreateButton();
         $grid->disableExport();
         $grid->disableColumnSelector();
+        $grid->filter(function ($filter) {
+                // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            $filter->column(1 / 2, function ($filter) {
+                $filter->equal('id','序号');
+                $filter->like('no_name', '序号名称');
+
+            });
+
+            $filter->column(1 / 2, function ($filter) {
+                $filter->like('goods_id', '商品ID');
+                $filter->like('name', '商品名称');
+
+            });
+
+        });
+         $grid->actions(function ($actions) {
+            // 去掉删除
+            $actions->disableDelete();
+        });         
+        $grid->disableRowSelector();
         return $grid;
     }
 

@@ -43,15 +43,30 @@ class HomeController extends AdminController
             return explode(' ', $day)[0];
         });
         $grid->column('index', __('指数'));
-        $grid->column('price', __('涨跌额'));
-        $grid->column('percent', __('涨跌幅'));
+        $grid->column('price', __('涨跌额'))->display(function ($percent) {
+            if (stripos($percent, '-') !== false) {
+                $str = "<span style='color:green'>{$percent}</span>";
+            } else {
+                $str = "<span style='color:red'>{$percent}</span>";
+            }
+            return $str;
+        });;
+        $grid->column('percent', __('涨跌幅'))->display(function ($percent) {
+            if (stripos($percent, '-') !== false) {
+                $str = "<span style='color:green'>{$percent}</span>";
+            } else {
+                $str = "<span style='color:red'>{$percent}</span>";
+            }
+            return $str;
+        });;
 
         $grid->disableCreateButton();
         $grid->disableExport();
 
         $grid->disableColumnSelector();
         $grid->disableRowSelector();
-        $grid->disableActions();    
+        $grid->disableActions(); 
+        $grid->disableFilter();   
         $now = time();
         switch ($gender) {
             case 0:
@@ -85,45 +100,6 @@ class HomeController extends AdminController
         $grid->tools(function ($tools) {
             $tools->append(new HomeGender());
         });
-        return $grid;
-        
+        return $grid;        
     }
-    // public function index(Content $content)
-    // {
-    //     return $content
-    //         ->header('折线图')
-    //         ->body(new Box('Bar chart', view('admin.chartjs')));
-    // }
-
-    // public function getData()
-    // {
-    //     $start = '20200601';
-    //     $end   = '20200610';
-    //     $date  = $this->getDateRange($start, $end);
-    //     $arr   = Indexs::where('created_at', '>=', $start)->where('created_at', '<=', $end)->get();
-    //     foreach ($arr as $v) {
-    //         $data['day'][]   = explode(' ', $v->created_at)[0];
-    //         $data['value'][] = $v->index;
-    //     }
-    //     return $data;
-    // }
-
-    // /**
-    //  * @param $startdate
-    //  * @param $enddate
-    //  * @return array
-    //  */
-    // public function getDateRange($startdate, $enddate)
-    // {
-    //     $stimestamp = strtotime($startdate);
-    //     $etimestamp = strtotime($enddate);
-    //     // 计算日期段内有多少天
-    //     $days = ($etimestamp - $stimestamp) / 86400 + 1;
-    //     // 保存每天日期
-    //     $date = array();
-    //     for ($i = 0; $i < $days; $i++) {
-    //         $date[] = date('Y-m-d', $stimestamp + (86400 * $i));
-    //     }
-    //     return $date;
-    // }
 }

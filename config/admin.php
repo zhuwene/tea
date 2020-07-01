@@ -85,7 +85,7 @@ return [
     | Html title for all pages.
     |
     */
-    'title'                     => 'Admin',
+    'title'                     => '后台管理',
 
     /*
     |--------------------------------------------------------------------------
@@ -300,7 +300,7 @@ return [
     | This value is used to set the background image of login page.
     |
     */
-    'login_background_image'    => '',
+    'login_background_image'    => '/admin-login-bg.jpg',
 
     /*
     |--------------------------------------------------------------------------
@@ -311,7 +311,7 @@ return [
     | each page
     |
     */
-    'show_version'              => true,
+    'show_version'              => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -321,7 +321,7 @@ return [
     | Whether to display the environment at the footer of each page
     |
     */
-    'show_environment'          => true,
+    'show_environment'          => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -339,7 +339,7 @@ return [
     |
     | Whether enable default breadcrumb for every page content.
     */
-    'enable_default_breadcrumb' => true,
+    'enable_default_breadcrumb' => false,
 
     /*
     |--------------------------------------------------------------------------

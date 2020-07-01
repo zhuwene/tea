@@ -17,7 +17,7 @@ class NoticesController extends AdminController
      *
      * @var string
      */
-    protected $title = 'Notices';
+    protected $title = '消息';
 
     /**
      * Make a grid builder.
@@ -30,6 +30,7 @@ class NoticesController extends AdminController
 
         $grid->column('id', __('序号'));
         $grid->column('users.username', __('用户账号'));
+        $grid->column('users.name', __('用户昵称'));
         $grid->column('msg', __('消息内容'))->display(function ($msg) {
             // 去掉html标签
             $subject = strip_tags($msg);
@@ -47,6 +48,21 @@ class NoticesController extends AdminController
         $grid->actions(function ($actions) {
             // 去掉查看
             $actions->disableView();
+        });
+
+        $grid->filter(function ($filter) {
+            // 用户账号
+            $user = Users::pluck('username', 'id');
+                // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            $filter->column(1/2, function ($filter) use ($user) {
+                $filter->in('uid', '用户账号')->multipleSelect($user);
+            });
+             $filter->column(1/2, function ($filter) use ($user) {
+                $filter->like('name','用户昵称');
+
+            });
+
         });
         return $grid;
     }

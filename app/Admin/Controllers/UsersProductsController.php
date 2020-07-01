@@ -32,6 +32,7 @@ class UsersProductsController extends AdminController
         $grid = new Grid(new UsersProducts());
         $grid->column('id', __('序号'));
         $grid->column('users.username', __('用户账号'));
+        $grid->column('users.name', __('用户昵称'));
         $grid->column('products.name', __('商品名称'));
         $grid->column('price', __('单价'));
         $grid->column('type', __('类型'))->display(function ($type) {
