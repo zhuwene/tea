@@ -59,6 +59,7 @@ class CommonController extends BaseController
         $sub_query = UsersProducts::where('uid', $users->id)
             ->where('available', '>', 0)
             ->where('type', 1)
+            ->select('id', 'products_id', 'from_id', 'price', 'num', 'surplus', 'available', 'avg', 'loss_percent', 'loss')
             ->orderBy('id', 'desc')
             ->limit(5);
 
@@ -69,29 +70,59 @@ class CommonController extends BaseController
             ->orderBy('id', 'desc')
             ->get();
 
-        foreach ($userPro as $pro) {
+        foreach ($userPro as &$pro) {
             $pro->no_name = $pro->products->no_name;
             $pro->name    = $pro->products->name;
             $price        = str_replace('￥', '', $pro->products->ref_price);
             if (stripos($price, '万') !== false) {
                 $price *= 10000;
             }
+
             // 现价
             $pro->ref_price = $price;
 
-            $isShell = UsersProducts::where('from_id', $pro->id)->first();
-            // 有交易记录
-            if (!empty($isShell)) {
+            $pros   = UsersProducts::where('uid', $users->id)
+                ->where('available', '>', 0)
+                ->where('products_id', $pro->products_id)
+                ->where('type', 1)
+                ->get();
+            $loss   = $loss_percent = $num = $available = 0;
+            $fromId = [];
+            foreach ($pros as $v) {
+                $num       += $v->num;
+                $available += $v->available;
+                array_push($fromId, $v->id);
+            }
+            $isShell = UsersProducts::whereIn('from_id', $fromId)->get();
 
-            } else {
+            $noPro = UsersProducts::where('uid', $users->id)
+                ->where('available', '>', 0)
+                ->where('products_id', $pro->products_id)
+                ->where('type', 1)
+                ->orderBy('id', 'desc')
+                ->first();
+            // 成本
+            $avg          = $noPro->avg;
+            $loss         = number_format($avg - $price, 2);
+            $loss_percent = number_format(($avg - $price) / $avg, 2) . '%';
 
-                // 盈亏率 = 成本-现价 / 成本
+            // 没有交易记录
+            if (!empty(count($isShell))) {
+                $num = $noPro->surplus;
             }
 
-            unset($pro->products);
+            $pro->p_num          = $num;
+            $pro->p_avg          = $avg;
+            $pro->p_available    = $available;
+            $pro->p_loss         = $loss;
+            $pro->p_loss_percent = $loss_percent;
+
+            unset($pro->products, $pro->products_id, $pro->from_id, $pro->loss,
+                $pro->price, $pro->num, $pro->surplus, $pro->available, $pro->avg, $pro->loss_percent
+            );
         }
+        $data['pro'] = $userPro;
 
-
-        return Tool::show(Tool::code('ok'), '登录成功', $userPro);
+        return Tool::show(Tool::code('ok'), '登录成功', $data);
     }
 }
