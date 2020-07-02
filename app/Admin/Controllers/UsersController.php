@@ -108,7 +108,7 @@ class UsersController extends AdminController
         $form->ignore(['password_confirmation']);
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->password != $form->password) {
-                $form->password = md5(env('ADMIN_KEY') . $form->password);;
+                $form->password = md5(env('ADMIN_KEY') . $form->password);
             }
         });
 

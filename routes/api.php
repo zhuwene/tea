@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -12,7 +10,12 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['chkAuth'])->group(function () {
+    Route::get('/sys/logs', 'UsersProductsController@logs');
+    Route::get('/sys/capital', 'UsersCapitalsController@index');
+    Route::get('/sys/getMsg', 'NoticesController@getMsg');
 });
+Route::post('/sys/login', 'CommonController@login');
+Route::get('/sys/trendChart', 'ProductsController@index');
+Route::get('/sys/indexChart', 'IndexsController@list');
+

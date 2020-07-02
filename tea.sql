@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地
-Source Server Version : 50553
-Source Host           : localhost:3306
+Source Server         : Homestead
+Source Server Version : 50727
+Source Host           : 192.168.10.10:3306
 Source Database       : tea
 
 Target Server Type    : MYSQL
-Target Server Version : 50553
+Target Server Version : 50727
 File Encoding         : 65001
 
-Date: 2020-07-01 23:05:56
+Date: 2020-07-02 09:36:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -2851,27 +2851,6 @@ INSERT INTO `tea_admin_permissions` VALUES ('7', '商品管理', 'products', '',
 INSERT INTO `tea_admin_permissions` VALUES ('8', '消息管理', 'notices', '', '/notices', '2020-06-29 13:30:38', '2020-06-29 13:30:46');
 
 -- ----------------------------
--- Table structure for tea_admin_roles
--- ----------------------------
-DROP TABLE IF EXISTS `tea_admin_roles`;
-CREATE TABLE `tea_admin_roles` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `tea_admin_roles_name_unique` (`name`),
-  UNIQUE KEY `tea_admin_roles_slug_unique` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Records of tea_admin_roles
--- ----------------------------
-INSERT INTO `tea_admin_roles` VALUES ('1', '超级管理员', 'administrator', '2020-06-27 07:16:07', '2020-06-29 04:09:31');
-INSERT INTO `tea_admin_roles` VALUES ('2', '管理员', 'admin', '2020-06-29 04:10:02', '2020-06-29 04:10:02');
-
--- ----------------------------
 -- Table structure for tea_admin_role_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `tea_admin_role_menu`;
@@ -2928,6 +2907,45 @@ INSERT INTO `tea_admin_role_users` VALUES ('1', '1', null, null);
 INSERT INTO `tea_admin_role_users` VALUES ('2', '2', null, null);
 
 -- ----------------------------
+-- Table structure for tea_admin_roles
+-- ----------------------------
+DROP TABLE IF EXISTS `tea_admin_roles`;
+CREATE TABLE `tea_admin_roles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tea_admin_roles_name_unique` (`name`),
+  UNIQUE KEY `tea_admin_roles_slug_unique` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of tea_admin_roles
+-- ----------------------------
+INSERT INTO `tea_admin_roles` VALUES ('1', '超级管理员', 'administrator', '2020-06-27 07:16:07', '2020-06-29 04:09:31');
+INSERT INTO `tea_admin_roles` VALUES ('2', '管理员', 'admin', '2020-06-29 04:10:02', '2020-06-29 04:10:02');
+
+-- ----------------------------
+-- Table structure for tea_admin_user_permissions
+-- ----------------------------
+DROP TABLE IF EXISTS `tea_admin_user_permissions`;
+CREATE TABLE `tea_admin_user_permissions` (
+  `user_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  KEY `tea_admin_user_permissions_user_id_permission_id_index` (`user_id`,`permission_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of tea_admin_user_permissions
+-- ----------------------------
+INSERT INTO `tea_admin_user_permissions` VALUES ('2', '3', null, null);
+INSERT INTO `tea_admin_user_permissions` VALUES ('2', '6', null, null);
+
+-- ----------------------------
 -- Table structure for tea_admin_users
 -- ----------------------------
 DROP TABLE IF EXISTS `tea_admin_users`;
@@ -2949,24 +2967,6 @@ CREATE TABLE `tea_admin_users` (
 -- ----------------------------
 INSERT INTO `tea_admin_users` VALUES ('1', 'admin', '$2y$10$t6G1Q1TgmVzYNM89mtck1uZt6pzq888tfWoT8P8fGRphYF1iH9rLm', '管理员', null, 'hpZaJG4CGDu8vJ6SmUQ5E7QyHatUjxTotxHoy2IksA5TlmNklU0D8wyS0sXz', '2020-06-27 07:16:07', '2020-06-27 07:22:38');
 INSERT INTO `tea_admin_users` VALUES ('2', 'tea', '$2y$10$wUJ4PgAvtsQYc25u9Azt4uuzIdRgs8Z9TYG3aSb.c6oKuyl5VdABm', '管理员', null, 'coMeOaf775Hi3MvV0SEabxS1cJBOTqopyethjoWJWpyw7rlt9QR6Xw5xuGob', '2020-06-29 04:10:32', '2020-06-29 04:10:32');
-
--- ----------------------------
--- Table structure for tea_admin_user_permissions
--- ----------------------------
-DROP TABLE IF EXISTS `tea_admin_user_permissions`;
-CREATE TABLE `tea_admin_user_permissions` (
-  `user_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  KEY `tea_admin_user_permissions_user_id_permission_id_index` (`user_id`,`permission_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
--- Records of tea_admin_user_permissions
--- ----------------------------
-INSERT INTO `tea_admin_user_permissions` VALUES ('2', '3', null, null);
-INSERT INTO `tea_admin_user_permissions` VALUES ('2', '6', null, null);
 
 -- ----------------------------
 -- Table structure for tea_indexs
@@ -5616,12 +5616,11 @@ CREATE TABLE `tea_users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tea_users
 -- ----------------------------
-INSERT INTO `tea_users` VALUES ('1', 'zhuwene', '4dce7e8c845f0b367f620bba37c1593d', '', '500000', '0', '10000', null, '2020-06-30 17:12:01', '2020-07-01 18:37:32');
 
 -- ----------------------------
 -- Table structure for tea_users_capitals
@@ -5637,12 +5636,11 @@ CREATE TABLE `tea_users_capitals` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tea_users_capitals
 -- ----------------------------
-INSERT INTO `tea_users_capitals` VALUES ('1', '1', '10086', '500000', '500000', '1', '2020-06-30 17:12:19', '2020-06-30 17:12:19');
 
 -- ----------------------------
 -- Table structure for tea_users_products
@@ -5665,10 +5663,8 @@ CREATE TABLE `tea_users_products` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tea_users_products
 -- ----------------------------
-INSERT INTO `tea_users_products` VALUES ('1', '1', '1', '0', '1000', '1', '5', '5', '5', '1000', null, null, '500000', '2020-07-01 18:37:20', '2020-07-01 18:37:20');
-INSERT INTO `tea_users_products` VALUES ('2', '1', '9', '0', '1000', '1', '5', '5', '5', '1000', null, null, '500000', '2020-07-01 18:37:32', '2020-07-01 18:37:32');

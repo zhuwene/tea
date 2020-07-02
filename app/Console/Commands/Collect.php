@@ -76,7 +76,7 @@ class Collect extends Command
                 $product->goods_id  = $goodsId;
                 $product->ref_price = $list['price'];
                 $product->up        = $list['up'];
-                $product->percent   = $list['percent'];
+                $product->percent   = str_replace(' ', '', $list['percent']);
                 $product->save();
             }
 
