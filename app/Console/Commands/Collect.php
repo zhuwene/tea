@@ -39,6 +39,7 @@ class Collect extends Command
      */
     public function handle()
     {
+        $url   = env('COLLECT_PRODUCTS');
         $rules = [
             'name'     => ['.dh1 a', 'text'],
             'price'    => ['.dh3', 'text'],
@@ -49,7 +50,7 @@ class Collect extends Command
         $range = '.quotes_item li';
 
         for ($i = 1; $i <= 50; $i++) {
-            $url  = 'https://www.donghetea.com/mobile/quotes.php?id=36&page=' . $i;
+            $url  = $url . $i;
             $data = QueryList::get($url)
                 ->rules($rules)
                 ->range($range)

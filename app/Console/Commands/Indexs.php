@@ -38,7 +38,7 @@ class Indexs extends Command
      */
     public function handle()
     {
-        $url = 'https://www.baijiafutea.com/Ajax/ListEchar.aspx';
+        $url = env('COLLECT_INDEX');
         $res = json_decode($this->curl($url), 1);
 
         foreach ($res as $v) {

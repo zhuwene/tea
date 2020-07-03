@@ -56,18 +56,11 @@ class CommonController extends BaseController
         ];
 
         // 商品数量
-        $sub_query = UsersProducts::where('uid', $users->id)
-            ->where('available', '>', 0)
+        $userPro = UsersProducts::where('uid', $users->id)
             ->where('type', 1)
-            ->select('id', 'products_id', 'from_id', 'price', 'num', 'surplus', 'available', 'avg', 'loss_percent', 'loss')
+            ->select('id', 'products_id', 'num', 'available', 'avg')
             ->orderBy('id', 'desc')
-            ->limit(5);
-
-        $userPro = UsersProducts::select('*')
-            ->from(DB::raw('(' . $sub_query->toSql() . ') as a'))//from() 类似与 DB::table(), toSql()得到带 ? 号的执行 sql 语句
-            ->mergeBindings($sub_query->getQuery())//mergeBindings() 合并绑定参数,getQuery()获得具体值
             ->groupBy('products_id')
-            ->orderBy('id', 'desc')
             ->get();
 
         foreach ($userPro as &$pro) {
@@ -78,25 +71,17 @@ class CommonController extends BaseController
                 $price *= 10000;
             }
 
-            // 现价
-            $pro->ref_price = $price;
-
-            $pros   = UsersProducts::where('uid', $users->id)
-                ->where('available', '>', 0)
+            $pros = UsersProducts::where('uid', $users->id)
                 ->where('products_id', $pro->products_id)
                 ->where('type', 1)
                 ->get();
-            $loss   = $loss_percent = $num = $available = 0;
-            $fromId = [];
+            $num  = $available = 0;
             foreach ($pros as $v) {
                 $num       += $v->num;
                 $available += $v->available;
-                array_push($fromId, $v->id);
             }
-            $isShell = UsersProducts::whereIn('from_id', $fromId)->get();
 
             $noPro = UsersProducts::where('uid', $users->id)
-                ->where('available', '>', 0)
                 ->where('products_id', $pro->products_id)
                 ->where('type', 1)
                 ->orderBy('id', 'desc')
@@ -106,20 +91,15 @@ class CommonController extends BaseController
             $loss         = number_format($avg - $price, 2);
             $loss_percent = number_format(($avg - $price) / $avg, 2) . '%';
 
-            // 没有交易记录
-            if (!empty(count($isShell))) {
-                $num = $noPro->surplus;
-            }
 
             $pro->p_num          = $num;
             $pro->p_avg          = $avg;
             $pro->p_available    = $available;
             $pro->p_loss         = $loss;
             $pro->p_loss_percent = $loss_percent;
+            $pro->p_price        = $price;
 
-            unset($pro->products, $pro->products_id, $pro->from_id, $pro->loss,
-                $pro->price, $pro->num, $pro->surplus, $pro->available, $pro->avg, $pro->loss_percent
-            );
+            unset($pro->products, $pro->products_id, $pro->num, $pro->available, $pro->avg);
         }
         $data['pro'] = $userPro;
 
