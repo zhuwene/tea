@@ -35,7 +35,7 @@ class UsersController extends AdminController
         $grid->column('surplus_cash', __('可用资金'))->display(function () {
             return $this->assets - $this->market_value - abs($this->profit_loss);
         });
-        $grid->column('account', __('银行账号'));
+//        $grid->column('account', __('银行账号'));
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('修改时间'));
         $grid->disableExport();
@@ -73,7 +73,7 @@ class UsersController extends AdminController
         $show->field('assets', __('总资产'));
         $show->field('profit_loss', __('总盈亏'));
         $show->field('market_value', __('总市值'));
-        $show->field('account', __('银行账号'));
+//        $show->field('account', __('银行账号'));
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('修改时间'));
 

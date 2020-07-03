@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50727
 File Encoding         : 65001
 
-Date: 2020-07-02 17:41:52
+Date: 2020-07-03 09:41:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -64,7 +64,7 @@ CREATE TABLE `tea_admin_operation_log` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `tea_admin_operation_log_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2806 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2807 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of tea_admin_operation_log
@@ -2874,6 +2874,7 @@ INSERT INTO `tea_admin_operation_log` VALUES ('2802', '1', 'admin/users-products
 INSERT INTO `tea_admin_operation_log` VALUES ('2803', '1', 'admin/userPro', 'GET', '192.168.10.1', '{\"q\":\"1\"}', '2020-07-02 16:48:58', '2020-07-02 16:48:58');
 INSERT INTO `tea_admin_operation_log` VALUES ('2804', '1', 'admin/users-products', 'POST', '192.168.10.1', '{\"uid\":\"1\",\"type\":\"1\",\"products_id\":\"10\",\"price\":\"2500\",\"num\":\"10\",\"surplus\":null,\"loss\":null,\"loss_percent\":null,\"available\":null,\"_token\":\"pkbBgtYhdxv8WnPsIpShD3D5N1fbviGy9i9WZiTM\",\"_previous_\":\"http:\\/\\/tea.com\\/admin\\/users-products\"}', '2020-07-02 16:49:15', '2020-07-02 16:49:15');
 INSERT INTO `tea_admin_operation_log` VALUES ('2805', '1', 'admin/users-products', 'GET', '192.168.10.1', '[]', '2020-07-02 16:49:15', '2020-07-02 16:49:15');
+INSERT INTO `tea_admin_operation_log` VALUES ('2806', '1', 'admin', 'GET', '192.168.10.1', '[]', '2020-07-02 17:43:22', '2020-07-02 17:43:22');
 
 -- ----------------------------
 -- Table structure for tea_admin_permissions
