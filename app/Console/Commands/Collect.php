@@ -69,6 +69,7 @@ class Collect extends Command
                 $product = new Products();
                 $res     = $product->where('goods_id', $goodsId)->count();
                 if (!empty($res)) {
+                    $product->where('goods_id', $goodsId)->update(['updated_at' => date('Y-m-d H:i:s')]);
                     continue;
                 }
                 $product->no_name   = $noName;
