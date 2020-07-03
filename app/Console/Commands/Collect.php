@@ -39,7 +39,6 @@ class Collect extends Command
      */
     public function handle()
     {
-        $url   = env('COLLECT_PRODUCTS');
         $rules = [
             'name'     => ['.dh1 a', 'text'],
             'price'    => ['.dh3', 'text'],
@@ -50,7 +49,7 @@ class Collect extends Command
         $range = '.quotes_item li';
 
         for ($i = 1; $i <= 50; $i++) {
-            $url  = $url . $i;
+            $url  = env('COLLECT_PRODUCTS') . $i;
             $data = QueryList::get($url)
                 ->rules($rules)
                 ->range($range)
@@ -77,10 +76,9 @@ class Collect extends Command
                 $product->goods_id  = $goodsId;
                 $product->ref_price = $list['price'];
                 $product->up        = $list['up'];
-                $product->percent   = str_replace(' ', '', $list['percent']);
+                $product->percent   = $list['percent'];
                 $product->save();
             }
-
         }
     }
 }
