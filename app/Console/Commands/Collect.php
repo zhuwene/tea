@@ -72,6 +72,12 @@ class Collect extends Command
                     $product->where('goods_id', $goodsId)->update(['updated_at' => date('Y-m-d H:i:s')]);
                     continue;
                 }
+
+                $ql      = QueryList::get(env('COLLECT_PRODUCTS_DETAIL') . $goodsId);
+                $content = $ql->find('#goodsdiv');
+                $content->find('h1,.com_lists,.blank15,.refer_online,.blank20,.gcollect,.share,script,.blank,.goods_pj_right,#indicatorTotal')->remove();
+
+                $product->content = env('PRODUCT_STYLE') . '<div id="goodsdiv">' . $content->html() . '</div>';
                 $product->no_name   = $noName;
                 $product->name      = $name;
                 $product->goods_id  = $goodsId;

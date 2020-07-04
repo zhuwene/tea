@@ -15,6 +15,7 @@ use App\Models\UsersCapitals;
 use App\Models\UsersProducts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use QL\QueryList;
 
 class IndexsController extends BaseController
 {
