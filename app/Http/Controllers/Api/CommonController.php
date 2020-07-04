@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Libraries\Tool;
+use App\Models\Notices;
 use App\Models\Users;
 use App\Models\UsersProducts;
 use Illuminate\Support\Facades\Cache;
@@ -39,7 +40,7 @@ class CommonController extends BaseController
 
         // 记录缓存
         $token              = md5(env('ADMIN_KEY') . $users->id);
-        $expire_time        = 3600 * 6;
+        $expire_time        = 86400 * 7;
         $data['token_info'] = [
             'uid'         => $users->id,
             'token'       => $token,
@@ -56,12 +57,13 @@ class CommonController extends BaseController
         ];
 
         // 商品数量
-        $userPro = UsersProducts::where('uid', $users->id)
+        $userPro = UsersProducts::query()
+            ->where('uid', $users->id)
             ->where('type', 1)
             ->select('id', 'products_id', 'num', 'available', 'avg')
             ->orderBy('id', 'desc')
             ->groupBy('products_id')
-            ->get();
+            ->paginate(15);
 
         foreach ($userPro as &$pro) {
             $pro->no_name = $pro->products->no_name;
@@ -71,13 +73,12 @@ class CommonController extends BaseController
                 $price *= 10000;
             }
 
-            $pros = UsersProducts::where('uid', $users->id)
+            $pros      = UsersProducts::where('uid', $users->id)
                 ->where('products_id', $pro->products_id)
                 ->where('type', 1)
                 ->get();
-            $num  = $available = 0;
+            $available = 0;
             foreach ($pros as $v) {
-                $num       += $v->num;
                 $available += $v->available;
             }
 
@@ -91,8 +92,6 @@ class CommonController extends BaseController
             $loss         = number_format($avg - $price, 2);
             $loss_percent = number_format(($avg - $price) / $avg, 2) . '%';
 
-
-            $pro->p_num          = $num;
             $pro->p_avg          = $avg;
             $pro->p_available    = $available;
             $pro->p_loss         = $loss;
@@ -102,7 +101,13 @@ class CommonController extends BaseController
             unset($pro->products, $pro->products_id, $pro->num, $pro->available, $pro->avg);
         }
         $data['pro'] = $userPro;
-
+        // 是否有消息
+        $isMsg = Notices::query()->where('uid', $users->id)->where('is_read', 0)->count();
+        if (empty($isMsg)) {
+            $data['is_msg'] = 0;
+        } else {
+            $data['is_msg'] = 1;
+        }
         return Tool::show(Tool::code('ok'), '登录成功', $data);
     }
 }

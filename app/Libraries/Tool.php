@@ -26,7 +26,7 @@ class Tool
 
     public static function code($key)
     {
-        $arr = ['none' => 0, 'ok' => 200, 'error' => 500];
+        $arr = ['none' => 0, 'ok' => 200, 'forbidden' => 403];
         return $arr[$key];
     }
 

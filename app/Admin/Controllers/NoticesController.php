@@ -40,6 +40,13 @@ class NoticesController extends AdminController
             $msg = mb_substr($content, 0, 50, 'UTF-8') . '...';
             return $msg;
         });
+        $grid->column('is_read', __('是否已读'))->display(function ($type) {
+            if ($type == 0) {
+                return '否';
+            } else {
+                return '是';
+            }
+        });;
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
         // 禁止新建按钮

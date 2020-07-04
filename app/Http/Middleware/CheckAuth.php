@@ -32,7 +32,7 @@ class CheckAuth
 
         // 验证token
         if ($token !== md5(env('ADMIN_KEY') . $uid) || !Cache::has('users:' . $uid)) {
-            echo Tool::show(Tool::code('none'), 'token检验失败');
+            echo Tool::show(Tool::code('forbidden'), 'token检验失败,请重新登录');
             die;
         }
         return $next($request);
