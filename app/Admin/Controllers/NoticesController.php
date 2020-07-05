@@ -86,6 +86,7 @@ class NoticesController extends AdminController
 
         $show->field('id', __('序号'));
         $show->field('users.username', __('用户账号'));
+        $show->field('title', __('消息标题'));
         $show->field('msg', __('消息内容'));
         $show->field('created_at', __('创建时间'));
         $show->field('updated_at', __('更新时间'));
@@ -107,7 +108,12 @@ class NoticesController extends AdminController
         ])->options(
             Users::query()->pluck('username', 'id')
         );
-        $form->editor('msg');
+        $form->text('title', __('消息标题'))->rules('required', [
+            'required' => '消息标题不能为空',
+        ]);
+        $form->editor('msg')->rules('required', [
+            'required' => '消息内容不能为空',
+        ]);
         $form->tools(function (Form\Tools $tools) {
             // 去掉`查看`按钮
             $tools->disableView();
