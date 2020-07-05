@@ -81,10 +81,10 @@ class UsersProductsController extends AdminController
             $user = Users::pluck('username', 'id');
             // 商品名称
             $pro = Products::pluck('name', 'id');
-                // 去掉默认的id过滤器
+            // 去掉默认的id过滤器
             $filter->disableIdFilter();
             $filter->column(1 / 2, function ($filter) use ($user) {
-                $filter->equal('id','序号');
+                $filter->equal('id', '序号');
                 $filter->in('uid', '用户账号')->multipleSelect($user);
 
             });
@@ -137,9 +137,12 @@ class UsersProductsController extends AdminController
 
         $form->select('type', __('类型'))->options([1 => '买入', 2 => '卖出'])
             ->when(1, function (Form $form) {
-                $form->select('products_id', __('商品名称'))->options(
-                    Products::query()->pluck('name', 'id')
-                );
+                $pro = Products::query()->select('no_name', 'name', 'id')->get();
+                foreach ($pro as $k => $v) {
+                    $data[$v['id']] = $v['name'] . '-' . $v['no_name'];
+                }
+
+                $form->select('products_id', __('商品名称-批号'))->options($data)->rules('required', ['required' => '请选择商品']);
                 $form->number('price', __('金额'));
                 $form->number('num', __('数量'));
                 $form->hidden('surplus');
@@ -148,7 +151,7 @@ class UsersProductsController extends AdminController
                 $form->hidden('available');
             })
             ->when(2, function (Form $form) {
-                $form->select('pro', __('商品名称'));
+                $form->select('pro', __('商品名称'))->rules('required', ['required' => '请选择商品']);
                 $form->number('price', __('金额'));
                 $form->number('num', __('数量'));
                 $form->hidden('from_id');
@@ -186,7 +189,7 @@ class UsersProductsController extends AdminController
                 $userPro->available -= $form->num;
                 $userPro->save();
 
-                $lastNum = UsersProducts::where('uid', $form->uid)
+                $lastNum   = UsersProducts::where('uid', $form->uid)
                     ->where('products_id', $form->products_id)
                     ->where('type', 1)
                     ->orderBy('id', 'desc')
@@ -213,7 +216,7 @@ class UsersProductsController extends AdminController
                 }
                 $form->available = $form->num;
 //                $money           = abs($user->assets - $user->market_value - abs($user->profit_loss));
-                $price           = $form->price * $form->num;
+                $price = $form->price * $form->num;
 //                if ($price > $money) {
 //                    $error = new MessageBag([
 //                        'title'   => '错误提示',
@@ -278,7 +281,8 @@ class UsersProductsController extends AdminController
             if ($pro->price >= 1000) {
                 $price = number_format($pro->price / 10000, 1) . 'w';
             }
-            $data[$k]['text'] = $pro->products->name . ' - 买入单价:' . $price . ' - 剩余可用:' . $pro->available;
+            $data[$k]['text'] = $pro->products->name . '-' . $pro->products->no_name .
+                ' - 买入单价:' . $price . ' - 剩余可用:' . $pro->available;
         }
         return $data;
     }
