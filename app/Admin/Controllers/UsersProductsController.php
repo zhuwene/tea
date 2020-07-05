@@ -212,15 +212,15 @@ class UsersProductsController extends AdminController
                     $form->surplus = $form->num;
                 }
                 $form->available = $form->num;
-                $money           = abs($user->assets - $user->market_value - abs($user->profit_loss));
+//                $money           = abs($user->assets - $user->market_value - abs($user->profit_loss));
                 $price           = $form->price * $form->num;
-                if ($price > $money) {
-                    $error = new MessageBag([
-                        'title'   => '错误提示',
-                        'message' => '该用户余额不足，先去充值吧',
-                    ]);
-                    return back()->with(compact('error'));
-                }
+//                if ($price > $money) {
+//                    $error = new MessageBag([
+//                        'title'   => '错误提示',
+//                        'message' => '该用户余额不足，先去充值吧',
+//                    ]);
+//                    return back()->with(compact('error'));
+//                }
                 Users::where('id', $form->uid)->increment(
                     'market_value',
                     $price
