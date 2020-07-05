@@ -100,6 +100,7 @@ class IndexsController extends BaseController
             $pro->name    = $pro->products->name;
             $price        = str_replace('￥', '', $pro->products->ref_price);
             if (stripos($price, '万') !== false) {
+                $price = str_replace('万', '', $price);
                 $price *= 10000;
             }
 
