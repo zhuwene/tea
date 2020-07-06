@@ -71,6 +71,7 @@ class NoticesController extends AdminController
             });
 
         });
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
 

@@ -26,7 +26,7 @@ class UsersCapitalsController extends BaseController
             return Tool::show(Tool::code('none'), '用户ID参数缺失');
         }
 
-        $userCap = UsersCapitals::query()->paginate($perPage);
+        $userCap = UsersCapitals::query()->orderBy('id', 'desc')->paginate($perPage);
 
         foreach ($userCap as &$pro) {
             if ($pro->type == 1) {

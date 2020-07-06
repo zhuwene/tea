@@ -33,6 +33,7 @@ class SearchsController extends AdminController
 
         $grid->disableExport();
         $grid->disableColumnSelector();
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
 

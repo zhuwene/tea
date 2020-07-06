@@ -50,7 +50,7 @@ class UsersCapitalsController extends AdminController
         $grid->actions(function ($actions) {
             $actions->disableEdit();
         });
-
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
 

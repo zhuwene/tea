@@ -55,6 +55,7 @@ class UsersController extends AdminController
             });
 
         });
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
 

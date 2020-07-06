@@ -38,7 +38,7 @@ class UsersProductsController extends BaseController
                 break;
         }
 
-        $userPro = UsersProducts::query()->where($where)->paginate($perPage);
+        $userPro = UsersProducts::query()->where($where)->orderBy('id', 'desc')->paginate($perPage);
 
         foreach ($userPro as &$pro) {
             if ($pro->type == 1) {

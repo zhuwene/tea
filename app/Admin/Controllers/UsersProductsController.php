@@ -95,6 +95,7 @@ class UsersProductsController extends AdminController
             });
 
         });
+        $grid->model()->orderBy('id', 'desc');
         return $grid;
     }
 

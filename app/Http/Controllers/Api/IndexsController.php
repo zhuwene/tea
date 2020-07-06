@@ -142,7 +142,7 @@ class IndexsController extends BaseController
             $data['is_msg'] = 1;
         }
 
-        $searchs           = Searchs::query()->select('name')->get()->toArray();
+        $searchs           = Searchs::query()->select('name')->orderBy('id', 'desc')->get()->toArray();
         $data['hotSearch'] = array_column($searchs, 'name');
         return Tool::show(Tool::code('ok'), 'ok', $data);
     }
