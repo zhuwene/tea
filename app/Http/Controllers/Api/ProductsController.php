@@ -41,7 +41,7 @@ class ProductsController extends BaseController
         $indexs->week       = $weekarray[date("w", strtotime($indexs->created_at))];
         $data['indexs']     = $indexs;
         $pros               = Products::query()
-            ->select('no_name', 'name', 'ref_price', 'up', 'percent')
+            ->select('id','no_name', 'name', 'ref_price', 'up', 'percent')
             ->where($where)
             ->paginate($perPage);
 

@@ -111,7 +111,7 @@ class NoticesController extends AdminController
         $form->text('title', __('消息标题'))->rules('required', [
             'required' => '消息标题不能为空',
         ]);
-        $form->editor('msg')->rules('required', [
+        $form->UEditor('msg')->rules('required', [
             'required' => '消息内容不能为空',
         ]);
         $form->tools(function (Form\Tools $tools) {
