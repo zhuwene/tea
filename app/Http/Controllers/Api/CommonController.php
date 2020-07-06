@@ -61,6 +61,7 @@ class CommonController extends BaseController
         $userPro = UsersProducts::query()
             ->where('uid', $users->id)
             ->where('type', 1)
+            ->where('available', '>', 0)
             ->select('id', 'products_id', 'num', 'available', 'avg')
             ->orderBy('id', 'desc')
             ->groupBy('products_id')

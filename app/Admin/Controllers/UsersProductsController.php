@@ -19,7 +19,7 @@ class UsersProductsController extends AdminController
      *
      * @var string
      */
-    protected $title = '用户商品';
+    protected $title = '交易记录';
 
     /**
      * Make a grid builder.
@@ -181,8 +181,9 @@ class UsersProductsController extends AdminController
                 // 盈亏
                 $loss = $sellMoney - $market;
 
-                $user->profit_loss  = $user->profit_loss + $loss;
-                $user->market_value = $user->market_value - $market;
+                $user->assets       += $loss;
+                $user->profit_loss  += $loss;
+                $user->market_value -= $market;
                 $user->updated_at   = date('Y-m-d H:i:s');
                 $user->save();
 
