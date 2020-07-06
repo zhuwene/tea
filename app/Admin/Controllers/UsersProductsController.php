@@ -46,7 +46,7 @@ class UsersProductsController extends AdminController
         $grid->column('surplus', __('可用数量'));
 
         if (empty($type)) {
-            $grid->column('assets', __('总资产'));
+            $grid->column('surplus_cash', __('可用金额'));
         } elseif ($type[0] == 1) {
             $grid->column('avg', __('平均价'));
         } else {
@@ -262,6 +262,7 @@ class UsersProductsController extends AdminController
             $user               = Users::where('id', $userPro->uid)->first();
             $newUserPro         = UsersProducts::find($userPro->id);
             $newUserPro->assets = $user->assets;
+            $newUserPro->surplus_cash = $user->assets-abs($user->profit_loss)-$user->market_value;
             $newUserPro->save();
         });
         $form->ignore('pro');

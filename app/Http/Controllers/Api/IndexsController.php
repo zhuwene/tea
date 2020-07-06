@@ -58,6 +58,7 @@ class IndexsController extends BaseController
             ->where('created_at', '>=', $beginTime)
             ->where('created_at', '<=', $endTime)
             ->select('index', 'price', 'percent', 'created_at')
+            ->orderBy('created_at', 'desc')
             ->paginate($perPage);
 
         return Tool::show(Tool::code('ok'), 'ok', $indexsData);
