@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Libraries\Tool;
 use App\Models\Notices;
+use App\Models\Searchs;
 use App\Models\Users;
 use App\Models\UsersProducts;
 use Illuminate\Support\Facades\Cache;
@@ -104,6 +105,7 @@ class CommonController extends BaseController
             unset($pro->products, $pro->products_id, $pro->num, $pro->available, $pro->avg);
         }
         $data['pro'] = $userPro;
+
         // 是否有消息
         $isMsg = Notices::query()->where('uid', $users->id)->where('is_read', 0)->count();
         if (empty($isMsg)) {
@@ -111,6 +113,10 @@ class CommonController extends BaseController
         } else {
             $data['is_msg'] = 1;
         }
+
+        $searchs           = Searchs::query()->select('name')->get()->toArray();
+        $data['hotSearch'] = array_column($searchs, 'name');
+
         return Tool::show(Tool::code('ok'), '登录成功', $data);
     }
 }

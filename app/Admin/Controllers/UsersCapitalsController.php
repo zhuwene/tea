@@ -30,7 +30,7 @@ class UsersCapitalsController extends AdminController
     {
         $grid = new Grid(new UsersCapitals());
 
-        $grid->column('id', __('Id'));
+        $grid->column('id', __('序号'));
         $grid->column('users.username', __('用户名称'));
         $grid->column('users.name', __('用户昵称'));
         $grid->column('account', __('账号'));

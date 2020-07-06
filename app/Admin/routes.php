@@ -17,6 +17,7 @@ Route::group([
     $router->resource('users-products', UsersProductsController::class);
     $router->resource('users-capitals', UsersCapitalsController::class);
     $router->resource('notices', NoticesController::class);
+    $router->resource('searchs', SearchsController::class);
     $router->get('userAccount', 'UsersCapitalsController@userAccount');
     $router->get('userPro', 'UsersProductsController@userPro');
     $router->get('getData', 'HomeController@getData');

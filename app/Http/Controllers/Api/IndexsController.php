@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Api;
 use App\Libraries\Tool;
 use App\Models\Indexs;
 use App\Models\Notices;
+use App\Models\Searchs;
 use App\Models\Users;
 use App\Models\UsersCapitals;
 use App\Models\UsersProducts;
@@ -141,6 +142,8 @@ class IndexsController extends BaseController
             $data['is_msg'] = 1;
         }
 
+        $searchs           = Searchs::query()->select('name')->get()->toArray();
+        $data['hotSearch'] = array_column($searchs, 'name');
         return Tool::show(Tool::code('ok'), 'ok', $data);
     }
 }
