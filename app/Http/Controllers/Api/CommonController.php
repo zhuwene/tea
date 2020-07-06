@@ -94,8 +94,10 @@ class CommonController extends BaseController
                 ->first();
             // 成本
             $avg          = $noPro->avg;
-            $loss         = number_format($avg - $price, 2);
-            $loss_percent = number_format(($avg - $price) / $avg, 2) . '%';
+            $totalC       = $avg * $available;
+            $totalP       = $price * $available;
+            $loss         = number_format($totalP - $totalC, 2) * 100;
+            $loss_percent = number_format(($totalP - $totalC) / $totalC, 2) * 100 . '%';
 
             $pro->p_avg          = $avg;
             $pro->p_available    = $available;

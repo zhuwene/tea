@@ -203,7 +203,7 @@ class UsersProductsController extends AdminController
                 }
                 $form->surplus      = $available;
                 $form->loss         = $loss;
-                $form->loss_percent = number_format($loss / $market, 3) . '%';
+                $form->loss_percent = number_format($loss / $market, 3) * 100 . '%';
 
             } else {
                 $lastNum = UsersProducts::where('uid', $form->uid)
@@ -280,11 +280,11 @@ class UsersProductsController extends AdminController
 
         foreach ($userPro as $k => $pro) {
             $data[$k]['id'] = $pro->id;
-            if ($pro->price >= 1000) {
-                $price = number_format($pro->price / 10000, 1) . 'w';
-            }
+            // if ($pro->price >= 1000) {
+            //     $price = number_format($pro->price / 10000, 1) . 'w';
+            // }
             $data[$k]['text'] = $pro->products->name . '-' . $pro->products->no_name .
-                ' - 买入单价:' . $price . ' - 剩余可用:' . $pro->available;
+                ' - 买入单价:' . $pro->price . ' - 剩余可用:' . $pro->available;
         }
         return $data;
     }
