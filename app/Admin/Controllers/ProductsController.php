@@ -26,7 +26,6 @@ class ProductsController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Products());
-
         $grid->column('id', __('序号'));
         $grid->column('goods_id', __('商品ID'));
         $grid->column('no_name', __('序号名称'));
