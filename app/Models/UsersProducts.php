@@ -50,7 +50,6 @@ class UsersProducts extends Model
                 foreach ($newAvg as $k => $v) {
                     if ($k == 0) {
                         $avg     = $v->price;
-                        $surplus = $v->num;
                     } else {
                         $total = $v->price * $v->num;
                         $num   = $v->num;
@@ -59,11 +58,9 @@ class UsersProducts extends Model
                             $num   += $newAvg[$k - $i]['num'];
                         }
                         $avg     = $total / $num;
-                        $surplus = $num;
                     }
                     UsersProducts::where('id', $v->id)->update([
                         'avg'        => $avg,
-                        'surplus'    => $surplus,
                         'updated_at' => date('Y-m-d H:i:s')
                     ]);
                 }
@@ -89,6 +86,7 @@ class UsersProducts extends Model
             }
 
             $usersPro = UsersProducts::where('uid', $model->uid)
+                    ->where('id', '<>', $model->id)
                     ->orderBy('id', 'desc')
                     ->get();
             foreach ($usersPro as $k => $v) {
@@ -107,6 +105,26 @@ class UsersProducts extends Model
                     }
                 }
                 $v->save();
+            }
+
+            // 计算可用数量
+            $proSurplus = UsersProducts::where('products_id', $model->products_id)
+            ->where('uid',$model->uid)
+            ->where('id', '<>', $model->id)
+            ->orderBy('id', 'asc')
+            ->get();
+            foreach ($proSurplus as $k => $v) {
+                $surplusPro = UsersProducts::where('id', $v->id)->first();
+                if(!empty($k)) {                    
+                    if($v->type == 1) {
+                        $surplusPro->surplus = $proSurplus[$k-1]['surplus'] + $surplusPro->num;
+                    } else {
+                        $surplusPro->surplus = $proSurplus[$k-1]['surplus'] - $surplusPro->num;
+                    }                   
+                } else {
+                    $surplusPro->surplus =  $surplusPro->num;
+                }
+                 $surplusPro->save();
             }
 
         });
