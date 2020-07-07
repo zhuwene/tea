@@ -96,8 +96,8 @@ class CommonController extends BaseController
             $avg          = $noPro->avg;
             $totalC       = $avg * $available;
             $totalP       = $price * $available;
-            $loss         = number_format($totalP - $totalC, 2) * 100;
-            $loss_percent = number_format(($totalP - $totalC) / $totalC, 2) * 100 . '%';
+            $loss         = number_format($totalP - $totalC, 2) ;
+            $loss_percent = number_format(($totalP - $totalC) / $totalC * 100, 2) . '%';
 
             $pro->p_avg          = $avg;
             $pro->p_available    = $available;
