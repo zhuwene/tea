@@ -26,7 +26,7 @@ class UsersProducts extends Model
         parent::boot();
 
         static::deleted(function ($model) {
-            // 转入
+            // 买入
             if ($model->type == 1) {
                 // 市值减少
                 // 盈亏减少
@@ -36,9 +36,9 @@ class UsersProducts extends Model
                     $loss += $v->loss;
                 }
                 $user               = Users::find($model->uid);
-                $user->profit_loss  = $user->profit_loss - $loss;
-                $user->market_value = $user->market_value - ($model->price * $model->available);
-                $user->updated_at   = date('Y-m-d H:i:s');
+                $user->assets       -= $loss;
+                $user->profit_loss  -= $loss;
+                $user->market_value -= $model->price * $model->available;
                 $user->save();
                 // 重新计算平均价
                 $newAvg = UsersProducts::where('uid', $model->uid)
@@ -63,12 +63,10 @@ class UsersProducts extends Model
                     }
                     UsersProducts::where('id', $v->id)->update([
                         'avg'        => $avg,
-                        'surplus'   => $surplus,
+                        'surplus'    => $surplus,
                         'updated_at' => date('Y-m-d H:i:s')
                     ]);
                 }
-                // 重新计算可用数量
-
                 // 删除卖出记录
                 UsersProducts::where('from_id', $model->id)->delete();
             } else {
@@ -83,8 +81,9 @@ class UsersProducts extends Model
                 $oldPro             = UsersProducts::where('id', $model->from_id)->first();
                 $marketValue        = $model->num * $oldPro->price;
                 $user               = Users::find($model->uid);
-                $user->profit_loss  = $user->profit_loss - $model->loss;
-                $user->market_value = $user->market_value + $marketValue;
+                $user->profit_loss  -= $model->loss;
+                $user->assets       -= $model->loss;
+                $user->market_value += $marketValue;
                 $user->updated_at   = date('Y-m-d H:i:s');
                 $user->save();
             }
