@@ -73,8 +73,7 @@ class UsersProducts extends Model
                     $model->num,
                     ['updated_at' => date('Y-m-d H:i:s')]
                 );
-                // 盈亏减掉
-                // 市值增加
+
                 $oldPro             = UsersProducts::where('id', $model->from_id)->first();
                 $marketValue        = $model->num * $oldPro->price;
                 $user               = Users::find($model->uid);
@@ -85,24 +84,35 @@ class UsersProducts extends Model
                 $user->save();
             }
 
+            // 计算可用余额
             $usersPro = UsersProducts::where('uid', $model->uid)
                     ->where('id', '<>', $model->id)
-                    ->orderBy('id', 'desc')
+                    ->where('id', '>', $model->id)
+                    ->orderBy('id', 'asc')
                     ->get();
-            foreach ($usersPro as $k => $v) {
-                if($k == 0) {
+            foreach ($usersPro as $k => &$v) {
+                if(empty($k)) {
                     $v->assets       = $user->assets;
                     $v->surplus_cash = $user->assets - $user->market_value;
+                    $v->market_value = $user->market_value;
+                    $v->loss         = 0;
                 } else {
-                    $old = UsersProducts::where('id', $v->id)->select('assets', 'surplus_cash')->first();
-                    $v->assets  = $usersPro[$k-1]['assets'] - $old->assets;
-                    $firstCash  = $usersPro[$k-1]['surplus_cash'];
-                    $firstTotal = $usersPro[$k-1]['num'] * $usersPro[$k-1]['price'];
-                    if($firstCash < 0) {
-                        $v->surplus_cash = $firstCash + $firstTotal;
-                    } else {
-                        $v->surplus_cash =  $firstCash - $firstTotal;
-                    }
+                    $firstPro = UsersProducts::where('uid', $model->uid)
+                                ->where('id', '<>', $model->id)
+                                ->where('id', '<', $v->id)
+                                ->orderBy('id', 'desc')
+                                ->first();
+                    if($v->type == 1) {
+                        $v->assets       = $firstPro->assets;
+                        $v->market_value = $v->price * $v->num + $firstPro->market_value;
+                        $v->loss         = 0;
+                   } else {
+                        $oldPro = UsersProducts::where('id', $v->from_id)->first();
+                        $loss   = ($v->price * $v->num)-($oldPro->price * $v->num);
+                        $v->assets = $firstPro->assets + $loss;
+                        $v->market_value = $firstPro->market_value - $oldPro->price * $v->num;
+                   }
+                   $v->surplus_cash = $v->assets - $v->market_value;
                 }
                 $v->save();
             }
@@ -113,7 +123,8 @@ class UsersProducts extends Model
             ->where('id', '<>', $model->id)
             ->orderBy('id', 'asc')
             ->get();
-            foreach ($proSurplus as $k => $v) {
+
+            foreach ($proSurplus as $k => &$v) {
                 $surplusPro = UsersProducts::where('id', $v->id)->first();
                 if(!empty($k)) {                    
                     if($v->type == 1) {
@@ -123,8 +134,11 @@ class UsersProducts extends Model
                     }                   
                 } else {
                     $surplusPro->surplus =  $surplusPro->num;
-                }
-                 $surplusPro->save();
+                } 
+                file_put_contents('aa.txt', $surplusPro->surplus.PHP_EOL,FILE_APPEND);
+                $surplusPro->save();
+                $v->surplus = $surplusPro->surplus;
+                unset($surplusPro);
             }
 
         });

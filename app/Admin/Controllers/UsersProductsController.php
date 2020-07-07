@@ -46,7 +46,10 @@ class UsersProductsController extends AdminController
         $grid->column('surplus', __('可用数量'));
 
         if (empty($type)) {
-            $grid->column('surplus_cash', __('可用金额'));
+            $grid->column('surplus_cash', __('可用金额'))->display(function(){
+                $users = Users::where('id', $this->uid)->first();
+                return $users->assets-$users->market_value;
+            });
         } elseif ($type[0] == 1) {
             $grid->column('avg', __('平均价'));
         } else {
@@ -159,6 +162,8 @@ class UsersProductsController extends AdminController
                 $form->number('price', __('金额'));
                 $form->number('num', __('数量'))->min(1);
                 $form->hidden('from_id');
+                $form->hidden('loss');
+                $form->hidden('loss_percent');
             })
             ->rules('required', ['required' => '请选择类型']);
         $products_id = Request()->input('pro');
@@ -219,7 +224,8 @@ class UsersProductsController extends AdminController
                 } else {
                     $form->surplus = $form->num;
                 }
-                $form->available = $form->num;
+                $form->available    = $form->num;
+                $form->loss         = 0;
                 $price = $form->price * $form->num;
                 Users::where('id', $form->uid)->increment(
                     'market_value',
@@ -257,6 +263,7 @@ class UsersProductsController extends AdminController
             $user               = Users::where('id', $userPro->uid)->first();
             $newUserPro         = UsersProducts::find($userPro->id);
             $newUserPro->assets = $user->assets;
+            $newUserPro->market_value = $user->market_value;
             $newUserPro->surplus_cash = $user->assets-$user->market_value;
             $newUserPro->save();
         });
