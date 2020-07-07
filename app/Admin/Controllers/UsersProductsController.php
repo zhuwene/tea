@@ -203,7 +203,7 @@ class UsersProductsController extends AdminController
                 }
                 $form->surplus      = $available;
                 $form->loss         = $loss;
-                $form->loss_percent = number_format($loss / $market, 3) * 100 . '%';
+                $form->loss_percent = number_format($loss / $market * 100, 3) . '%';
 
             } else {
                 $lastNum = UsersProducts::where('uid', $form->uid)
