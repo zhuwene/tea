@@ -90,9 +90,8 @@ class UsersController extends AdminController
     {
         $form = new Form(new Users());
 
-        $form->text('username', __('用户账号'))->creationRules('required|max:11|numeric|unique:users', [
+        $form->text('username', __('用户账号'))->creationRules('required|numeric|unique:users', [
             'required'     => '用户账号不能为空',
-            'max'          => '手机号码长度最大11位',
             'unique'       => '用户账号已存在',
             'numeric'      => '手机号必须是数字'
 
