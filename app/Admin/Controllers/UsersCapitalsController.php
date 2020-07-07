@@ -91,11 +91,13 @@ class UsersCapitalsController extends AdminController
     {
         $form = new Form(new UsersCapitals());
 
+        $users = Users::query()->select('username', 'name', 'id')->get();
+        foreach ($users as $k => $v) {
+            $data[$v['id']] = $v['username'] . '-' . $v['name'];
+        }
         $form->select('uid', __('用户账号'))->rules('required', [
             'required' => '用户账号不能为空',
-        ])->options(
-            Users::query()->pluck('username', 'id')
-        );
+        ])->options($data);
 
         $form->text('account', __('银行账号'))->rules('required', [
             'required' => '请选择银行账号',
@@ -105,7 +107,7 @@ class UsersCapitalsController extends AdminController
         ]);
         $form->number('price', __('金额'))->rules('required', [
             'required' => '请填写金额',
-        ]);
+        ])->min(1);
         $form->hidden('balance');
 
         // 保存前回调

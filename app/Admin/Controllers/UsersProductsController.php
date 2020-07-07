@@ -130,9 +130,12 @@ class UsersProductsController extends AdminController
     {
         $form = new Form(new UsersProducts());
 
-        $form->select('uid', __('用户账号'))->options(
-            Users::query()->pluck('username', 'id')
-        )
+        $users = Users::query()->select('username', 'name', 'id')->get();
+        foreach ($users as $k => $v) {
+            $data[$v['id']] = $v['username'] . '-' . $v['name'];
+        }
+
+        $form->select('uid', __('用户账号'))->options($data)
             ->rules('required', ['required' => '请选择用户账号'])
             ->load('pro', '/admin/userPro');
 
@@ -145,7 +148,7 @@ class UsersProductsController extends AdminController
 
                 $form->select('products_id', __('商品名称-批号'))->options($data)->rules('required', ['required' => '请选择商品']);
                 $form->number('price', __('金额'));
-                $form->number('num', __('数量'));
+                $form->number('num', __('数量'))->min(1);
                 $form->hidden('surplus');
                 $form->hidden('loss');
                 $form->hidden('loss_percent');
@@ -154,7 +157,7 @@ class UsersProductsController extends AdminController
             ->when(2, function (Form $form) {
                 $form->select('pro', __('商品名称'))->rules('required', ['required' => '请选择商品']);
                 $form->number('price', __('金额'));
-                $form->number('num', __('数量'));
+                $form->number('num', __('数量'))->min(1);
                 $form->hidden('from_id');
             })
             ->rules('required', ['required' => '请选择类型']);

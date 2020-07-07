@@ -88,6 +88,26 @@ class UsersProducts extends Model
                 $user->save();
             }
 
+            $usersPro = UsersProducts::where('uid', $model->uid)
+                    ->orderBy('id', 'desc')
+                    ->get();
+            foreach ($usersPro as $k => $v) {
+                if($k == 0) {
+                    $v->assets       = $user->assets;
+                    $v->surplus_cash = $user->assets - $user->market_value;
+                } else {
+                    $old = UsersProducts::where('id', $v->id)->select('assets', 'surplus_cash')->first();
+                    $v->assets  = $usersPro[$k-1]['assets'] - $old->assets;
+                    $firstCash  = $usersPro[$k-1]['surplus_cash'];
+                    $firstTotal = $usersPro[$k-1]['num'] * $usersPro[$k-1]['price'];
+                    if($firstCash < 0) {
+                        $v->surplus_cash = $firstCash + $firstTotal;
+                    } else {
+                        $v->surplus_cash =  $firstCash - $firstTotal;
+                    }
+                }
+                $v->save();
+            }
 
         });
     }
