@@ -46,10 +46,11 @@ class UsersProductsController extends AdminController
         $grid->column('surplus', __('可用数量'));
 
         if (empty($type)) {
-            $grid->column('surplus_cash', __('可用金额'))->display(function(){
-                $users = Users::where('id', $this->uid)->first();
-                return $users->assets-$users->market_value;
-            });
+            $grid->column('surplus_cash', __('可用金额'));
+            // $grid->column('surplus_cash', __('可用金额'))->display(function(){
+            //     $users = Users::where('id', $this->uid)->first();
+            //     return $users->assets-$users->market_value;
+            // });
         } elseif ($type[0] == 1) {
             $grid->column('avg', __('平均价'));
         } else {
@@ -78,6 +79,11 @@ class UsersProductsController extends AdminController
         $grid->disableColumnSelector();
         $grid->actions(function ($actions) {
             $actions->disableEdit();
+        });
+        $grid->tools(function ($tools) {
+            $tools->batch(function ($batch) {
+                $batch->disableDelete();
+            });
         });
         $grid->filter(function ($filter) {
             // 用户账号
