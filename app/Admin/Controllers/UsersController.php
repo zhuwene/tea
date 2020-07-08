@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\MessageBag;
 
 class UsersController extends AdminController
 {
@@ -117,7 +118,16 @@ class UsersController extends AdminController
                 $form->password = md5(env('ADMIN_KEY') . $form->password);
             }
         });
-
+        // 在表单提交前调用
+        $form->submitted(function (Form $form) {
+            if(!preg_match('/^1[3-9]\d{9}$/', $form->username)) {
+                $error = new MessageBag([
+                    'title'   => '错误提示',
+                    'message' => '用户账号格式不正确,请输入11位手机号码',
+                ]);
+                return back()->with(compact('error'));
+            }
+        });
         return $form;
     }
 }
