@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Api;
 use App\Libraries\Tool;
 use App\Models\Indexs;
 use App\Models\Products;
+use App\Models\Searchs;
 use App\Models\Users;
 use App\Models\UsersCapitals;
 use App\Models\UsersProducts;
@@ -41,7 +42,7 @@ class ProductsController extends BaseController
         $indexs->week       = $weekarray[date("w", strtotime($indexs->created_at))];
         $data['indexs']     = $indexs;
         $pros               = Products::query()
-            ->select('id','no_name', 'name', 'ref_price', 'up', 'percent')
+            ->select('id', 'no_name', 'name', 'ref_price', 'up', 'percent')
             ->where($where)
             ->paginate($perPage);
 
@@ -49,6 +50,10 @@ class ProductsController extends BaseController
             $pro->percent = str_replace(' ', '', $pro->percent);
         }
         $data['pro'] = $pros;
+
+        $searchs           = Searchs::query()->select('name')->orderBy('id', 'desc')->get()->toArray();
+        $data['hotSearch'] = array_column($searchs, 'name');
+
         return Tool::show(Tool::code('ok'), 'ok', $data);
     }
 
@@ -63,5 +68,23 @@ class ProductsController extends BaseController
         $pro = Products::query()->where('id', $id)->select('no_name', 'name', 'content')->first();
 
         return Tool::show(Tool::code('ok'), 'ok', $pro);
+    }
+
+    public function teaMarket()
+    {
+        $where   = [];
+        $perPage = $this->params['per_page'] ?? 15;
+
+        $pros = Products::query()
+            ->select('id', 'img_path', 'no_name', 'name', 'ref_price', 'up', 'percent')
+            ->where($where)
+            ->paginate($perPage);
+
+        foreach ($pros as $v) {
+            if(!empty($v->img_path)) {
+                $v->img_path = env('APP_URL') . '/upload/' . $v->img_path;
+            }
+        }
+        return Tool::show(Tool::code('ok'), 'ok', $pros);
     }
 }

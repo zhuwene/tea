@@ -9,8 +9,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Libraries\Tool;
+use App\Models\Banners;
 use App\Models\Indexs;
 use App\Models\Notices;
+use App\Models\Products;
 use App\Models\Searchs;
 use App\Models\Users;
 use App\Models\UsersCapitals;
@@ -64,11 +66,11 @@ class IndexsController extends BaseController
     }
 
     /**
-     * 首页数据
+     * 交易首页数据
      * @param Request $request
      * @return string
      */
-    public function index(Request $request)
+    public function transIndex(Request $request)
     {
         $uid     = $request->header('uid');
         $perPage = $this->params['per_page'] ?? 15;
@@ -134,16 +136,26 @@ class IndexsController extends BaseController
         }
         $data['pro'] = $userPro;
 
-        // 是否有消息
-        $isMsg = Notices::query()->where('uid', $users->id)->where('is_read', 0)->count();
-        if (empty($isMsg)) {
-            $data['is_msg'] = 0;
-        } else {
-            $data['is_msg'] = 1;
-        }
+        return Tool::show(Tool::code('ok'), 'ok', $data);
+    }
 
-        $searchs           = Searchs::query()->select('name')->orderBy('id', 'desc')->get()->toArray();
-        $data['hotSearch'] = array_column($searchs, 'name');
+    /**
+     * 首页数据
+     * @param Request $request
+     * @return string
+     */
+    public function index()
+    {
+        $data['pro'] = Products::query()
+            ->select('no_name', 'name', 'ref_price', 'up', 'percent')
+            ->orderBy('updated_at', 'desc')
+            ->limit(10)
+            ->get();
+        $banners     = Banners::query()->select('id', 'title', 'img_path')->get();
+        foreach ($banners as $v) {
+            $v->img_path = env('APP_URL') . '/upload/' . $v->img_path;
+        }
+        $data['banners'] = $banners;
         return Tool::show(Tool::code('ok'), 'ok', $data);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\Products;
 use App\Models\Users;
 use App\Models\UsersCapitals;
 use Encore\Admin\Controllers\AdminController;
@@ -51,6 +52,22 @@ class UsersCapitalsController extends AdminController
             $actions->disableEdit();
         });
         $grid->model()->orderBy('id', 'desc');
+
+        $grid->filter(function ($filter) {
+            // 用户账号
+            $user = Users::pluck('username', 'id');
+            // 去掉默认的id过滤器
+            $filter->disableIdFilter();
+            $filter->column(1 / 2, function ($filter) use ($user) {
+                $filter->in('uid', '用户账号')->multipleSelect($user);
+
+            });
+
+            $filter->column(1 / 2, function ($filter) {
+                $filter->in('type', '类型')->multipleSelect([1 => '转入', 2 => '转出']);
+            });
+
+        });
         return $grid;
     }
 

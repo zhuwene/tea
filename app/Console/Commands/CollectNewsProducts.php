@@ -2,25 +2,25 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Products;
+use App\Models\NewsProducts;
 use Illuminate\Console\Command;
 use QL\QueryList;
 
-class Collect extends Command
+class CollectNewsProducts extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'collect:products';
+    protected $signature = 'collects:newsProducts';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = '采集商品数据';
+    protected $description = 'Command description';
 
     /**
      * Create a new command instance.
@@ -40,16 +40,16 @@ class Collect extends Command
     public function handle()
     {
         $rules = [
-            'name'     => ['.dh1 a', 'text'],
-            'price'    => ['.dh3', 'text'],
-            'goods_id' => ['.dh1 a', 'href'],
-            'up'       => ['.dh4', 'text'],
-            'percent'  => ['.dh5', 'text'],
+            'name'     => ['.goodsItem_title a', 'text'],
+            'price'    => ['.goodsItem_refer .shop_s3', 'text'],
+            'goods_id' => ['.goodsItem_title a', 'href'],
+            'up'       => ['.goodsItem_up span:eq(0)', 'text'],
+            'percent'  => ['.goodsItem_up span:eq(1)', 'text'],
         ];
-        $range = '.quotes_item li';
+        $range = '.categorybox .goodsItem';
 
-        for ($i = 1; $i <= 50; $i++) {
-            $url  = env('COLLECT_PRODUCTS') . $i;
+        for ($i = 1; $i <= 5; $i++) {
+            $url  = env('COLLECT_NEW_PRODUCTS') . $i;
             $data = QueryList::get($url)
                 ->rules($rules)
                 ->range($range)
@@ -66,13 +66,12 @@ class Collect extends Command
                     $noName = '';
                     $name   = $listName[0];
                 }
-                $product = new Products();
+                $product = new NewsProducts();
                 $res     = $product->where('goods_id', $goodsId)->count();
                 if (!empty($res)) {
                     $product->where('goods_id', $goodsId)->update(['updated_at' => date('Y-m-d H:i:s')]);
                     continue;
                 }
-
                 $ql      = QueryList::get(env('COLLECT_PRODUCTS_DETAIL') . $goodsId);
                 $content = $ql->find('#goodsdiv');
                 $content->find('h1,.com_lists,.blank15,.refer_online,.blank20,.gcollect,.share,script,.blank,.goods_pj_right,#indicatorTotal')->remove();

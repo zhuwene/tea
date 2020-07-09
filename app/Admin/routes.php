@@ -18,6 +18,8 @@ Route::group([
     $router->resource('users-capitals', UsersCapitalsController::class);
     $router->resource('notices', NoticesController::class);
     $router->resource('searchs', SearchsController::class);
+    $router->resource('banners', BannersController::class);
+    $router->resource('news-products', NewsProductsController::class);
     $router->get('userAccount', 'UsersCapitalsController@userAccount');
     $router->get('userPro', 'UsersProductsController@userPro');
     $router->get('getData', 'HomeController@getData');

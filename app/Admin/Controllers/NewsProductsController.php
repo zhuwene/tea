@@ -2,21 +2,20 @@
 
 namespace App\Admin\Controllers;
 
-use App\Models\Products;
+use App\Models\NewsProducts;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
-use QL\QueryList;
 
-class ProductsController extends AdminController
+class NewsProductsController extends AdminController
 {
     /**
      * Title for current resource.
      *
      * @var string
      */
-    protected $title = '商品';
+    protected $title = 'NewsProducts';
 
     /**
      * Make a grid builder.
@@ -25,13 +24,13 @@ class ProductsController extends AdminController
      */
     protected function grid()
     {
-        $grid = new Grid(new Products());
+        $grid = new Grid(new NewsProducts());
 
         $grid->column('id', __('序号'));
         $grid->column('goods_id', __('商品ID'));
         $grid->column('no_name', __('序号名称'));
         $grid->column('name', __('商品名称'));
-        $grid->column('img_path', __('图片'))->image(env('APP_URL') . '/upload/', 50, 50);
+        $grid->column('img_path', __('图片'))->image(env('APP_URL').'/upload/', 50, 50);
         $grid->column('ref_price', __('参考价'));
         $grid->column('up', __('升跌'))->display(function ($up) {
             if (stripos($up, '↓') !== false) {
@@ -52,9 +51,6 @@ class ProductsController extends AdminController
         $grid->column('created_at', __('创建时间'));
         $grid->column('updated_at', __('更新时间'));
 
-//        $grid->actions(function ($actions) {
-//            $actions->disableDelete();
-//        });
         // 禁止新建按钮
         $grid->disableCreateButton();
         $grid->disableExport();
@@ -63,7 +59,7 @@ class ProductsController extends AdminController
             // 去掉默认的id过滤器
             $filter->disableIdFilter();
             $filter->column(1 / 2, function ($filter) {
-                $filter->equal('id', '序号');
+                $filter->equal('id','序号');
                 $filter->like('no_name', '序号名称');
 
             });
@@ -75,11 +71,6 @@ class ProductsController extends AdminController
             });
 
         });
-        $grid->actions(function ($actions) {
-            // 去掉删除
-            $actions->disableDelete();
-        });
-        $grid->disableRowSelector();
         return $grid;
     }
 
@@ -91,21 +82,19 @@ class ProductsController extends AdminController
      */
     protected function detail($id)
     {
-        $show = new Show(Products::findOrFail($id));
+        $show = new Show(NewsProducts::findOrFail($id));
 
-        $show->field('id', __('序号'));
-        $show->field('no_name', __('序号名称'));
-        $show->field('name', __('商品名称'));
-        $show->field('goods_id', __('商品ID'));
-        $show->field('ref_price', __('参考价'));
-        $show->field('up', __('升跌'));
-        $show->field('percent', __('升跌幅'));
-        $show->field('created_at', __('创建时间'));
-        $show->field('updated_at', __('修改时间'));
-
-        $show->panel()->tools(function ($tools) {
-            $tools->disableDelete();
-        });
+        $show->field('id', __('Id'));
+        $show->field('img_path', __('Img path'));
+        $show->field('no_name', __('No name'));
+        $show->field('name', __('Name'));
+        $show->field('goods_id', __('Goods id'));
+        $show->field('ref_price', __('Ref price'));
+        $show->field('up', __('Up'));
+        $show->field('percent', __('Percent'));
+        $show->field('content', __('Content'));
+        $show->field('created_at', __('Created at'));
+        $show->field('updated_at', __('Updated at'));
 
         return $show;
     }
@@ -117,7 +106,7 @@ class ProductsController extends AdminController
      */
     protected function form()
     {
-        $form = new Form(new Products());
+        $form = new Form(new NewsProducts());
 
         $form->text('no_name', __('序号名称'))->disable();
         $form->text('name', __('商品名称'))->disable();

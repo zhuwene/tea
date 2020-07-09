@@ -36,9 +36,12 @@ class NoticesController extends AdminController
             $subject = strip_tags($msg);
             // 去掉空格
             $content = preg_replace('/\s/', '', $subject);
-            // 截取50个汉字
-            $msg = mb_substr($content, 0, 50, 'UTF-8') . '...';
-            return $msg;
+            if(strlen($content) < 50) {
+                return $content;
+            } else {
+                // 截取50个汉字
+                return mb_substr($content, 0, 50, 'UTF-8') . '...';
+            }
         });
         $grid->column('is_read', __('是否已读'))->display(function ($type) {
             if ($type == 0) {
