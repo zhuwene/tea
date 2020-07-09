@@ -108,11 +108,13 @@ class UsersCapitalsController extends AdminController
     {
         $form = new Form(new UsersCapitals());
 
+        $users = Users::query()->select('username', 'name', 'id')->get();
+        foreach ($users as $k => $v) {
+            $data[$v['id']] = $v['username'] . '-' . $v['name'];
+        }
         $form->select('uid', __('用户账号'))->rules('required', [
             'required' => '用户账号不能为空',
-        ])->options(
-            Users::query()->pluck('username', 'id')
-        );
+        ])->options($data);
 
         $form->text('account', __('银行账号'))->rules('required', [
             'required' => '请选择银行账号',
@@ -122,40 +124,27 @@ class UsersCapitalsController extends AdminController
         ]);
         $form->number('price', __('金额'))->rules('required', [
             'required' => '请填写金额',
-        ]);
+        ])->min(1);
         $form->hidden('balance');
 
         // 保存前回调
         $form->saving(function (Form $form) {
-            if ($form->type == 2) {
-                $user = Users::find($form->uid);
-                if($form->price > $user->assets) {
+            $user = Users::find($form->uid);
+            if ($form->type == 2) {                
+                if($form->price > $user->assets-$user->market_value) {
                     $error = new MessageBag([
                         'title'   => '错误提示',
-                        'message' => '转出金额大于总资产!',
+                        'message' => '转出金额大于可用余额!',
                     ]);
                     return back()->with(compact('error'));
                 }
-                Users::where('id', $form->uid)->decrement(
-                    'assets',
-                    $form->price,
-                    ['updated_at' => date('Y-m-d H:i:s')]
-                );
+                $user->assets -= $form->price;
+                
             } else {
-                Users::where('id', $form->uid)->increment(
-                    'assets',
-                    $form->price,
-                    ['updated_at' => date('Y-m-d H:i:s')]
-                );
+                $user->assets += $form->price;
             }
-            $form->balance = 0;
-        });
-        $form->saved(function (Form $form) {
-            $users             = Users::where('id', $form->model()->uid)->select('assets', 'market_value', 'profit_loss')->first();
-            $balance           = $users->assets - $users->market_value - abs($users->profit_loss);
-            $usersCap          = UsersCapitals::find($form->model()->id);
-            $usersCap->balance = $balance;
-            $usersCap->save();
+            $user->save();
+            $form->balance = $user->assets - $user->market_value;
         });
         return $form;
     }

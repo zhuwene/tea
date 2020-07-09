@@ -60,6 +60,7 @@ class IndexsController extends BaseController
             ->where('created_at', '>=', $beginTime)
             ->where('created_at', '<=', $endTime)
             ->select('index', 'price', 'percent', 'created_at')
+            ->orderBy('created_at', 'desc')
             ->paginate($perPage);
 
         return Tool::show(Tool::code('ok'), 'ok', $indexsData);
@@ -93,6 +94,7 @@ class IndexsController extends BaseController
         $userPro = UsersProducts::query()
             ->where('uid', $users->id)
             ->where('type', 1)
+            ->where('available', '>', 0)
             ->select('id', 'products_id', 'num', 'available', 'avg')
             ->orderBy('id', 'desc')
             ->groupBy('products_id')
@@ -123,8 +125,10 @@ class IndexsController extends BaseController
                 ->first();
             // 成本
             $avg          = $noPro->avg;
-            $loss         = number_format($avg - $price, 2);
-            $loss_percent = number_format(($avg - $price) / $avg, 2) . '%';
+            $totalC       = $avg * $available;
+            $totalP       = $price * $available;
+            $loss         = number_format($totalP - $totalC, 2) ;
+            $loss_percent = number_format(($totalP - $totalC) / $totalC * 100, 2) . '%';
 
             $pro->p_avg          = $avg;
             $pro->p_available    = $available;

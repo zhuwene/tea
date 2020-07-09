@@ -26,7 +26,6 @@ class ProductsController extends AdminController
     protected function grid()
     {
         $grid = new Grid(new Products());
-
         $grid->column('id', __('序号'));
         $grid->column('goods_id', __('商品ID'));
         $grid->column('no_name', __('序号名称'));
@@ -126,8 +125,8 @@ class ProductsController extends AdminController
         $form->text('up', __('升跌'))->disable();
         $form->text('percent', __('升跌幅'))->disable();
         $form->image('img_path', __('图片'));
-        $form->UEditor('content', __('详细'));
 
+        $form->UEditor('content', __('详细'));
         $form->tools(function (Form\Tools $tools) {
             $tools->disableDelete();
         });

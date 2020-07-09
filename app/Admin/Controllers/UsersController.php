@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\MessageBag;
 
 class UsersController extends AdminController
 {
@@ -33,7 +34,7 @@ class UsersController extends AdminController
         $grid->column('profit_loss', __('总盈亏'));
         $grid->column('market_value', __('总市值'));
         $grid->column('surplus_cash', __('可用资金'))->display(function () {
-            return $this->assets - $this->market_value - abs($this->profit_loss);
+            return $this->assets - $this->market_value;
         });
 //        $grid->column('account', __('银行账号'));
         $grid->column('created_at', __('创建时间'));
@@ -90,8 +91,13 @@ class UsersController extends AdminController
     {
         $form = new Form(new Users());
 
-        $form->text('username', __('用户账号'))->creationRules(['required', "unique:users"])
-            ->updateRules(['required', "unique:users,username,{{id}}"]);
+        $form->text('username', __('用户账号'))->creationRules('required|numeric|unique:users', [
+            'required'     => '用户账号不能为空',
+            'unique'       => '用户账号已存在',
+            'numeric'      => '手机号必须是数字'
+
+        ])->updateRules(["unique:users,username,{{id}}"])
+        ->placeholder('请输入11位手机号码');
         $form->password('password', __('密码'))->rules('required|confirmed', [
             'required'  => '密码不能为空',
             'confirmed' => '两次密码不一致'
@@ -112,7 +118,16 @@ class UsersController extends AdminController
                 $form->password = md5(env('ADMIN_KEY') . $form->password);
             }
         });
-
+        // 在表单提交前调用
+        // $form->submitted(function (Form $form) {
+        //     if(!preg_match('/^1[3-9]\d{9}$/', $form->username)) {
+        //         $error = new MessageBag([
+        //             'title'   => '错误提示',
+        //             'message' => '用户账号格式不正确,请输入11位手机号码',
+        //         ]);
+        //         return back()->with(compact('error'));
+        //     }
+        // });
         return $form;
     }
 }

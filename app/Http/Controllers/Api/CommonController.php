@@ -49,9 +49,6 @@ class CommonController extends BaseController
         ];
         Cache::put('users:' . $users->id, $token, $expire_time);
 
-        $searchs           = Searchs::query()->select('name')->orderBy('id', 'desc')->get()->toArray();
-        $data['hotSearch'] = array_column($searchs, 'name');
-
         return Tool::show(Tool::code('ok'), '登录成功', $data);
     }
 }
