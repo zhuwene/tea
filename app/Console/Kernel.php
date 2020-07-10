@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         'App\\Console\\Commands\\Collect',
-        'App\\Console\\Commands\\Indexs'
+        'App\\Console\\Commands\\Indexs',
+        'App\\Console\\Commands\\CollectNewsProducts'
     ];
 
     /**
