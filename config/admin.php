@@ -400,7 +400,7 @@ return [
             // Set to `false` if you want to disable this extension
             'enable' => true,
         ],
-         'ueditor' => [
+        'ueditor'       => [
 
             // 如果要关掉这个扩展，设置为false
             'enable' => true,
@@ -408,7 +408,8 @@ return [
             // 编辑器的前端配置 参考：http://fex.baidu.com/ueditor/#start-config
             'config' => [
                 'initialFrameHeight' => 400, // 例如初始化高度
-                'allowDivTransToP'=>false,
+                'allowDivTransToP'   => false,
+                'enterTag'           => '',
             ],
             // 'field_type' => '自定义名字'
         ]

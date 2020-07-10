@@ -30,7 +30,7 @@ class BannersController extends AdminController
         $grid->column('id', __('序号'));
         $grid->column('title', __('标题'));
         $grid->column('img_path', __('图片'))->image(env('APP_URL').'/upload/', 50, 50);
-        $grid->column('content', __('消息内容'))->display(function ($msg) {
+        $grid->column('content', __('详细内容'))->display(function ($msg) {
             // 去掉html标签
             $subject = strip_tags($msg);
             // 去掉空格
@@ -98,7 +98,7 @@ class BannersController extends AdminController
         $form->image('img_path', __('图片'))->rules('required',[
             'required' => '请上传图片',
         ]);
-        $form->UEditor('content');
+        $form->UEditor('content',__('详细内容'));
         return $form;
     }
 }
