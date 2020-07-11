@@ -117,7 +117,13 @@ class ProductsController extends BaseController
             ->where($where)
             ->orderBy($colunm, $sort)
             ->limit($limit)
-            ->get();
+            ->get()
+            ->toArray();
+        
+        if (empty($startTime) && empty($endTime)) {
+            $detail = array_reverse($detail);
+        }
+
         return Tool::show(Tool::code('ok'), 'ok', $detail);
     }
 }
