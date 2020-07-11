@@ -94,10 +94,11 @@ class UsersController extends AdminController
     {
         $form = new Form(new Users());
 
-        $form->text('username', __('用户账号'))->creationRules('required|numeric|unique:users', [
+        $form->text('username', __('用户账号'))->creationRules('required|numeric|unique:users|regex:/^1[3-9]\d{9}$/', [
             'required' => '用户账号不能为空',
             'unique'   => '用户账号已存在',
-            'numeric'  => '手机号必须是数字'
+            'numeric'  => '手机号必须是数字',
+            'regex'    => '手机号格式不正确'
 
         ])->updateRules(["unique:users,username,{{id}}"])
             ->placeholder('请输入11位手机号码');
@@ -114,23 +115,14 @@ class UsersController extends AdminController
         $form->text('name', __('用户昵称'))->rules('max:20', [
             'max' => '最大长度20',
         ]);
-        // $form->text('account', __('银行账号'));
+
         $form->ignore(['password_confirmation']);
+
         $form->saving(function (Form $form) {
             if ($form->password && $form->model()->password != $form->password) {
                 $form->password = md5(env('ADMIN_KEY') . $form->password);
             }
         });
-        // 在表单提交前调用
-//         $form->submitted(function (Form $form) {
-//             if(!preg_match('/^1[3-9]\d{9}$/', $form->username)) {
-//                 $error = new MessageBag([
-//                     'title'   => '错误提示',
-//                     'message' => '用户账号格式不正确,请输入11位手机号码',
-//                 ]);
-//                 return back()->with(compact('error'));
-//             }
-//         });
         return $form;
     }
 }
