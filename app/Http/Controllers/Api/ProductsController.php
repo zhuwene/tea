@@ -107,6 +107,11 @@ class ProductsController extends BaseController
         if (!empty($endTime)) {
             array_push($where, ['created_at', '<=', $endTime]);
         }
+
+        if(empty($startTime) && empty($endTime)) {
+            array_push($where, ['created_at', '>=', date('Y-m-d', strtotime('-30 day'))]);
+            array_push($where, ['created_at', '<=', date('Y-m-d')]);
+        }
         $detail = ProductsDetails::query()
             ->where('goods_id', $goodsId)
             ->select('ref_price', 'futures_price', 'created_at')
