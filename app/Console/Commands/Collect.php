@@ -68,16 +68,20 @@ class Collect extends Command
                 }
                 $product = new Products();
                 $res     = $product->where('goods_id', $goodsId)->count();
-                if (!empty($res)) {
-                    $product->where('goods_id', $goodsId)->update(['updated_at' => date('Y-m-d H:i:s')]);
-                    continue;
-                }
-
                 $ql      = QueryList::get(env('COLLECT_PRODUCTS_DETAIL') . $goodsId);
                 $content = $ql->find('#goodsdiv');
                 $content->find('h1,.com_lists,.blank15,.refer_online,.blank20,.gcollect,.share,script,.blank,.goods_pj_right,#indicatorTotal')->remove();
+                $contentHtml = $content->html();
 
-                $product->content   = env('PRODUCT_STYLE') . '<div id="goodsdiv">' . $content->html() . '</div>';
+                $contents = env('PRODUCT_STYLE') . '<div id="goodsdiv">' . $contentHtml . '</div>';
+                if (!empty($res)) {
+                    $product->where('goods_id', $goodsId)->update([
+                        'content'    => $contents,
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
+                    continue;
+                }
+                $product->content   = $contents;
                 $product->img_path  = '';
                 $product->no_name   = $noName;
                 $product->name      = $name;

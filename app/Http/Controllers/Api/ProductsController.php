@@ -119,7 +119,7 @@ class ProductsController extends BaseController
             ->limit($limit)
             ->get()
             ->toArray();
-        
+
         if (empty($startTime) && empty($endTime)) {
             $detail = array_reverse($detail);
         }
