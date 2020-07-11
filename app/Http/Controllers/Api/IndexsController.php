@@ -158,7 +158,7 @@ class IndexsController extends BaseController
     public function index()
     {
         $data['pro'] = Products::query()
-            ->select('id','no_name', 'name', 'ref_price', 'up', 'percent')
+            ->select('id','goods_id','no_name', 'name', 'ref_price', 'up', 'percent')
             ->orderBy('updated_at', 'desc')
             ->limit(10)
             ->get();
