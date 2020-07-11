@@ -11,13 +11,8 @@ namespace App\Http\Controllers\Api;
 use App\Libraries\Tool;
 use App\Models\Indexs;
 use App\Models\Products;
-use App\models\ProductsDetails;
+use App\Models\ProductsDetails;
 use App\Models\Searchs;
-use App\Models\Users;
-use App\Models\UsersCapitals;
-use App\Models\UsersProducts;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 
 class ProductsController extends BaseController
 {
