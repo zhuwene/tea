@@ -55,11 +55,14 @@ class UsersCapitalsController extends AdminController
 
         $grid->filter(function ($filter) {
             // 用户账号
-            $user = Users::pluck('username', 'id');
+            $user = Users::query()->select('username', 'name', 'id')->get();
+            foreach ($user as $k => $v) {
+                $userData[$v['id']] = $v['username'] . '-' . $v['name'];
+            }
             // 去掉默认的id过滤器
             $filter->disableIdFilter();
-            $filter->column(1 / 2, function ($filter) use ($user) {
-                $filter->in('uid', '用户账号')->multipleSelect($user);
+            $filter->column(1 / 2, function ($filter) use ($userData) {
+                $filter->in('uid', '用户账号')->multipleSelect($userData);
 
             });
 

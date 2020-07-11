@@ -87,19 +87,26 @@ class UsersProductsController extends AdminController
         });
         $grid->filter(function ($filter) {
             // 用户账号
-            $user = Users::pluck('username', 'id');
+            $user = Users::query()->select('username', 'name', 'id')->get();
+            foreach ($user as $k => $v) {
+                $userData[$v['id']] = $v['username'] . '-' . $v['name'];
+            }
+
             // 商品名称
-            $pro = Products::pluck('name', 'id');
+            $pro = Products::query()->select('no_name', 'name', 'id')->get();
+            foreach ($pro as $k => $v) {
+                $proData[$v['id']] = $v['name'] . '-' . $v['no_name'];
+            }
             // 去掉默认的id过滤器
             $filter->disableIdFilter();
-            $filter->column(1 / 2, function ($filter) use ($user) {
+            $filter->column(1 / 2, function ($filter) use ($userData) {
                 $filter->equal('id', '序号');
-                $filter->in('uid', '用户账号')->multipleSelect($user);
+                $filter->in('uid', '用户账号')->multipleSelect($userData);
 
             });
 
-            $filter->column(1 / 2, function ($filter) use ($pro) {
-                $filter->in('products_id', '商品名称')->multipleSelect($pro);
+            $filter->column(1 / 2, function ($filter) use ($proData) {
+                $filter->in('products_id', '商品名称')->multipleSelect($proData);
                 $filter->in('type', '类型')->multipleSelect([1 => '买入', 2 => '卖出']);
             });
 

@@ -110,6 +110,7 @@ class IndexsController extends BaseController
         foreach ($userPro as &$pro) {
             $pro->no_name = $pro->products->no_name;
             $pro->name    = $pro->products->name;
+            $pro->goods_id = $pro->products->goods_id;
             $price        = str_replace('￥', '', $pro->products->ref_price);
             if (stripos($price, '万') !== false) {
                 $price = str_replace('万', '', $price);

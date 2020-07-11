@@ -44,14 +44,17 @@ class UsersController extends AdminController
 
         $grid->filter(function ($filter) {
             // 用户账号
-            $user = Users::pluck('username', 'id');
-                // 去掉默认的id过滤器
+            $user = Users::query()->select('username', 'name', 'id')->get();
+            foreach ($user as $k => $v) {
+                $userData[$v['id']] = $v['username'] . '-' . $v['name'];
+            }
+            // 去掉默认的id过滤器
             $filter->disableIdFilter();
-            $filter->column(1/2, function ($filter) use ($user) {
-                $filter->in('uid', '用户账号')->multipleSelect($user);
+            $filter->column(1 / 2, function ($filter) use ($userData) {
+                $filter->in('uid', '用户账号')->multipleSelect($userData);
             });
-             $filter->column(1/2, function ($filter) use ($user) {
-                $filter->like('name','用户昵称');
+            $filter->column(1 / 2, function ($filter) use ($user) {
+                $filter->like('name', '用户昵称');
 
             });
 
@@ -92,12 +95,12 @@ class UsersController extends AdminController
         $form = new Form(new Users());
 
         $form->text('username', __('用户账号'))->creationRules('required|numeric|unique:users', [
-            'required'     => '用户账号不能为空',
-            'unique'       => '用户账号已存在',
-            'numeric'      => '手机号必须是数字'
+            'required' => '用户账号不能为空',
+            'unique'   => '用户账号已存在',
+            'numeric'  => '手机号必须是数字'
 
         ])->updateRules(["unique:users,username,{{id}}"])
-        ->placeholder('请输入11位手机号码');
+            ->placeholder('请输入11位手机号码');
         $form->password('password', __('密码'))->rules('required|confirmed', [
             'required'  => '密码不能为空',
             'confirmed' => '两次密码不一致'
@@ -109,7 +112,7 @@ class UsersController extends AdminController
                 return $form->model()->password;
             });
         $form->text('name', __('用户昵称'))->rules('max:20', [
-            'max'  => '最大长度20',
+            'max' => '最大长度20',
         ]);
         // $form->text('account', __('银行账号'));
         $form->ignore(['password_confirmation']);
@@ -119,15 +122,15 @@ class UsersController extends AdminController
             }
         });
         // 在表单提交前调用
-        // $form->submitted(function (Form $form) {
-        //     if(!preg_match('/^1[3-9]\d{9}$/', $form->username)) {
-        //         $error = new MessageBag([
-        //             'title'   => '错误提示',
-        //             'message' => '用户账号格式不正确,请输入11位手机号码',
-        //         ]);
-        //         return back()->with(compact('error'));
-        //     }
-        // });
+//         $form->submitted(function (Form $form) {
+//             if(!preg_match('/^1[3-9]\d{9}$/', $form->username)) {
+//                 $error = new MessageBag([
+//                     'title'   => '错误提示',
+//                     'message' => '用户账号格式不正确,请输入11位手机号码',
+//                 ]);
+//                 return back()->with(compact('error'));
+//             }
+//         });
         return $form;
     }
 }
