@@ -20,7 +20,7 @@ class CollectNewsProducts extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = '采集新品行情';
 
     /**
      * Create a new command instance.

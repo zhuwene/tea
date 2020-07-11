@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Api;
 use App\Libraries\Tool;
 use App\Models\Indexs;
 use App\Models\Products;
+use App\models\ProductsDetails;
 use App\Models\Searchs;
 use App\Models\Users;
 use App\Models\UsersCapitals;
@@ -81,10 +82,36 @@ class ProductsController extends BaseController
             ->paginate($perPage);
 
         foreach ($pros as $v) {
-            if(!empty($v->img_path)) {
+            if (!empty($v->img_path)) {
                 $v->img_path = env('APP_URL') . '/upload/' . $v->img_path;
             }
         }
         return Tool::show(Tool::code('ok'), 'ok', $pros);
+    }
+
+    public function goodsCharts()
+    {
+        $where     = [];
+        $goodsId   = $this->params['goods_id'] ?? 0;
+        $startTime = $this->params['start_time'] ?? 0;
+        $endTime   = $this->params['end_time'] ?? 0;
+
+        if (empty($goodsId)) {
+            return Tool::show(Tool::code('none'), '商品ID参数缺失');
+        }
+
+        if (!empty($startTime)) {
+            array_push($where, ['created_at', '>=', $startTime]);
+        }
+
+        if (!empty($endTime)) {
+            array_push($where, ['created_at', '<=', $endTime]);
+        }
+        $detail = ProductsDetails::query()
+            ->where('goods_id', $goodsId)
+            ->select('ref_price', 'futures_price', 'created_at')
+            ->where($where)
+            ->get();
+        return Tool::show(Tool::code('ok'), 'ok', $detail);
     }
 }

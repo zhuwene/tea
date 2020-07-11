@@ -21,6 +21,7 @@ Route::middleware(['chkAuth'])->group(function () {
 Route::post('/sys/login', 'CommonController@login');
 Route::get('/sys/trendChart', 'ProductsController@index');
 Route::get('/sys/teaMarket', 'ProductsController@teaMarket');
+Route::get('/sys/goodsCharts', 'ProductsController@goodsCharts');
 Route::get('/sys/newsMarket', 'NewsProductsController@newsMarket');
 Route::get('/sys/indexChart', 'IndexsController@list');
 Route::get('/sys/proDetail', 'ProductsController@proDetail');
