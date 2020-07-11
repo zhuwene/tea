@@ -38,7 +38,7 @@ class ProductsController extends BaseController
         $indexs->week       = $weekarray[date("w", strtotime($indexs->created_at))];
         $data['indexs']     = $indexs;
         $pros               = Products::query()
-            ->select('id','goods_id', 'no_name', 'name', 'ref_price', 'up', 'percent')
+            ->select('id', 'goods_id', 'no_name', 'name', 'ref_price', 'up', 'percent')
             ->where($where)
             ->paginate($perPage);
 
@@ -72,7 +72,7 @@ class ProductsController extends BaseController
         $perPage = $this->params['per_page'] ?? 15;
 
         $pros = Products::query()
-            ->select('id','goods_id', 'img_path', 'no_name', 'name', 'ref_price', 'up', 'percent')
+            ->select('id', 'goods_id', 'img_path', 'no_name', 'name', 'ref_price', 'up', 'percent')
             ->where($where)
             ->paginate($perPage);
 
@@ -102,15 +102,21 @@ class ProductsController extends BaseController
         if (!empty($endTime)) {
             array_push($where, ['created_at', '<=', $endTime]);
         }
-
-        if(empty($startTime) && empty($endTime)) {
-            array_push($where, ['created_at', '>=', date('Y-m-d', strtotime('-30 day'))]);
-            array_push($where, ['created_at', '<=', date('Y-m-d')]);
+        $limit  = 500;
+        $colunm = 'id';
+        $sort   = 'asc';
+        if (empty($startTime) && empty($endTime)) {
+            $limit  = 30;
+            $colunm = 'id';
+            $sort   = 'desc';
         }
+
         $detail = ProductsDetails::query()
             ->where('goods_id', $goodsId)
             ->select('ref_price', 'futures_price', 'created_at')
             ->where($where)
+            ->orderBy($colunm, $sort)
+            ->limit($limit)
             ->get();
         return Tool::show(Tool::code('ok'), 'ok', $detail);
     }
