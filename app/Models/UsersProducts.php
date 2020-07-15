@@ -135,7 +135,6 @@ class UsersProducts extends Model
                                 $v->surplus = $surplusPro->surplus -  $v->num;  
                             }
                             $name = $k .'$v->price:'.$oldPrice;
-                            file_put_contents('cc.txt',$name.PHP_EOL, FILE_APPEND);
                             $v->available    = 0;
                             $v->avg = 0;
                        }
@@ -145,7 +144,6 @@ class UsersProducts extends Model
                 }
             }
             
-            file_put_contents('dd.txt', '1'.PHP_EOL, FILE_APPEND); 
             // 更新总表
             $userPro = UsersProducts::where('uid', $model->uid)
                                 ->where('id', '<>', $model->id)
