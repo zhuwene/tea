@@ -22,12 +22,6 @@ class NewsProductsController extends BaseController
             ->where($where)
             ->paginate($perPage);
 
-        foreach ($pros as $v) {
-            if (!empty($v->img_path)) {
-                $v->img_path = env('APP_URL') . '/upload/' . $v->img_path;
-            }
-        }
-
         return Tool::show(Tool::code('ok'), 'ok', $pros);
     }
 

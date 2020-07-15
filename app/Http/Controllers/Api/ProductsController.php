@@ -75,12 +75,6 @@ class ProductsController extends BaseController
             ->select('id', 'goods_id', 'img_path', 'no_name', 'name', 'ref_price', 'up', 'percent')
             ->where($where)
             ->paginate($perPage);
-
-        foreach ($pros as $v) {
-            if (!empty($v->img_path)) {
-                $v->img_path = env('APP_URL') . '/upload/' . $v->img_path;
-            }
-        }
         return Tool::show(Tool::code('ok'), 'ok', $pros);
     }
 
