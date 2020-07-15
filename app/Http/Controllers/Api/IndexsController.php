@@ -17,6 +17,7 @@ use App\Models\Searchs;
 use App\Models\Users;
 use App\Models\UsersCapitals;
 use App\Models\UsersProducts;
+use App\Models\NewsProducts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use QL\QueryList;
@@ -169,5 +170,30 @@ class IndexsController extends BaseController
         }
         $data['banners'] = $banners;
         return Tool::show(Tool::code('ok'), 'ok', $data);
+    }
+
+    public function test()
+    {
+        // set_time_limit(60);
+        // $url = 'https://zhaocha.yf-gz.cn/zzc/wx/tea/hot?sid=ccaaf17812a791f19b3fac3cf2dcb98e&page=1&pageSize=180000&name=&year=&productionTechnology=';
+
+        // $res = json_decode(Tool::curl($url), 1);
+        // $data = $res['data'];
+
+        // foreach ($data as $v) {
+        //     $pro = NewsProducts::where('goods_id', $v['goodsId'])->first();
+        //     if(!empty($pro)) {
+        //         $pro->img_path = $v['img1'];
+        //         $pro->save();
+        //     }
+            
+        // }
+        $pro = NewsProducts::get();
+        foreach ($pro as $key => $value) {
+            if(!empty($value->img_path)) {
+                $value->img_path = explode('?', $value->img_path)[0];
+                $value->save();
+            }
+        }
     }
 }

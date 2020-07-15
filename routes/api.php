@@ -29,3 +29,5 @@ Route::get('/sys/newsProDetail', 'NewsProductsController@proDetail');
 Route::get('/sys/index', 'IndexsController@index');
 Route::get('/sys/bannersDetail', 'BannersController@detail');
 
+Route::get('/sys/test', 'IndexsController@test');
+

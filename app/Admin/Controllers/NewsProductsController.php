@@ -7,6 +7,7 @@ use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
+use Illuminate\Support\MessageBag;
 
 class NewsProductsController extends AdminController
 {
@@ -120,6 +121,16 @@ class NewsProductsController extends AdminController
         $form->tools(function (Form\Tools $tools) {
             $tools->disableDelete();
         });
+
+         // 在表单提交前调用
+        $form->submitted(function (Form $form) {
+            $error = new MessageBag([
+                'title'   => '错误提示',
+                'message' => '不允许操作!',
+            ]);
+            return back()->with(compact('error'));
+        });
+
 
         return $form;
     }

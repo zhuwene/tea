@@ -61,7 +61,7 @@ class ProductsController extends BaseController
             return Tool::show(Tool::code('none'), '商品ID参数缺失');
         }
 
-        $pro = Products::query()->where('id', $id)->select('no_name', 'name', 'content')->first();
+        $pro = Products::query()->where('id', $id)->select('no_name', 'name', 'content', 'img_path')->first();
 
         return Tool::show(Tool::code('ok'), 'ok', $pro);
     }
