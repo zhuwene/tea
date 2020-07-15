@@ -16,7 +16,7 @@ class NewsProductsController extends AdminController
      *
      * @var string
      */
-    protected $title = 'NewsProducts';
+    protected $title = '新品行情';
 
     /**
      * Make a grid builder.
