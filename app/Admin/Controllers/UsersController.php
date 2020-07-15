@@ -44,6 +44,7 @@ class UsersController extends AdminController
 
         $grid->filter(function ($filter) {
             // 用户账号
+            $userData = [];
             $user = Users::query()->select('username', 'name', 'id')->get();
             foreach ($user as $k => $v) {
                 $userData[$v['id']] = $v['username'] . '-' . $v['name'];

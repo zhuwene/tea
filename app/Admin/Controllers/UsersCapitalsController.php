@@ -55,6 +55,7 @@ class UsersCapitalsController extends AdminController
 
         $grid->filter(function ($filter) {
             // 用户账号
+            $userData = [];
             $user = Users::query()->select('username', 'name', 'id')->get();
             foreach ($user as $k => $v) {
                 $userData[$v['id']] = $v['username'] . '-' . $v['name'];
@@ -110,7 +111,8 @@ class UsersCapitalsController extends AdminController
     protected function form()
     {
         $form = new Form(new UsersCapitals());
-
+        
+        $data = [];
         $users = Users::query()->select('username', 'name', 'id')->get();
         foreach ($users as $k => $v) {
             $data[$v['id']] = $v['username'] . '-' . $v['name'];
