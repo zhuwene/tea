@@ -62,7 +62,6 @@ class ProductsController extends BaseController
         }
 
         $pro = Products::query()->where('id', $id)->select('no_name', 'name', 'content', 'img_path')->first();
-
         return Tool::show(Tool::code('ok'), 'ok', $pro);
     }
 

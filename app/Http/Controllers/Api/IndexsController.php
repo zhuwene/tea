@@ -109,10 +109,11 @@ class IndexsController extends BaseController
             ->paginate($perPage);
 
         foreach ($userPro as &$pro) {
-            $pro->no_name = $pro->products->no_name;
-            $pro->name    = $pro->products->name;
+            $pro->no_name  = $pro->products->no_name;
+            $pro->name     = $pro->products->name;
             $pro->goods_id = $pro->products->goods_id;
-            $price        = str_replace('￥', '', $pro->products->ref_price);
+            $pro->id       = $pro->products->id;
+            $price         = str_replace('￥', '', $pro->products->ref_price);
             if (stripos($price, '万') !== false) {
                 $price = str_replace('万', '', $price);
                 $price *= 10000;
@@ -136,7 +137,7 @@ class IndexsController extends BaseController
             $avg          = $noPro->avg;
             $totalC       = $avg * $available;
             $totalP       = $price * $available;
-            $loss         = number_format($totalP - $totalC, 2) ;
+            $loss         = number_format($totalP - $totalC, 2);
             $loss_percent = number_format(($totalP - $totalC) / $totalC * 100, 2) . '%';
 
             $pro->p_avg          = $avg;
@@ -160,7 +161,7 @@ class IndexsController extends BaseController
     public function index()
     {
         $data['pro'] = Products::query()
-            ->select('id','goods_id','no_name', 'name', 'ref_price', 'up', 'percent')
+            ->select('id', 'goods_id', 'no_name', 'name', 'ref_price', 'up', 'percent')
             ->orderBy('updated_at', 'desc')
             ->limit(10)
             ->get();
@@ -186,11 +187,11 @@ class IndexsController extends BaseController
         //         $pro->img_path = $v['img1'];
         //         $pro->save();
         //     }
-            
+
         // }
         $pro = NewsProducts::get();
         foreach ($pro as $key => $value) {
-            if(!empty($value->img_path)) {
+            if (!empty($value->img_path)) {
                 $value->img_path = explode('?', $value->img_path)[0];
                 $value->save();
             }
