@@ -76,6 +76,9 @@ class CollectNewsProducts extends Command
                 $contents = env('PRODUCT_STYLE') . '<div id="goodsdiv">' . $contentHtml . '</div>';
                 if (!empty($res)) {
                     $product->where('goods_id', $goodsId)->update([
+                        'ref_price'  => $list['price'],
+                        'up'         => $list['up'],
+                        'percent'    => $list['percent'],
                         'content'    => $contents,
                         'updated_at' => date('Y-m-d H:i:s')
                     ]);
