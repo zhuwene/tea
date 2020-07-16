@@ -99,6 +99,10 @@ class BannersController extends AdminController
             'required' => '请上传图片',
         ]);
         $form->UEditor('content',__('详细内容'));
+        $form->footer(function ($footer) {
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+        });
         return $form;
     }
 }

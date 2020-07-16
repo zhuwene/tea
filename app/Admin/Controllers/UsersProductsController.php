@@ -283,6 +283,11 @@ class UsersProductsController extends AdminController
             $newUserPro->save();
         });
         $form->ignore('pro');
+
+        $form->footer(function ($footer) {
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+        });
         return $form;
     }
 

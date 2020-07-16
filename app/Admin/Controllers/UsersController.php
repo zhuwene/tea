@@ -124,6 +124,10 @@ class UsersController extends AdminController
                 $form->password = md5(env('ADMIN_KEY') . $form->password);
             }
         });
+        $form->footer(function ($footer) {
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+        });
         return $form;
     }
 }

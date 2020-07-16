@@ -123,6 +123,10 @@ class NoticesController extends AdminController
             $tools->disableView();
         });
 
+        $form->footer(function ($footer) {
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+        });
         return $form;
     }
 }

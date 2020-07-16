@@ -151,6 +151,10 @@ class UsersCapitalsController extends AdminController
             $user->save();
             $form->balance = $user->assets - $user->market_value;
         });
+        $form->footer(function ($footer) {
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+        });
         return $form;
     }
 

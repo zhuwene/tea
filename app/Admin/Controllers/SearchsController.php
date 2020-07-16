@@ -80,6 +80,10 @@ class SearchsController extends AdminController
             'required' => '请输入搜索名称',
         ]);
 
+        $form->footer(function ($footer) {
+            // 去掉`继续编辑`checkbox
+            $footer->disableEditingCheck();
+        });
         return $form;
     }
 }
