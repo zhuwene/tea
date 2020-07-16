@@ -95,7 +95,7 @@ class IndexsController extends BaseController
             'assets'       => $users->assets,
             'profit_loss'  => $users->profit_loss,
             'market_value' => $users->market_value,
-            'surplus'      => $users->assets - abs($users->profit_loss) - $users->market_value,
+            'surplus'      => $users->assets  - $users->market_value,
         ];
 
         // 商品数量
