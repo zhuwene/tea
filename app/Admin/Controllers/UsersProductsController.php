@@ -52,7 +52,9 @@ class UsersProductsController extends AdminController
             //     return $users->assets-$users->market_value;
             // });
         } elseif ($type[0] == 1) {
-            $grid->column('avg', __('平均价'));
+            $grid->column('avg', __('总价'))->display(function ($loss) {
+                return $this->price * $this->num;
+            });
         } else {
             $grid->column('loss', __('盈亏'))->display(function ($loss) {
                 if ($loss < 0) {
@@ -88,7 +90,7 @@ class UsersProductsController extends AdminController
         $grid->filter(function ($filter) {
             // 用户账号
             $userData = [];
-            $user = Users::query()->select('username', 'name', 'id')->get();
+            $user     = Users::query()->select('username', 'name', 'id')->get();
             foreach ($user as $k => $v) {
                 $userData[$v['id']] = $v['username'] . '-' . $v['name'];
             }
@@ -146,8 +148,8 @@ class UsersProductsController extends AdminController
     protected function form()
     {
         $form = new Form(new UsersProducts());
-        
-        $data= [];
+
+        $data  = [];
         $users = Users::query()->select('username', 'name', 'id')->get();
         foreach ($users as $k => $v) {
             $data[$v['id']] = $v['username'] . '-' . $v['name'];
@@ -239,9 +241,9 @@ class UsersProductsController extends AdminController
                 } else {
                     $form->surplus = $form->num;
                 }
-                $form->available    = $form->num;
-                $form->loss         = 0;
-                $price = $form->price * $form->num;
+                $form->available = $form->num;
+                $form->loss      = 0;
+                $price           = $form->price * $form->num;
                 Users::where('id', $form->uid)->increment(
                     'market_value',
                     $price
@@ -275,11 +277,11 @@ class UsersProductsController extends AdminController
                 $newUserPro->save();
             }
             // 更新用户商品总资产
-            $user               = Users::where('id', $userPro->uid)->first();
-            $newUserPro         = UsersProducts::find($userPro->id);
-            $newUserPro->assets = $user->assets;
+            $user                     = Users::where('id', $userPro->uid)->first();
+            $newUserPro               = UsersProducts::find($userPro->id);
+            $newUserPro->assets       = $user->assets;
             $newUserPro->market_value = $user->market_value;
-            $newUserPro->surplus_cash = $user->assets-$user->market_value;
+            $newUserPro->surplus_cash = $user->assets - $user->market_value;
             $newUserPro->save();
         });
         $form->ignore('pro');

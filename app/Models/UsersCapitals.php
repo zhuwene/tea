@@ -21,21 +21,28 @@ class UsersCapitals extends Model
         parent::boot();
         static::deleted(function ($model) {
             // 转入
+            $user = Users::find($model->uid);
             if ($model->type == 1) {
-                Users::where('id', $model->uid)->decrement(
-                    'assets',
-                    $model->price,
-                    ['updated_at' => date('Y-m-d H:i:s')]
-                );
+                $user->assets -= $model->price;
             } else {
-                Users::where('id', $model->uid)->increment(
-                    'assets',
-                    $model->price,
-                    ['updated_at' => date('Y-m-d H:i:s')]
-                );
+                $user->assets += $model->price;
             }
-
-
+            $user->save();
+            $userCap = UsersCapitals::where('id', '<>', $model->id)
+                ->where('uid', $model->uid)
+                ->orderBy('id', 'desc')
+                ->get();
+            if (!$userCap->isEmpty()) {
+                foreach ($userCap as $k => $v) {
+                    if (empty($k)) {
+                        $v->balance = $user->assets - $user->market_value;
+                    } else {
+                        $v->balance = $userCap[$k - 1]['balance'] - $userCap[$k - 1]['price'];
+                    }
+                    $v->save();
+                    $userCap[$k]['balance'] = $v->balance;
+                }
+            }
         });
     }
 }
