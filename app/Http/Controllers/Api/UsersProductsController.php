@@ -46,7 +46,8 @@ class UsersProductsController extends BaseController
             } else {
                 $pro->type = '卖出';
             }
-            $pro->no_name  = $pro->products->no_name;
+            $pro->id       = $pro->products->id;
+             $pro->no_name = $pro->products->no_name;
             $pro->name     = $pro->products->name;
             $pro->goods_id = $pro->products->goods_id;
             unset($pro->products, $pro->uid, $pro->products_id, $pro->from_id, $pro->available, $pro->updated_at);
