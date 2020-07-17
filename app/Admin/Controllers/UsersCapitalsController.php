@@ -52,7 +52,11 @@ class UsersCapitalsController extends AdminController
             $actions->disableEdit();
         });
         $grid->model()->orderBy('id', 'desc');
-
+        $grid->tools(function ($tools) {
+            $tools->batch(function ($batch) {
+                $batch->disableDelete();
+            });
+        });
         $grid->filter(function ($filter) {
             // 用户账号
             $userData = [];
