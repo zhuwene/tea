@@ -134,12 +134,8 @@ class ProductsController extends AdminController
 
         // 在表单提交前调用
         $form->submitted(function (Form $form) {
-            $error = new MessageBag([
-                'title'   => '错误提示',
-                'message' => '不允许操作!',
-            ]);
-            return back()->with(compact('error'));
-        });
+           $form->ignore('content');
+        });  
 
         return $form;
     }

@@ -33,7 +33,7 @@ class NewsProductsController extends BaseController
             return Tool::show(Tool::code('none'), '商品ID参数缺失');
         }
 
-        $pro = Products::query()->where('id', $id)->select('no_name', 'name', 'content','img_path')->first();
+        $pro = NewsProducts::query()->where('id', $id)->select('no_name', 'name', 'content','img_path')->first();
 
         return Tool::show(Tool::code('ok'), 'ok', $pro);
     }
