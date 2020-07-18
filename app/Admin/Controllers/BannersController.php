@@ -97,7 +97,7 @@ class BannersController extends AdminController
         ]);
         $form->image('img_path', __('图片'))->rules('required',[
             'required' => '请上传图片',
-        ]);
+        ])->removable();
         $form->UEditor('content',__('详细内容'));
         $form->footer(function ($footer) {
             // 去掉`继续编辑`checkbox

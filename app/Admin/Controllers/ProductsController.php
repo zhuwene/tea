@@ -125,7 +125,7 @@ class ProductsController extends AdminController
         $form->text('ref_price', __('参考价'))->disable();
         $form->text('up', __('升跌'))->disable();
         $form->text('percent', __('升跌幅'))->disable();
-        $form->image('img_path', __('图片'));
+        $form->image('img_path', __('图片'))->removable();
 
         $form->UEditor('content', __('详细'));
         $form->tools(function (Form\Tools $tools) {
