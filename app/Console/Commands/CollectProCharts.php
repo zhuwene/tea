@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Libraries\Tool;
 use App\Models\Products;
-use App\models\ProductsDetails;
+use App\Models\ProductsDetails;
 use Illuminate\Console\Command;
 
 class CollectProCharts extends Command
@@ -53,7 +53,7 @@ class CollectProCharts extends Command
         foreach ($pros as $pro) {
             $params = [
                 'id'   => $pro->goods_id,
-                'bday' => strtotime("$today -30 day"),
+                'bday' => strtotime("$today -5 day"),
                 'eday' => strtotime($today)
             ];
 
