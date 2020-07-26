@@ -72,8 +72,11 @@ class CollectProCharts extends Command
                     ->where('goods_id', $pro->goods_id)
                     ->where('created_at', $v[0])
                     ->first();
-                if (count($hasDetail) > 0) {
-                    $hasDetail->update_at = date('Y-m-d H:i:s');
+
+                if (!empty($hasDetail)) {
+                    $hasDetail->updated_at = date('Y-m-d H:i:s');
+                    $hasDetail->save();
+                    continue;
                 }
 
                 ProductsDetails::insert([
