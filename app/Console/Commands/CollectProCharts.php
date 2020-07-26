@@ -53,11 +53,12 @@ class CollectProCharts extends Command
         foreach ($pros as $pro) {
             $params = [
                 'id'   => $pro->goods_id,
-                'bday' => strtotime("$today -1 day"),
+                'bday' => strtotime("$today -30 day"),
                 'eday' => strtotime($today)
             ];
 
             $res = Tool::curl($url, 'POST', $params);
+
             $res = json_decode(str_replace("\\", '', urldecode(str_replace("%EF%BB%BF", '', urlencode($res)))), 1);
 
             if (!isset($res['result'])) {
@@ -65,6 +66,7 @@ class CollectProCharts extends Command
             }
 
             $data = $res['result'];
+
             foreach ($data as $v) {
                 $hasDetail = ProductsDetails::query()
                     ->where('goods_id', $pro->goods_id)
