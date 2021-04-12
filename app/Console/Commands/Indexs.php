@@ -38,8 +38,13 @@ class Indexs extends Command
      */
     public function handle()
     {
-        $url = env('COLLECT_INDEX');
-        $res = json_decode($this->curl($url), 1);
+//        https://www.baijiafutea.com/Ajax/ListEchar.aspx
+//        https://www.baijiafutea.com/index/tape/graph.html?type=0&start=2021-04-11&end=2021-04-13
+        $startTime = date('Y-m-d', strtotime(date('Ymd') . '-1 day'));
+        $endTime   = date('Y-m-d', strtotime(date('Ymd') . '+1 day'));
+        $url       = env('COLLECT_INDEX') . '?type=0&start=' . $startTime . '&end=' . $endTime;
+        $res       = json_decode($this->curl($url), 1);
+        if (empty($res)) return;
 
         foreach ($res as $v) {
             $chk = IndexsM::where('item_id', $v['ItemId'])->count();
