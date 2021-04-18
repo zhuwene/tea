@@ -43,7 +43,11 @@ class NewsProductsController extends BaseController
         }
 
         $pro = NewsProducts::query()->where('id', $id)->select('no_name', 'name', 'content', 'img_path')->first();
-
+        if (stripos($pro->img_path, 'https://') === false &&
+            stripos($pro->img_path, 'http://') === false
+        ) {
+            $pro->img_path = env('APP_URL') . '/upload/' . $pro->img_path;
+        }
         return Tool::show(Tool::code('ok'), 'ok', $pro);
     }
 }
