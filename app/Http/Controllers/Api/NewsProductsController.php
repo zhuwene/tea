@@ -20,6 +20,7 @@ class NewsProductsController extends BaseController
         $pros = NewsProducts::query()
             ->select('id', 'goods_id', 'img_path', 'no_name', 'name', 'ref_price', 'up', 'percent')
             ->where($where)
+            ->orderBy('goods_id','desc')
             ->paginate($perPage);
 
         return Tool::show(Tool::code('ok'), 'ok', $pros);

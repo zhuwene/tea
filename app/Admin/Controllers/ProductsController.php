@@ -28,7 +28,7 @@ class ProductsController extends AdminController
     {
         $grid = new Grid(new Products());
         $grid->column('id', __('序号'));
-        $grid->column('goods_id', __('商品ID'));
+        $grid->column('goods_id', __('商品ID'))->sortable();;
         $grid->column('no_name', __('序号名称'));
         $grid->column('name', __('商品名称'));
         $grid->column('img_path', __('图片'))->image(env('APP_URL') . '/upload/', 50, 50);
