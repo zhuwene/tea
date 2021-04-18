@@ -20,9 +20,17 @@ class NewsProductsController extends BaseController
         $pros = NewsProducts::query()
             ->select('id', 'goods_id', 'img_path', 'no_name', 'name', 'ref_price', 'up', 'percent')
             ->where($where)
-            ->orderBy('goods_id','desc')
+            ->orderBy('goods_id', 'desc')
             ->paginate($perPage);
 
+        foreach ($pros as $v) {
+            if (stripos($v->img_path, 'https://') !== false ||
+                stripos($v->img_path, 'http://') !== false
+            ) {
+                continue;
+            }
+            $v->img_path = env('APP_URL') . '/upload/' . $v->img_path;
+        }
         return Tool::show(Tool::code('ok'), 'ok', $pros);
     }
 
@@ -34,7 +42,7 @@ class NewsProductsController extends BaseController
             return Tool::show(Tool::code('none'), '商品ID参数缺失');
         }
 
-        $pro = NewsProducts::query()->where('id', $id)->select('no_name', 'name', 'content','img_path')->first();
+        $pro = NewsProducts::query()->where('id', $id)->select('no_name', 'name', 'content', 'img_path')->first();
 
         return Tool::show(Tool::code('ok'), 'ok', $pro);
     }
